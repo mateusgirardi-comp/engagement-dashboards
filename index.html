@@ -71,7 +71,7 @@
 
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             margin-bottom: 30px;
         }
@@ -296,6 +296,13 @@
             border: 1px solid #4caf50;
         }
 
+        .badge.badge-client {
+            background: #c8e6c9;
+            color: #1b5e20;
+            border: 1px solid #1b5e20;
+            font-weight: 700;
+        }
+
         .badge.icp-high {
             background: #c8e6c9;
             color: #2e7d32;
@@ -380,7 +387,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 14:47</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 15:09</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP.</p>
         </div>
 
@@ -416,6 +423,15 @@
                 </div>
                 <div class="kpi-breakdown">13.4% Chris | 12.2% Pedro</div>
             </div>
+
+            <div class="kpi-card">
+                <div class="kpi-label">ICPs que são clientes Comp</div>
+                <div>
+                    <span class="kpi-value">0</span>
+                    <span class="kpi-value-inline">de 107 ICPs</span>
+                </div>
+                <div class="kpi-breakdown">0 Chris | 0 Pedro | 0 em ambos os perfis</div>
+            </div>
         </div>
 
         <!-- Gráficos ICP -->
@@ -447,6 +463,14 @@
             <h2>📊 Timeline de Conexões (Consolidado + Pedro + Chris)</h2>
             <div class="chart-wrapper" style="height: 400px;">
                 <canvas id="timelineChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ICP Clientes vs Prospects -->
+        <div class="chart-container featured" style="margin-bottom: 30px;">
+            <h2>🏢 Empresas ICP: Clientes vs Prospects</h2>
+            <div class="chart-wrapper" style="height: 350px;">
+                <canvas id="icpClientChart"></canvas>
             </div>
         </div>
 
@@ -492,6 +516,15 @@
                 </div>
 
                 <div class="filter-group">
+                    <label>Cliente Comp:</label>
+                    <select id="filterClient" onchange="filterTable()">
+                        <option value="">Todos</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
                     <label>Buscar:</label>
                     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Nome, empresa, cargo...">
                 </div>
@@ -511,7 +544,7 @@
                 </thead>
                 <tbody>
                     
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="AlphaSense">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="AlphaSense" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 AlphaSense <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -540,7 +573,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="BCG X">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="BCG X" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 BCG X <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -558,7 +591,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Baseten">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Baseten" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Baseten <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -576,7 +609,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Conexa Saúde">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Conexa Saúde" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Conexa Saúde <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -594,7 +627,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Conta Azul">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Conta Azul" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Conta Azul <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -612,7 +645,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="CoreWeave">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="CoreWeave" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 CoreWeave <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -630,7 +663,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Faire">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Faire" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Faire <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -659,7 +692,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Harvey">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Harvey" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Harvey <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -677,7 +710,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Mercai">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Mercai" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Mercai <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -695,7 +728,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Talkdesk">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Talkdesk" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Talkdesk <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -713,7 +746,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Tools for Humanity">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Tools for Humanity" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Tools for Humanity <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -731,7 +764,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="VR">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="VR" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 VR <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -749,7 +782,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Wellhub">
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Wellhub" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Wellhub <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -767,7 +800,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="BairesDev">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="BairesDev" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 BairesDev <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -785,7 +818,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Deel Local Payroll, powered by PaySpace">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Deel Local Payroll, powered by PaySpace" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Deel Local Payroll, powered by PaySpace <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -814,7 +847,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Etched">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Etched" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Etched <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -832,7 +865,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Karsten S.A.">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Karsten S.A." data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Karsten S.A. <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -850,7 +883,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Kavak.com">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Kavak.com" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Kavak.com <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -868,7 +901,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="L.E.K. Consulting">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="L.E.K. Consulting" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 L.E.K. Consulting <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -886,7 +919,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Matrix Energia">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Matrix Energia" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Matrix Energia <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -904,7 +937,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Merge">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Merge" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Merge <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -933,7 +966,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Olist">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Olist" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Olist <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -973,7 +1006,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Playtech">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Playtech" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Playtech <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -991,7 +1024,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="RD Station">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="RD Station" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 RD Station <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -1020,7 +1053,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Rimini Street Brazil">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Rimini Street Brazil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Rimini Street Brazil <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1038,7 +1071,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Seedtag">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Seedtag" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Seedtag <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1056,7 +1089,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Sem Parar">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Sem Parar" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Sem Parar <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1074,7 +1107,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Telnyx">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Telnyx" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Telnyx <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1092,7 +1125,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Toku (YC S21)">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Toku (YC S21)" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Toku (YC S21) <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1110,7 +1143,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Vestwell">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Vestwell" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Vestwell <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1128,7 +1161,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="invygo">
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="invygo" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 invygo <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -1157,7 +1190,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Alice">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Alice" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Alice <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1175,7 +1208,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="AppsFlyer">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="AppsFlyer" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 AppsFlyer <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1193,7 +1226,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Auvo Tecnologia">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Auvo Tecnologia" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Auvo Tecnologia <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1211,7 +1244,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Base Power Company">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Base Power Company" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Base Power Company <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1229,7 +1262,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Bloq.it">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Bloq.it" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Bloq.it <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1247,7 +1280,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Brellium">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Brellium" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Brellium <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1265,7 +1298,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Clinicorp Solutions <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -1305,7 +1338,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="EXA">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="EXA" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 EXA <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1323,7 +1356,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Endeavor">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Endeavor" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Endeavor <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -1352,7 +1385,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="FitBank">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="FitBank" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 FitBank <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -1381,7 +1414,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Gi Group Holding">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Gi Group Holding" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Gi Group Holding <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1399,7 +1432,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Hand Talk by Sorenson">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Hand Talk by Sorenson" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Hand Talk by Sorenson <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1417,7 +1450,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Inbrands">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Inbrands" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Inbrands <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1435,7 +1468,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="JA Horses">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 JA Horses <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -1464,7 +1497,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Jeeves">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Jeeves" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Jeeves <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1482,7 +1515,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Marlabs Brasil">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Marlabs Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Marlabs Brasil <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1500,7 +1533,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Numeric">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Numeric" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Numeric <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1518,7 +1551,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="OLX Brasil">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="OLX Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 OLX Brasil <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1536,7 +1569,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="PSW Digital">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="PSW Digital" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 PSW Digital <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1554,7 +1587,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Pilot.com">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Pilot.com" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Pilot.com <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1572,7 +1605,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="PostHog">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="PostHog" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 PostHog <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1590,7 +1623,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="RankMyApp">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="RankMyApp" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 RankMyApp <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1608,7 +1641,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="RapidSOS">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="RapidSOS" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 RapidSOS <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1626,7 +1659,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Redpin">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Redpin" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Redpin <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1644,7 +1677,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="SYOS">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="SYOS" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 SYOS <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -1673,7 +1706,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Stealth FinTech Startup">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Stealth FinTech Startup" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Stealth FinTech Startup <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1691,7 +1724,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Sólides">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Sólides" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Sólides <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(4 contatos)</span>
             </td>
@@ -1742,7 +1775,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Tech Seals">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Tech Seals" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Tech Seals <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1760,7 +1793,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Tequaly">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Tequaly" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Tequaly <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1778,7 +1811,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="The Carlyle Group">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="The Carlyle Group" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 The Carlyle Group <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1796,7 +1829,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="The Davey Tree Expert Company">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="The Davey Tree Expert Company" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 The Davey Tree Expert Company <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1814,7 +1847,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Traba">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Traba" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Traba <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(4 contatos)</span>
             </td>
@@ -1865,7 +1898,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Transfeera">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Transfeera" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Transfeera <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -1905,7 +1938,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="UOL">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="UOL" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 UOL <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1923,7 +1956,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Xepelin">
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Xepelin" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Xepelin <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1941,7 +1974,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="4intelligence Data Science">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="4intelligence Data Science" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 4intelligence Data Science <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -1959,7 +1992,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="7shifts">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="7shifts" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 7shifts <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -1988,7 +2021,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Aitana">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Aitana" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Aitana <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2006,7 +2039,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="AmorSaúde Brasil">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="AmorSaúde Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 AmorSaúde Brasil <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2024,7 +2057,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Barte">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Barte" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Barte <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2053,7 +2086,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="COOPERFORTE">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="COOPERFORTE" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 COOPERFORTE <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2071,7 +2104,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="CondoConta">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 CondoConta <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2100,7 +2133,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Cooperativa Central Ailos">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Cooperativa Central Ailos" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cooperativa Central Ailos <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2118,7 +2151,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Cubos Tecnologia">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Cubos Tecnologia" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cubos Tecnologia <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2136,7 +2169,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="ELSA, Corp">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="ELSA, Corp" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 ELSA, Corp <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2154,7 +2187,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Empresa de Trens Urbanos de Porto Alegre S.A. - Trensurb">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Empresa de Trens Urbanos de Porto Alegre S.A. - Trensurb" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Empresa de Trens Urbanos de Porto Alegre S.A. - Trensurb <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2172,7 +2205,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="FIEMG">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="FIEMG" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 FIEMG <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2190,7 +2223,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="GoBots">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 GoBots <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2219,7 +2252,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Grupo Edson Queiroz">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Grupo Edson Queiroz" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Grupo Edson Queiroz <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2237,7 +2270,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Grupo Jacto">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Grupo Jacto" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Grupo Jacto <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2255,7 +2288,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Halexistar Indústria Farmacêutica S/A">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Halexistar Indústria Farmacêutica S/A" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Halexistar Indústria Farmacêutica S/A <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2273,7 +2306,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Inven">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Inven" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Inven <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2302,7 +2335,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Kiln">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Kiln" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Kiln <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2320,7 +2353,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Kombo">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Kombo" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Kombo <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2349,7 +2382,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Leader Bank">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Leader Bank" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Leader Bank <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2367,7 +2400,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="MEV">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="MEV" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 MEV <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2385,7 +2418,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Modaxo">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Modaxo" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Modaxo <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2403,7 +2436,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Nectar">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Nectar" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Nectar <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2432,7 +2465,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="NotCo">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="NotCo" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 NotCo <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2450,7 +2483,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="OceanPact Serviços Marítimos">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="OceanPact Serviços Marítimos" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 OceanPact Serviços Marítimos <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2468,7 +2501,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Portal Telemedicina">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Portal Telemedicina" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Portal Telemedicina <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2486,7 +2519,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Prodesp">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Prodesp" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Prodesp <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2504,7 +2537,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Radiante Engenharia de Telecomunicações">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Radiante Engenharia de Telecomunicações" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Radiante Engenharia de Telecomunicações <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2522,7 +2555,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Randstad Brasil">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Randstad Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Randstad Brasil <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2540,7 +2573,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="SYSTRA Brasil">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="SYSTRA Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 SYSTRA Brasil <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2558,7 +2591,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Santander Corporate & Investment Banking">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Santander Corporate & Investment Banking" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Santander Corporate & Investment Banking <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2576,7 +2609,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Senior Frontend Contractor">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Senior Frontend Contractor" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Senior Frontend Contractor <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2605,7 +2638,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Slash">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Slash" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Slash <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2623,7 +2656,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="StartSe">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="StartSe" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 StartSe <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2641,7 +2674,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Stoque">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Stoque" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Stoque <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2659,7 +2692,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Volaris Group">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Volaris Group" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Volaris Group <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2677,7 +2710,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Vórtx">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Vórtx" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Vórtx <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2695,7 +2728,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="goFlux">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="goFlux" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 goFlux <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2724,7 +2757,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="green4T">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="green4T" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 green4T <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2742,7 +2775,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="iglu">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="iglu" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 iglu <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2760,7 +2793,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="inChurch">
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="inChurch" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 inChurch <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2778,7 +2811,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="180 Seguros">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="180 Seguros" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 180 Seguros <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -2818,7 +2851,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Abria - Associação Brasileira de Inteligência Artificial">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Abria - Associação Brasileira de Inteligência Artificial" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Abria - Associação Brasileira de Inteligência Artificial <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2836,7 +2869,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Acargo">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Acargo" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Acargo <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2854,7 +2887,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Aceleradora Bluefields">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Aceleradora Bluefields" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Aceleradora Bluefields <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -2894,7 +2927,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="AgriShift :: Hub de Experiências Imersivas">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="AgriShift :: Hub de Experiências Imersivas" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 AgriShift :: Hub de Experiências Imersivas <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2912,7 +2945,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Aliadas">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Aliadas" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Aliadas <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -2930,7 +2963,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Ally">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Ally" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Ally <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2959,7 +2992,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Allya">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Allya" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Allya <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -2988,7 +3021,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Alvarez & Marsal">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Alvarez & Marsal" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Alvarez & Marsal <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3006,7 +3039,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Americas">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Americas" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Americas <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3024,7 +3057,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Aprix">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Aprix" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Aprix <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3042,7 +3075,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="ArcelorMittal Brasil">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="ArcelorMittal Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 ArcelorMittal Brasil <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3060,7 +3093,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Arco Educação">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Arco Educação" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Arco Educação <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -3100,7 +3133,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Asaas">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Asaas" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Asaas <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -3129,7 +3162,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Atos">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Atos" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Atos <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3147,7 +3180,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Avenue">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Avenue" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Avenue <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3165,7 +3198,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Azion">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Azion" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Azion <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -3194,7 +3227,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Azos">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Azos" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Azos <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3212,7 +3245,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="B3">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="B3" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 B3 <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3230,7 +3263,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="BTG Pactual">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="BTG Pactual" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 BTG Pactual <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(7 contatos)</span>
             </td>
@@ -3314,7 +3347,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Banco Daycoval">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Banco Daycoval" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Banco Daycoval <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3332,7 +3365,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Beyon l Executive Search">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Beyon l Executive Search" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Beyon l Executive Search <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3350,7 +3383,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Bionexo">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Bionexo" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Bionexo <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3368,7 +3401,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Biz">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Biz" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Biz <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -3397,7 +3430,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Blip">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Blip" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Blip <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -3426,7 +3459,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Boutique Executive Search">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Boutique Executive Search" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Boutique Executive Search <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -3455,7 +3488,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Brex">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Brex" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Brex <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(4 contatos)</span>
             </td>
@@ -3506,7 +3539,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Buildbox">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Buildbox" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Buildbox <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3524,7 +3557,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="C&A Latam">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="C&A Latam" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 C&A Latam <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3542,7 +3575,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="CRMBonus">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="CRMBonus" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 CRMBonus <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -3571,7 +3604,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="CRMBonus - iFood">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="CRMBonus - iFood" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 CRMBonus - iFood <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3589,7 +3622,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cayena">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cayena" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cayena <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3607,7 +3640,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cedar Capital">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cedar Capital" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cedar Capital <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3625,7 +3658,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Celcoin">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Celcoin" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Celcoin <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3643,7 +3676,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Centro Acadêmico Linus Torvalds">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Centro Acadêmico Linus Torvalds" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Centro Acadêmico Linus Torvalds <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3661,7 +3694,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cercli (YC S23)">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cercli (YC S23)" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cercli (YC S23) <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3679,7 +3712,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Ciabratech">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Ciabratech" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Ciabratech <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3697,7 +3730,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cielo">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cielo" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cielo <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3715,7 +3748,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cientec Roraima">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cientec Roraima" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cientec Roraima <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3733,7 +3766,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Coaktion">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Coaktion" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Coaktion <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3751,7 +3784,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cobli">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cobli" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cobli <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3769,7 +3802,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Coca-Cola Andina">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Coca-Cola Andina" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Coca-Cola Andina <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3787,7 +3820,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Comp">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Comp" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Comp <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -3816,7 +3849,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Concrejato Engenharia">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Concrejato Engenharia" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Concrejato Engenharia <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3834,7 +3867,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Connected Executive Search">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Connected Executive Search" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Connected Executive Search <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3852,7 +3885,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Construtora Tenda">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Construtora Tenda" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Construtora Tenda <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3870,7 +3903,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Conta Simples">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Conta Simples" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Conta Simples <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -3910,7 +3943,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cora">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Cora" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Cora <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3928,7 +3961,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Corpay">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Corpay" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Corpay <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3946,7 +3979,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Corpb! Educação Executiva">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Corpb! Educação Executiva" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Corpb! Educação Executiva <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -3964,7 +3997,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="DNA Educação">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="DNA Educação" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 DNA Educação <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -3993,7 +4026,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="DeepESG">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="DeepESG" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 DeepESG <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4011,7 +4044,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Donnelley Financial Solutions (DFIN)">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Donnelley Financial Solutions (DFIN)" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Donnelley Financial Solutions (DFIN) <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4029,7 +4062,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="DreamExperience">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="DreamExperience" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 DreamExperience <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4047,7 +4080,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="EY-Parthenon">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="EY-Parthenon" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 EY-Parthenon <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4065,7 +4098,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="FACAMP - Faculdades de Campinas">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="FACAMP - Faculdades de Campinas" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 FACAMP - Faculdades de Campinas <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4083,7 +4116,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="FENICIO">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="FENICIO" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 FENICIO <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -4112,7 +4145,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="FIR Capital Partners">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="FIR Capital Partners" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 FIR Capital Partners <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4130,7 +4163,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Fabíola Fois Gestão de Pessoas">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Fabíola Fois Gestão de Pessoas" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Fabíola Fois Gestão de Pessoas <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4148,7 +4181,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Film Actor">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Film Actor" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Film Actor <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4166,7 +4199,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Flash">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Flash" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Flash <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4184,7 +4217,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Flightline">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Flightline" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Flightline <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4202,7 +4235,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Flutter Brazil">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Flutter Brazil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Flutter Brazil <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4220,7 +4253,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="G4 Educação">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="G4 Educação" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 G4 Educação <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4238,7 +4271,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="GRUPO SEB">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="GRUPO SEB" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 GRUPO SEB <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4256,7 +4289,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="GUIMARAES TAVARES LTDA - EPP">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="GUIMARAES TAVARES LTDA - EPP" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 GUIMARAES TAVARES LTDA - EPP <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4274,7 +4307,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Galapagos Capital">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Galapagos Capital" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Galapagos Capital <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -4314,7 +4347,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Genial Investimentos">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Genial Investimentos" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Genial Investimentos <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4332,7 +4365,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Gerdau">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Gerdau" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Gerdau <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4350,7 +4383,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Grupo Carrefour Brasil">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Grupo Carrefour Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Grupo Carrefour Brasil <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4368,7 +4401,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Grupo RV">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Grupo RV" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Grupo RV <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4386,7 +4419,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="ITACA Advisory">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="ITACA Advisory" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 ITACA Advisory <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4404,7 +4437,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="ITEN Concessionária do Centro de Gestão Integrada do Distrito Federal S.A.">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="ITEN Concessionária do Centro de Gestão Integrada do Distrito Federal S.A." data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 ITEN Concessionária do Centro de Gestão Integrada do Distrito Federal S.A. <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4422,7 +4455,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Icatu Seguros">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Icatu Seguros" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Icatu Seguros <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4440,7 +4473,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Impulso">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Impulso" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Impulso <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4458,7 +4491,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="InFinance Insper">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="InFinance Insper" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 InFinance Insper <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4476,7 +4509,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Invisible Keyboard">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Invisible Keyboard" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Invisible Keyboard <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4494,7 +4527,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Joint SDG Fund">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Joint SDG Fund" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Joint SDG Fund <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -4523,7 +4556,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Juntos Somos Mais">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Juntos Somos Mais" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Juntos Somos Mais <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4541,7 +4574,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Jusbrasil Soluções">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Jusbrasil Soluções" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Jusbrasil Soluções <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4559,7 +4592,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="KPMG US">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="KPMG US" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 KPMG US <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4577,7 +4610,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Kearney">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Kearney" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Kearney <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4595,7 +4628,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="LEAG GROUP Brasil">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="LEAG GROUP Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 LEAG GROUP Brasil <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -4624,7 +4657,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="LG lugar de gente">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="LG lugar de gente" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 LG lugar de gente <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -4653,7 +4686,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Laborfy.io">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Laborfy.io" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Laborfy.io <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4671,7 +4704,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Lima Consulting Brasil">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Lima Consulting Brasil" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Lima Consulting Brasil <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4689,7 +4722,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Loft">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Loft" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Loft <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -4718,7 +4751,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Logcomex">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Logcomex" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Logcomex <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4736,7 +4769,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Logical IT">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Logical IT" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Logical IT <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4754,7 +4787,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="MCassab">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="MCassab" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 MCassab <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4772,7 +4805,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Mainú Capital">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Mainú Capital" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Mainú Capital <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4790,7 +4823,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="MaisTODOS">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="MaisTODOS" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 MaisTODOS <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4808,7 +4841,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Mani - Consultoria de Investimentos">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Mani - Consultoria de Investimentos" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Mani - Consultoria de Investimentos <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4826,7 +4859,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Minerva Foods">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Minerva Foods" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Minerva Foods <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4844,7 +4877,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Modulo Security Solutions">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Modulo Security Solutions" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Modulo Security Solutions <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4862,7 +4895,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Morgan Stanley">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Morgan Stanley" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Morgan Stanley <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -4891,7 +4924,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Neon">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Neon" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Neon <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4909,7 +4942,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Nest Asset Management">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Nest Asset Management" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Nest Asset Management <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4927,7 +4960,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Nextar">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Nextar" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Nextar <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4945,7 +4978,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="No time for social network">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="No time for social network" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 No time for social network <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4963,7 +4996,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Nomos">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Nomos" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Nomos <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4981,7 +5014,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="OmniK">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="OmniK" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 OmniK <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -4999,7 +5032,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Patria Investments">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Patria Investments" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Patria Investments <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -5028,7 +5061,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="PicPay">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="PicPay" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 PicPay <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5046,7 +5079,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Ploomes">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Ploomes" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Ploomes <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5064,7 +5097,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Prefeitura Municipal do Rio Grande">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Prefeitura Municipal do Rio Grande" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Prefeitura Municipal do Rio Grande <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5082,7 +5115,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="QI Tech">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="QI Tech" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 QI Tech <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(5 contatos)</span>
             </td>
@@ -5144,7 +5177,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="QRPoint">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="QRPoint" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 QRPoint <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5162,7 +5195,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="QuintoAndar">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="QuintoAndar" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 QuintoAndar <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5180,7 +5213,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="RecargaPay">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="RecargaPay" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 RecargaPay <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5198,7 +5231,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="SafeSpace">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="SafeSpace" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 SafeSpace <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5216,7 +5249,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Sankhya Gestão de Negócios">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Sankhya Gestão de Negócios" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Sankhya Gestão de Negócios <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5234,7 +5267,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Segura">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Segura" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Segura <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5252,7 +5285,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Senior Sistemas">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Senior Sistemas" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Senior Sistemas <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5270,7 +5303,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Shape Digital">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Shape Digital" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Shape Digital <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5288,7 +5321,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Squad">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Squad" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Squad <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5306,7 +5339,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Stone">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Stone" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Stone <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
             </td>
@@ -5346,7 +5379,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Sumitomo Mitsui Banking Corporation – SMBC Group">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Sumitomo Mitsui Banking Corporation – SMBC Group" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Sumitomo Mitsui Banking Corporation – SMBC Group <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5364,7 +5397,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="TRACTIAN">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="TRACTIAN" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 TRACTIAN <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -5393,7 +5426,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="TRACTIAN 𝗕𝗥">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="TRACTIAN 𝗕𝗥" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 TRACTIAN 𝗕𝗥 <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5411,7 +5444,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Techfin ERP Finance - uma empresa TOTVS e ITAÚ">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Techfin ERP Finance - uma empresa TOTVS e ITAÚ" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Techfin ERP Finance - uma empresa TOTVS e ITAÚ <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5429,7 +5462,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="The HEINEKEN Company">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="The HEINEKEN Company" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 The HEINEKEN Company <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5447,7 +5480,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Tivita">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Tivita" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Tivita <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5465,7 +5498,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="UBS">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="UBS" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 UBS <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -5494,7 +5527,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="UNICRED DO BRASIL">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="UNICRED DO BRASIL" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 UNICRED DO BRASIL <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5512,7 +5545,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Uncover">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Uncover" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Uncover <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -5541,7 +5574,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="V4 Company">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="V4 Company" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 V4 Company <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5559,7 +5592,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Valetec Capital">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Valetec Capital" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Valetec Capital <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -5588,7 +5621,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Venture Fund (Stealth)">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Venture Fund (Stealth)" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Venture Fund (Stealth) <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5606,7 +5639,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Verssys Soluções Inteligentes">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Verssys Soluções Inteligentes" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Verssys Soluções Inteligentes <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5624,7 +5657,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="YouRH by Umentor">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="YouRH by Umentor" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 YouRH by Umentor <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5642,7 +5675,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="Zippi">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="Zippi" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Zippi <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5660,7 +5693,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="ai2c">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="ai2c" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 ai2c <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5678,7 +5711,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="banco BV">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="banco BV" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 banco BV <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5696,7 +5729,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="eHubs">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="eHubs" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 eHubs <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5714,7 +5747,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="enjoei">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="enjoei" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 enjoei <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -5732,7 +5765,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="iFood">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="iFood" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 iFood <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(4 contatos)</span>
             </td>
@@ -5783,7 +5816,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="wehandle">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="wehandle" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 wehandle <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
             </td>
@@ -5812,7 +5845,7 @@
             </tr>
             
 
-        <tr class="company-header" data-icp-category="Uncategorized" data-company="yume">
+        <tr class="company-header" data-icp-category="Uncategorized" data-company="yume" data-is-client="Não">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 yume <span class="badge not-icp">Uncategorized</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
             </td>
@@ -6097,11 +6130,56 @@
             }
         });
 
+        // ICP Clients vs Prospects Chart
+        const icpClientData = {"labels": ["Clientes Comp", "Prospects"], "values": [0, 107]};
+        const icpClientTotal = icpClientData.values.reduce((a, b) => a + b, 0);
+
+        new Chart(document.getElementById('icpClientChart'), {
+            type: 'doughnut',
+            data: {
+                labels: icpClientData.labels,
+                datasets: [{
+                    data: icpClientData.values,
+                    backgroundColor: ['#1b5e20', '#757575']  // Verde escuro para clientes, cinza para prospects
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    centerText: {
+                        text: icpClientTotal.toString(),
+                        subtext: 'empresas ICP'
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 14 },
+                            generateLabels: function(chart) {
+                                const data = chart.data;
+                                return data.labels.map((label, i) => {
+                                    const value = data.datasets[0].data[i];
+                                    const percentage = ((value / icpClientTotal) * 100).toFixed(1);
+                                    return {
+                                        text: `${label}: ${value} (${percentage}%)`,
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                        hidden: false,
+                                        index: i
+                                    };
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
         // Table filtering and sorting
         function filterTable() {
             const icpFilter = document.getElementById('filterICP').value;
             const l6Filter = document.getElementById('filterL6').value.toLowerCase();
             const hrFilter = document.getElementById('filterHR').value.toLowerCase();
+            const clientFilter = document.getElementById('filterClient').value.toLowerCase();
             const searchInput = document.getElementById('searchInput').value.toLowerCase();
             const table = document.getElementById('leadsTable');
             const rows = table.getElementsByTagName('tr');
@@ -6143,7 +6221,7 @@
                 }
             }
 
-            // Second pass: show/hide company headers based on visible contacts
+            // Second pass: show/hide company headers based on visible contacts and client filter
             let visibleCompanyCount = 0;
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
@@ -6151,11 +6229,13 @@
                 if (row.classList.contains('company-header')) {
                     const icpCategory = row.getAttribute('data-icp-category');
                     const companyName = row.getAttribute('data-company');
+                    const isClient = row.getAttribute('data-is-client').toLowerCase();
 
                     const matchesICP = !icpFilter || icpCategory === icpFilter;
+                    const matchesClient = !clientFilter || isClient.includes(clientFilter);
                     const hasVisibleLeads = visibleCompanies.has(companyName);
 
-                    if (matchesICP && hasVisibleLeads) {
+                    if (matchesICP && matchesClient && hasVisibleLeads) {
                         row.style.display = '';
                         visibleCompanyCount++;
                     } else {
