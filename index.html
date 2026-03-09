@@ -140,6 +140,15 @@
             margin-top: 8px;
         }
 
+        .kpi-breakdown {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ecf0f1;
+            font-weight: 600;
+        }
+
         /* Chart Sections */
         .chart-row {
             display: grid;
@@ -373,72 +382,36 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 12:11</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 12:31</p>
             <p><strong>Objetivo:</strong> Análise de conexões LinkedIn para identificar leads actionables</p>
         </div>
 
-        <!-- KPI Cards por Owner -->
-        <div class="kpi-section">
-            <div class="kpi-owner-label">📊 Pedro</div>
-            <div class="kpi-grid">
-                <div class="kpi-card kpi-divider">
-                    <div class="kpi-label">Total de Conexões</div>
-                    <div class="kpi-value">130</div>
-                </div>
-
-                <div class="kpi-card success kpi-divider">
-                    <div class="kpi-label">Leads Actionables</div>
-                    <div class="kpi-value">6</div>
-                </div>
-
-                <div class="kpi-card warning kpi-divider">
-                    <div class="kpi-label">Taxa Actionable</div>
-                    <div class="kpi-value">4.6%</div>
-                </div>
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Total de Conexões</div>
+                <div class="kpi-value">1055</div>
+                <div class="kpi-description">desde 23/02/2026</div>
+                <div class="kpi-breakdown">190 Chris | 130 Pedro</div>
             </div>
 
-            <div class="kpi-owner-label">📊 Chris</div>
-            <div class="kpi-grid">
-                <div class="kpi-card kpi-divider">
-                    <div class="kpi-label">Total de Conexões</div>
-                    <div class="kpi-value">190</div>
-                </div>
-
-                <div class="kpi-card success kpi-divider">
-                    <div class="kpi-label">Leads Actionables</div>
-                    <div class="kpi-value">8</div>
-                </div>
-
-                <div class="kpi-card warning kpi-divider">
-                    <div class="kpi-label">Taxa Actionable</div>
-                    <div class="kpi-value">4.2%</div>
-                </div>
+            <div class="kpi-card info">
+                <div class="kpi-label">Empresas Únicas</div>
+                <div class="kpi-value">820</div>
             </div>
 
-            <div class="kpi-owner-label">📊 Consolidado</div>
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-label">Total de Conexões</div>
-                    <div class="kpi-value">1055</div>
-                    <div class="kpi-description">desde 23/02/2026</div>
-                </div>
-
-                <div class="kpi-card info">
-                    <div class="kpi-label">Empresas Únicas</div>
-                    <div class="kpi-value">820</div>
-                </div>
-
-                <div class="kpi-card success">
-                    <div class="kpi-label">Leads Actionables</div>
-                    <div class="kpi-value">16</div>
-                </div>
+            <div class="kpi-card success">
+                <div class="kpi-label">Leads Actionables (ICP)</div>
+                <div class="kpi-value">16</div>
+                <div class="kpi-description">Alta/Média prioridade</div>
+                <div class="kpi-breakdown">8 Chris | 6 Pedro</div>
             </div>
 
-            <div class="kpi-grid" style="margin-top: -10px;">
-                <div class="kpi-card warning">
-                    <div class="kpi-label">Taxa Actionable</div>
-                    <div class="kpi-value">1.5%</div>
-                </div>
+            <div class="kpi-card warning">
+                <div class="kpi-label">Taxa Actionable</div>
+                <div class="kpi-value">1.5%</div>
+                <div class="kpi-description">% de leads prioritários</div>
+                <div class="kpi-breakdown">4.2% Chris | 4.6% Pedro</div>
             </div>
         </div>
 
@@ -467,26 +440,10 @@
         </div>
 
         <!-- Timeline de Conexões -->
-        <div class="chart-row-equal">
-            <div class="chart-container featured">
-                <h2>📊 Consolidado - Timeline</h2>
-                <div class="chart-wrapper">
-                    <canvas id="timelineChart"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <h2>Pedro - Timeline</h2>
-                <div class="chart-wrapper">
-                    <canvas id="pedroTimelineChart"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <h2>Chris - Timeline</h2>
-                <div class="chart-wrapper">
-                    <canvas id="chrisTimelineChart"></canvas>
-                </div>
+        <div class="chart-container featured" style="margin-bottom: 30px;">
+            <h2>📊 Timeline de Conexões (Consolidado + Pedro + Chris)</h2>
+            <div class="chart-wrapper" style="height: 400px;">
+                <canvas id="timelineChart"></canvas>
             </div>
         </div>
 
@@ -810,27 +767,76 @@
             }
         });
 
-        // Timeline Chart
+        // Timeline Chart (Consolidado + Pedro + Chris em um único gráfico)
         const timelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]};
+        const pedroTimelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [59, 31, 7, 10, 5, 2, 2, 8, 1, 2, 1, 2]};
+        const chrisTimelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [75, 34, 8, 17, 9, 7, 6, 12, 12, 7, 3]};
+
+        // Merge all dates from all timelines
+        const allDates = new Set([
+            ...timelineData.dates,
+            ...pedroTimelineData.dates,
+            ...chrisTimelineData.dates
+        ]);
+        const sortedDates = Array.from(allDates).sort();
+
+        // Create data arrays with zeros for missing dates
+        const consolidadoCounts = sortedDates.map(date => {
+            const index = timelineData.dates.indexOf(date);
+            return index >= 0 ? timelineData.counts[index] : 0;
+        });
+
+        const pedroCounts = sortedDates.map(date => {
+            const index = pedroTimelineData.dates.indexOf(date);
+            return index >= 0 ? pedroTimelineData.counts[index] : 0;
+        });
+
+        const chrisCounts = sortedDates.map(date => {
+            const index = chrisTimelineData.dates.indexOf(date);
+            return index >= 0 ? chrisTimelineData.counts[index] : 0;
+        });
+
         new Chart(document.getElementById('timelineChart'), {
             type: 'line',
             data: {
-                labels: timelineData.dates,
-                datasets: [{
-                    label: 'Conexões',
-                    data: timelineData.counts,
-                    borderColor: '#FF4757',
-                    backgroundColor: 'rgba(255, 71, 87, 0.1)',
-                    fill: true,
-                    tension: 0.3
-                }]
+                labels: sortedDates,
+                datasets: [
+                    {
+                        label: 'Consolidado',
+                        data: consolidadoCounts,
+                        borderColor: '#FF4757',
+                        backgroundColor: 'rgba(255, 71, 87, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Chris',
+                        data: chrisCounts,
+                        borderColor: '#4caf50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Pedro',
+                        data: pedroCounts,
+                        borderColor: '#2196f3',
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.3
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false
+                        display: true,
+                        position: 'top'
                     }
                 },
                 scales: {
@@ -918,52 +924,6 @@
                         }
                     }
                 }
-            }
-        });
-
-        // Pedro Timeline Chart
-        const pedroTimelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [59, 31, 7, 10, 5, 2, 2, 8, 1, 2, 1, 2]};
-        new Chart(document.getElementById('pedroTimelineChart'), {
-            type: 'line',
-            data: {
-                labels: pedroTimelineData.dates,
-                datasets: [{
-                    label: 'Conexões',
-                    data: pedroTimelineData.counts,
-                    borderColor: '#2196f3',
-                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
-
-        // Chris Timeline Chart
-        const chrisTimelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [75, 34, 8, 17, 9, 7, 6, 12, 12, 7, 3]};
-        new Chart(document.getElementById('chrisTimelineChart'), {
-            type: 'line',
-            data: {
-                labels: chrisTimelineData.dates,
-                datasets: [{
-                    label: 'Conexões',
-                    data: chrisTimelineData.counts,
-                    borderColor: '#4caf50',
-                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } }
             }
         });
 
