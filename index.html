@@ -394,7 +394,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 15:40</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 15:43</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP.</p>
         </div>
 
@@ -6148,25 +6148,68 @@
         });
 
         // ICP Status Chart (Waterfall Bridge Chart)
-        const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects"], "values": [0, 1, 106]};
-        const icpStatusTotal = icpStatusData.values.reduce((a, b) => a + b, 0);
+        const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects c/ HR", "Prospects s/ HR"], "values": [0, 1, 106, 11, 95]};
 
-        // Create waterfall data: Total ICPs at top, then descending breakdown
-        const bridgeLabels = ['Total ICPs', ...icpStatusData.labels];
+        // Extract values: [clientes, pipeline, prospects_total, prospects_com_hr, prospects_sem_hr]
+        const clientesCount = icpStatusData.values[0];
+        const pipelineCount = icpStatusData.values[1];
+        const prospectsTotal = icpStatusData.values[2];
+        const prospectsComHR = icpStatusData.values[3];
+        const prospectsSemHR = icpStatusData.values[4];
+        const icpStatusTotal = clientesCount + pipelineCount + prospectsTotal;
 
-        // Calculate descending cumulative values for waterfall effect
-        let cumulativeDesc = icpStatusTotal;
-        const waterfallData = [
-            [0, icpStatusTotal],  // Total bar: full height
-            ...icpStatusData.values.map(value => {
-                const end = cumulativeDesc;
-                cumulativeDesc -= value;
-                const start = cumulativeDesc;
-                return [start, end];  // Floating bar descending from total
-            })
+        // Create waterfall data: Total ICPs, then breakdown, then prospects breakdown
+        const bridgeLabels = [
+            'Total ICPs',
+            'Clientes Comp',
+            'Pipeline',
+            'Prospects',
+            'Prospects c/ HR',
+            'Prospects s/ HR'
         ];
 
-        const bridgeColors = ['#FF4757', '#1b5e20', '#f57f17', '#757575'];  // Vermelho para total, verde/amarelo/cinza para breakdown
+        // Calculate descending cumulative values for waterfall effect
+        let cumulative = icpStatusTotal;
+        const waterfallData = [
+            [0, icpStatusTotal],  // Total bar: full height
+        ];
+
+        // Clientes
+        let start = cumulative;
+        cumulative -= clientesCount;
+        waterfallData.push([cumulative, start]);
+
+        // Pipeline
+        start = cumulative;
+        cumulative -= pipelineCount;
+        waterfallData.push([cumulative, start]);
+
+        // Prospects (total) - desce até 0
+        start = cumulative;
+        cumulative -= prospectsTotal;
+        waterfallData.push([cumulative, start]);
+
+        // Now restart from prospectsTotal to break it down
+        cumulative = prospectsTotal;
+
+        // Prospects com HR
+        start = cumulative;
+        cumulative -= prospectsComHR;
+        waterfallData.push([cumulative, start]);
+
+        // Prospects sem HR (termina em 0)
+        start = cumulative;
+        cumulative -= prospectsSemHR;
+        waterfallData.push([cumulative, start]);
+
+        const bridgeColors = [
+            '#FF4757',  // Total (vermelho)
+            '#1b5e20',  // Clientes (verde)
+            '#f57f17',  // Pipeline (amarelo)
+            '#757575',  // Prospects (cinza)
+            '#4CAF50',  // Prospects c/ HR (verde claro)
+            '#9E9E9E'   // Prospects s/ HR (cinza claro)
+        ];
 
         new Chart(document.getElementById('icpStatusChart'), {
             type: 'bar',
@@ -6190,10 +6233,16 @@
                         callbacks: {
                             label: function(context) {
                                 const dataIndex = context.dataIndex;
+                                const values = [icpStatusTotal, clientesCount, pipelineCount, prospectsTotal, prospectsComHR, prospectsSemHR];
+                                const value = values[dataIndex];
+
                                 if (dataIndex === 0) {
-                                    return `Total: ${icpStatusTotal} empresas ICP`;
+                                    return `Total: ${value} empresas ICP`;
+                                } else if (dataIndex === 3) {
+                                    return `${value} prospects (${((value / icpStatusTotal) * 100).toFixed(1)}% do total)`;
+                                } else if (dataIndex >= 4) {
+                                    return `${value} empresas (${((value / prospectsTotal) * 100).toFixed(1)}% dos prospects)`;
                                 } else {
-                                    const value = icpStatusData.values[dataIndex - 1];
                                     const percentage = ((value / icpStatusTotal) * 100).toFixed(1);
                                     return `${value} empresas (${percentage}%)`;
                                 }
