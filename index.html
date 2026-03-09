@@ -457,7 +457,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 17:36</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 17:45</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -533,16 +533,34 @@
 
             <div class="table-filters">
                 <div class="filter-group">
-                    <label>Filtrar por Categoria ICP:</label>
-                    <select id="filterICP" onchange="filterTable()">
-                        <option value="">Todos</option>
-                        <option value="ICP — High Priority">Alta Prioridade</option>
-                        <option value="ICP — Medium Priority">Média Prioridade</option>
-                        <option value="ICP — Low Priority">Baixa Prioridade</option>
-                        <option value="ICP — Very Low Priority">Muito Baixa Prioridade</option>
-                        <option value="ICP — Uncategorized">ICP - Não Categorizado</option>
-                        <option value="Uncategorized">Não Categorizado</option>
-                    </select>
+                    <label style="display: block; margin-bottom: 8px;">Filtrar por Categoria ICP:</label>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
+                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — High Priority" onchange="filterTable()" style="margin-right: 6px;">
+                            Alta Prioridade
+                        </label>
+                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — Medium Priority" onchange="filterTable()" style="margin-right: 6px;">
+                            Média Prioridade
+                        </label>
+                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — Low Priority" onchange="filterTable()" style="margin-right: 6px;">
+                            Baixa Prioridade
+                        </label>
+                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — Very Low Priority" onchange="filterTable()" style="margin-right: 6px;">
+                            Muito Baixa Prioridade
+                        </label>
+                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — Uncategorized" onchange="filterTable()" style="margin-right: 6px;">
+                            ICP - Não Categorizado
+                        </label>
+                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" class="icp-filter-checkbox" value="Uncategorized" onchange="filterTable()" style="margin-right: 6px;">
+                            Não Categorizado
+                        </label>
+                    </div>
+                    <button onclick="clearICPFilters()" style="margin-top: 8px; padding: 4px 12px; font-size: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">Limpar</button>
                 </div>
 
                 <div class="filter-group">
@@ -6334,7 +6352,10 @@
 
         // Table filtering and sorting
         function filterTable() {
-            const icpFilter = document.getElementById('filterICP').value;
+            // Get selected ICP filters (multiple checkboxes)
+            const icpCheckboxes = document.querySelectorAll('.icp-filter-checkbox:checked');
+            const icpFilters = Array.from(icpCheckboxes).map(cb => cb.value);
+
             const l6Filter = document.getElementById('filterL6').value.toLowerCase();
             const hrFilter = document.getElementById('filterHR').value.toLowerCase();
             const statusFilter = document.getElementById('filterStatus').value;
@@ -6378,7 +6399,8 @@
                     const icpCategory = companyInfo ? companyInfo.icpCategory : '';
                     const companyStatusValue = companyInfo ? companyInfo.status : '';
 
-                    const matchesICP = !icpFilter || icpCategory === icpFilter;
+                    // Check if ICP category matches any selected filter (or no filter selected)
+                    const matchesICP = icpFilters.length === 0 || icpFilters.includes(icpCategory);
                     const matchesStatus = !statusFilter || companyStatusValue === statusFilter;
                     const matchesL6 = !l6Filter || l6.includes(l6Filter);
                     const matchesHR = !hrFilter || hrRelated.includes(hrFilter);
@@ -6406,7 +6428,7 @@
                     const companyName = row.getAttribute('data-company');
                     const status = row.getAttribute('data-status');
 
-                    const matchesICP = !icpFilter || icpCategory === icpFilter;
+                    const matchesICP = icpFilters.length === 0 || icpFilters.includes(icpCategory);
                     const matchesStatus = !statusFilter || status === statusFilter;
                     const hasVisibleLeads = visibleCompanies.has(companyName);
 
@@ -6434,6 +6456,12 @@
             // Update counters
             document.getElementById('visibleCompaniesCount').textContent = visibleCompanyCount;
             document.getElementById('visibleLeadsCount').textContent = uniqueContactKeys.size;
+        }
+
+        function clearICPFilters() {
+            const checkboxes = document.querySelectorAll('.icp-filter-checkbox');
+            checkboxes.forEach(cb => cb.checked = false);
+            filterTable();
         }
 
         function sortTable(columnIndex) {
