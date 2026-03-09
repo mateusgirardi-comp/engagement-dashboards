@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Engagement Dashboards - Comp</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 64px;
+            font-weight: 900;
+            color: #FF4757;
+            letter-spacing: -2px;
+        }
+
+        .header {
+            background: white;
+            border-left: 5px solid #FF4757;
+            padding: 40px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #FF4757;
+            margin: 0 0 15px 0;
+            font-size: 36px;
+        }
+
+        .header p {
+            margin: 8px 0;
+            color: #666;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .dashboards-section {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .dashboards-section h2 {
+            color: #FF4757;
+            font-size: 28px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #FF4757;
+            padding-bottom: 15px;
+        }
+
+        .dashboard-item {
+            padding: 25px;
+            border-bottom: 1px solid #ecf0f1;
+            transition: background 0.2s;
+            border-radius: 6px;
+        }
+
+        .dashboard-item:hover {
+            background: #f8f9fa;
+        }
+
+        .dashboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .dashboard-item a {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FF4757;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-item a:hover {
+            text-decoration: underline;
+        }
+
+        .dashboard-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .dashboard-stats span {
+            background: #f8f9fa;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #666;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dashboard-stats span strong {
+            color: #333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #999;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 48px;
+            }
+
+            .header {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .dashboards-section {
+                padding: 25px;
+            }
+
+            .dashboard-stats {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">comp</div>
+
+        <div class="header">
+            <h1>LinkedIn Engagement Dashboards</h1>
+            <p><strong>Objetivo:</strong> Análise de engajamentos LinkedIn para identificar leads actionables</p>
+            <p>Dashboards interativos gerados automaticamente a partir de dados do Google Sheets</p>
+            <p><strong>Análise:</strong> ICP vs Não-ICP • Distribuição por Bucket • Scores • Timeline • Top Leads</p>
+        </div>
+
+        <div class="dashboards-section">
+            <h2>📊 Dashboards Disponíveis</h2>
+
+            <!-- Dashboards will be listed here -->
+            <!-- NEW DASHBOARDS GO HERE -->
+
+            <div class="dashboard-item">
+                <a href="engagement-dashboard-2026-03-09.html">Engagement Dashboard - 09/03/2026</a>
+                <div class="dashboard-stats">
+                    <span><strong>Total:</strong> 1,055 engajamentos</span>
+                    <span><strong>Actionables:</strong> 16 ICPs</span>
+                    <span><strong>Taxa:</strong> 1.5%</span>
+                </div>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>Nenhum dashboard publicado ainda</p>
+                <p style="font-size: 13px; margin-top: 10px;">Use a skill <code>linkedin-engagement-dashboard</code> para gerar seu primeiro dashboard</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Dashboards gerados automaticamente pela skill linkedin-engagement-dashboard</p>
+            <p>Dados processados localmente • Publicado via GitHub Pages</p>
+        </div>
+    </div>
+
+    <script>
+        // Hide empty state if there are dashboards
+        const dashboardItems = document.querySelectorAll('.dashboard-item');
+        if (dashboardItems.length > 0) {
+            document.getElementById('emptyState').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

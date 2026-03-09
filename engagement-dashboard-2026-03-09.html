@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Engagement Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 48px;
+            font-weight: 900;
+            color: #FF4757;
+            letter-spacing: -2px;
+        }
+
+        .header {
+            background: white;
+            border-left: 5px solid #FF4757;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #FF4757;
+            margin: 0 0 10px 0;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #FF4757;
+            transition: transform 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .kpi-card.success {
+            border-left-color: #4caf50;
+        }
+
+        .kpi-card.warning {
+            border-left-color: #ff9800;
+        }
+
+        .kpi-card.info {
+            border-left-color: #2196f3;
+        }
+
+        .kpi-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .kpi-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FF4757;
+            line-height: 1;
+        }
+
+        .kpi-card.success .kpi-value {
+            color: #4caf50;
+        }
+
+        .kpi-card.warning .kpi-value {
+            color: #ff9800;
+        }
+
+        .kpi-card.info .kpi-value {
+            color: #2196f3;
+        }
+
+        .kpi-description {
+            font-size: 13px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        /* Chart Sections */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .chart-container h2 {
+            color: #FF4757;
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #FF4757;
+            padding-bottom: 10px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Table Section */
+        .table-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .table-section h2 {
+            color: #FF4757;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #FF4757;
+            padding-bottom: 10px;
+        }
+
+        .table-filters {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        thead {
+            background: #f8f9fa;
+            border-bottom: 2px solid #FF4757;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th:hover {
+            background: #e9ecef;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.bucket-a {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .badge.bucket-b {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .badge.bucket-c {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .badge.l6-yes {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge.icp-high {
+            background: #c8e6c9;
+            color: #2e7d32;
+            border: 1px solid #2e7d32;
+        }
+
+        .badge.icp-medium {
+            background: #fff9c4;
+            color: #f57f17;
+            border: 1px solid #f57f17;
+        }
+
+        .badge.icp-low {
+            background: #ffccbc;
+            color: #d84315;
+            border: 1px solid #d84315;
+        }
+
+        .badge.not-icp {
+            background: #f5f5f5;
+            color: #757575;
+            border: 1px solid #bdbdbd;
+        }
+
+        .linkedin-link {
+            color: #0077b5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .linkedin-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-section {
+                overflow-x: auto;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .kpi-card, .chart-container, .table-section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">comp</div>
+
+        <div class="header">
+            <h1>LinkedIn Engagement Dashboard</h1>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 10:56</p>
+            <p><strong>Objetivo:</strong> Análise de engajamentos LinkedIn para identificar leads actionables</p>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Total de Engajamentos</div>
+                <div class="kpi-value">1055</div>
+                <div class="kpi-description">Volume total capturado</div>
+            </div>
+
+            <div class="kpi-card success">
+                <div class="kpi-label">Leads Actionables (ICP)</div>
+                <div class="kpi-value">16</div>
+                <div class="kpi-description">Alta/Média prioridade</div>
+            </div>
+
+            <div class="kpi-card warning">
+                <div class="kpi-label">Taxa Actionable</div>
+                <div class="kpi-value">1.5%</div>
+                <div class="kpi-description">% de leads prioritários</div>
+            </div>
+
+            <div class="kpi-card info">
+                <div class="kpi-label">Não-ICP</div>
+                <div class="kpi-value">724</div>
+                <div class="kpi-description">Fora do perfil ideal</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="chart-grid">
+            <div class="chart-container">
+                <h2>Distribuição ICP vs Não-ICP</h2>
+                <div class="chart-wrapper">
+                    <canvas id="icpChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Distribuição por Bucket</h2>
+                <div class="chart-wrapper">
+                    <canvas id="bucketChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Distribuição por Score</h2>
+                <div class="chart-wrapper">
+                    <canvas id="scoreChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Timeline de Engajamentos</h2>
+                <div class="chart-wrapper">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Leads Table -->
+        <div class="table-section">
+            <h2>🎯 Top Leads Actionables (Prioridade Alta/Média)</h2>
+
+            <div class="table-filters">
+                <div class="filter-group">
+                    <label>Filtrar por Bucket:</label>
+                    <select id="filterBucket" onchange="filterTable()">
+                        <option value="">Todos</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Filtrar por L6+:</label>
+                    <select id="filterL6" onchange="filterTable()">
+                        <option value="">Todos</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Buscar:</label>
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Nome, empresa, cargo...">
+                </div>
+            </div>
+
+            <table id="leadsTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Nome</th>
+                        <th onclick="sortTable(1)">Cargo</th>
+                        <th onclick="sortTable(2)">Empresa</th>
+                        <th onclick="sortTable(3)">L6+</th>
+                        <th onclick="sortTable(4)">Score</th>
+                        <th onclick="sortTable(5)">Bucket</th>
+                        <th onclick="sortTable(6)">ICP</th>
+                        <th onclick="sortTable(7)">Data</th>
+                        <th>LinkedIn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td>Joao Alves</td>
+            <td>AI Adoption Specialist</td>
+            <td>AlphaSense</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-high">High Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/joao-alves-777727b4" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Evan Intrater</td>
+            <td>Director</td>
+            <td>Faire</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-high">High Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/eintrater" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Marcelo Russo</td>
+            <td>Finance Director</td>
+            <td>Olist</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/mrusso" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Sky Tsoi</td>
+            <td>Bridging Asia</td>
+            <td>Mercai</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-high">High Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/sky-tsoi" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Raphael Carvalho</td>
+            <td>Human Resources & Culture Director</td>
+            <td>Rimini Street Brazil</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/raphaelcarvalhohumanresources" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Joao Alves</td>
+            <td>AI Adoption Specialist</td>
+            <td>AlphaSense</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-high">High Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/joao-alves-777727b4" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Juan Cruz de la Rúa</td>
+            <td>Founder</td>
+            <td>Kavak.com</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/juancruzdelarua" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Raphael Levi</td>
+            <td>Founder • Startup exit • Lifelong learner</td>
+            <td>Olist</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/raphael-levi" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Daniela Godoy</td>
+            <td>Talent Management</td>
+            <td>Playtech</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/daniela-godoy-26612021" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Natália Alves (she/her)</td>
+            <td>VP of People -  Global Talent Strategy and Experience</td>
+            <td>Wellhub</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-high">High Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/nataliaalvesdebarros" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Felipe Bizzi</td>
+            <td>Creative Coordinator</td>
+            <td>RD Station</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/felipe-bizzi" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Evan Intrater</td>
+            <td>Director</td>
+            <td>Faire</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-high">High Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/eintrater" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Owen Jean-Aimee</td>
+            <td>Senior Sales Director</td>
+            <td>Seedtag</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/owen-jean-aimee-bb3235a9" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>Bruno Rodrigues</td>
+            <td>Coordenador de Risco</td>
+            <td>Conta Azul</td>
+            <td><span class="badge l6-yes">L6+</span></td>
+            <td>4</td>
+            <td><span class="badge bucket-a">A</span></td>
+            <td><span class="badge icp-high">High Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/bruno-rodrigues-3344652a" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>John Mackenzie Smith</td>
+            <td>Líder Executivo</td>
+            <td>Deel Local Payroll, powered by PaySpace</td>
+            <td>Não</td>
+            <td>3</td>
+            <td><span class="badge bucket-b">B</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/johnmackenziesmith" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+
+        <tr>
+            <td>John Mackenzie Smith</td>
+            <td>Líder Executivo</td>
+            <td>Deel Local Payroll, powered by PaySpace</td>
+            <td>Não</td>
+            <td>3</td>
+            <td><span class="badge bucket-b">B</span></td>
+            <td><span class="badge icp-medium">Medium Priority</span></td>
+            <td>NaT</td>
+            <td><a href="https://www.linkedin.com/in/johnmackenziesmith" class="linkedin-link" target="_blank">Ver perfil</a></td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>Dashboard gerado automaticamente pela skill linkedin-engagement-dashboard</p>
+            <p>Dados processados localmente • Privacidade garantida</p>
+        </div>
+    </div>
+
+    <script>
+        // ICP Distribution Chart
+        const icpData = {"labels": ["Not ICP", "Uncategorized", "ICP \u2014 Very Low Priority", "ICP \u2014 Low Priority", "ICP \u2014 Medium Priority", "ICP \u2014 High Priority"], "values": [724, 200, 49, 44, 23, 15]};
+        new Chart(document.getElementById('icpChart'), {
+            type: 'doughnut',
+            data: {
+                labels: icpData.labels,
+                datasets: [{
+                    data: icpData.values,
+                    backgroundColor: [
+                        '#4caf50',  // High
+                        '#8bc34a',  // Medium
+                        '#ffc107',  // Low
+                        '#ff9800',  // Very Low
+                        '#f44336',  // Not ICP
+                        '#9e9e9e'   // Uncategorized
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Bucket Distribution Chart
+        new Chart(document.getElementById('bucketChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Bucket A', 'Bucket B', 'Bucket C'],
+                datasets: [{
+                    label: 'Quantidade',
+                    data: [320, 43, 692],
+                    backgroundColor: ['#4caf50', '#ff9800', '#f44336']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Score Distribution Chart
+        const scoreData = {"values": [0, 692, 43, 307, 13]};
+        new Chart(document.getElementById('scoreChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Score 1', 'Score 2', 'Score 3', 'Score 4', 'Score 5'],
+                datasets: [{
+                    label: 'Quantidade',
+                    data: scoreData.values,
+                    backgroundColor: '#2196f3'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Timeline Chart
+        const timelineData = {"dates": ["2026-02-23", "2026-02-24"], "counts": [10, 10]};
+        new Chart(document.getElementById('timelineChart'), {
+            type: 'line',
+            data: {
+                labels: timelineData.dates,
+                datasets: [{
+                    label: 'Engajamentos',
+                    data: timelineData.counts,
+                    borderColor: '#FF4757',
+                    backgroundColor: 'rgba(255, 71, 87, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Table filtering and sorting
+        function filterTable() {
+            const bucketFilter = document.getElementById('filterBucket').value.toLowerCase();
+            const l6Filter = document.getElementById('filterL6').value.toLowerCase();
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const table = document.getElementById('leadsTable');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.getElementsByTagName('td');
+
+                const name = cells[0].textContent.toLowerCase();
+                const cargo = cells[1].textContent.toLowerCase();
+                const empresa = cells[2].textContent.toLowerCase();
+                const l6 = cells[3].textContent.toLowerCase();
+                const bucket = cells[5].textContent.toLowerCase();
+
+                const matchesBucket = !bucketFilter || bucket.includes(bucketFilter);
+                const matchesL6 = !l6Filter || l6.includes(l6Filter);
+                const matchesSearch = !searchInput ||
+                    name.includes(searchInput) ||
+                    cargo.includes(searchInput) ||
+                    empresa.includes(searchInput);
+
+                row.style.display = (matchesBucket && matchesL6 && matchesSearch) ? '' : 'none';
+            }
+        }
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById('leadsTable');
+            const rows = Array.from(table.rows).slice(1);
+            const isAscending = table.dataset.sortOrder !== 'asc';
+
+            rows.sort((a, b) => {
+                const aValue = a.cells[columnIndex].textContent;
+                const bValue = b.cells[columnIndex].textContent;
+
+                // Try numeric comparison first
+                const aNum = parseFloat(aValue);
+                const bNum = parseFloat(bValue);
+
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    return isAscending ? aNum - bNum : bNum - aNum;
+                }
+
+                // Fall back to string comparison
+                return isAscending ?
+                    aValue.localeCompare(bValue) :
+                    bValue.localeCompare(aValue);
+            });
+
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+            table.dataset.sortOrder = isAscending ? 'asc' : 'desc';
+        }
+    </script>
+</body>
+</html>
