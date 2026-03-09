@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkedIn Engagement Dashboard</title>
+    <title>LinkedIn Connections Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
@@ -342,17 +342,23 @@
         <div class="logo">comp</div>
 
         <div class="header">
-            <h1>LinkedIn Engagement Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 10:56</p>
-            <p><strong>Objetivo:</strong> Análise de engajamentos LinkedIn para identificar leads actionables</p>
+            <h1>LinkedIn Connections Dashboard</h1>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 11:26</p>
+            <p><strong>Objetivo:</strong> Análise de conexões LinkedIn para identificar leads actionables</p>
         </div>
 
         <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card">
-                <div class="kpi-label">Total de Engajamentos</div>
+                <div class="kpi-label">Total de Conexões</div>
                 <div class="kpi-value">1055</div>
-                <div class="kpi-description">Volume total capturado</div>
+                <div class="kpi-description">desde 23/02/2026</div>
+            </div>
+
+            <div class="kpi-card info">
+                <div class="kpi-label">Empresas Únicas</div>
+                <div class="kpi-value">820</div>
+                <div class="kpi-description">Diversidade de contas</div>
             </div>
 
             <div class="kpi-card success">
@@ -365,12 +371,6 @@
                 <div class="kpi-label">Taxa Actionable</div>
                 <div class="kpi-value">1.5%</div>
                 <div class="kpi-description">% de leads prioritários</div>
-            </div>
-
-            <div class="kpi-card info">
-                <div class="kpi-label">Não-ICP</div>
-                <div class="kpi-value">724</div>
-                <div class="kpi-description">Fora do perfil ideal</div>
             </div>
         </div>
 
@@ -398,7 +398,7 @@
             </div>
 
             <div class="chart-container">
-                <h2>Timeline de Engajamentos</h2>
+                <h2>Timeline de Conexões</h2>
                 <div class="chart-wrapper">
                     <canvas id="timelineChart"></canvas>
                 </div>
@@ -760,7 +760,7 @@
             data: {
                 labels: timelineData.dates,
                 datasets: [{
-                    label: 'Engajamentos',
+                    label: 'Conexões',
                     data: timelineData.counts,
                     borderColor: '#FF4757',
                     backgroundColor: 'rgba(255, 71, 87, 0.1)',
