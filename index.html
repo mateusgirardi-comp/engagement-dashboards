@@ -95,21 +95,10 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        .kpi-card.success {
-            border-left-color: #4caf50;
-        }
-
-        .kpi-card.warning {
-            border-left-color: #ff9800;
-        }
-
-        .kpi-card.info {
-            border-left-color: #2196f3;
-        }
-
         .kpi-label {
-            font-size: 14px;
-            color: #666;
+            font-size: 16px;
+            font-weight: 700;
+            color: #999;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 10px;
@@ -120,33 +109,21 @@
             font-weight: 700;
             color: #FF4757;
             line-height: 1;
-        }
-
-        .kpi-card.success .kpi-value {
-            color: #4caf50;
-        }
-
-        .kpi-card.warning .kpi-value {
-            color: #ff9800;
-        }
-
-        .kpi-card.info .kpi-value {
-            color: #2196f3;
+            margin-bottom: 8px;
         }
 
         .kpi-description {
             font-size: 13px;
-            color: #999;
-            margin-top: 8px;
+            color: #bbb;
+            display: inline;
+            margin-right: 8px;
         }
 
         .kpi-breakdown {
-            font-size: 12px;
-            color: #666;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #ecf0f1;
-            font-weight: 600;
+            font-size: 13px;
+            color: #bbb;
+            display: inline;
+            margin-left: 8px;
         }
 
         /* Chart Sections */
@@ -394,7 +371,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 14:09</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 14:18</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP.</p>
         </div>
 
@@ -414,19 +391,22 @@
                 <div class="kpi-breakdown" style="color: #FF4757; margin-top: 5px;">138 em ambos os perfis</div>
             </div>
 
-            <div class="kpi-card success">
+            <div class="kpi-card">
                 <div class="kpi-label">Empresas ICP</div>
                 <div class="kpi-value">107</div>
-                <div class="kpi-description">Todas as categorias ICP</div>
-                <div class="kpi-breakdown">69 Chris | 51 Pedro</div>
-                <div class="kpi-breakdown" style="color: #FF4757; margin-top: 5px;">16 em ambos os perfis</div>
+                <div style="margin-top: 8px;">
+                    <span class="kpi-breakdown">69 Chris | 51 Pedro</span>
+                    <span class="kpi-breakdown" style="color: #FF4757;">| 16 em ambos os perfis</span>
+                </div>
             </div>
 
-            <div class="kpi-card warning">
+            <div class="kpi-card">
                 <div class="kpi-label">Taxa ICP</div>
                 <div class="kpi-value">13.0%</div>
-                <div class="kpi-description">% empresas ICP / total empresas</div>
-                <div class="kpi-breakdown">12.8% Chris | 12.2% Pedro</div>
+                <div style="margin-top: 8px;">
+                    <span class="kpi-description">% empresas ICP / total empresas</span>
+                    <span class="kpi-breakdown">12.8% Chris | 12.2% Pedro</span>
+                </div>
             </div>
         </div>
 
@@ -440,14 +420,14 @@
             </div>
 
             <div class="chart-container">
-                <h2>Pedro - ICP</h2>
+                <h2>Pedro</h2>
                 <div class="chart-wrapper">
                     <canvas id="pedroIcpChart"></canvas>
                 </div>
             </div>
 
             <div class="chart-container">
-                <h2>Chris - ICP</h2>
+                <h2>Chris</h2>
                 <div class="chart-wrapper">
                     <canvas id="chrisIcpChart"></canvas>
                 </div>
