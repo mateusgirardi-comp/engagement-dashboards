@@ -502,7 +502,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 20:50</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 20:53</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -5239,33 +5239,37 @@
                     const textY = y + segmentHeight / 2;
                     ctx.fillText(item.value.toString(), centerX, textY);
 
-                    // Draw labels on the RIGHT side
+                    // Draw labels on the RIGHT side — dynamically centered per segment
                     const rightX = centerX + maxWidth / 2 + 20;
                     ctx.textAlign = 'left';
-                    ctx.fillStyle = '#333';
-                    ctx.font = 'bold 18px -apple-system, Arial';
+                    ctx.textBaseline = 'middle';
 
-                    // Main label (with optional second line)
+                    // Build ordered list of lines
+                    const GAP = 6;
+                    const lines = [];
                     if (item.label2) {
-                        ctx.fillText(item.label, rightX, textY - 20);
-                        ctx.fillText(item.label2, rightX, textY - 3);
+                        lines.push({ text: item.label,  font: 'bold 15px -apple-system, Arial', color: '#333', size: 15 });
+                        lines.push({ text: item.label2, font: 'bold 15px -apple-system, Arial', color: '#333', size: 15 });
                     } else {
-                        ctx.fillText(item.label, rightX, textY - 12);
+                        lines.push({ text: item.label,  font: 'bold 15px -apple-system, Arial', color: '#333', size: 15 });
                     }
-
-                    // Note (for second trapezoid)
                     if (item.note) {
-                        ctx.font = '12px -apple-system, Arial';
-                        ctx.fillStyle = '#666';
-                        ctx.fillText(item.note, rightX, textY + 10);
+                        lines.push({ text: item.note,    font: '11px -apple-system, Arial',       color: '#888', size: 11 });
+                    }
+                    if (item.sublabel) {
+                        lines.push({ text: item.sublabel, font: 'bold 12px -apple-system, Arial', color: item.color, size: 12 });
                     }
 
-                    // Sublabel (percentage)
-                    if (item.sublabel) {
-                        ctx.font = 'bold 13px -apple-system, Arial';
-                        ctx.fillStyle = item.color;
-                        ctx.fillText(item.sublabel, rightX, textY + (item.note ? 25 : 13));
-                    }
+                    // Total block height
+                    const totalH = lines.reduce((s, l) => s + l.size, 0) + GAP * (lines.length - 1);
+                    let lineY = textY - totalH / 2;
+
+                    lines.forEach(line => {
+                        ctx.font = line.font;
+                        ctx.fillStyle = line.color;
+                        ctx.fillText(line.text, rightX, lineY + line.size / 2);
+                        lineY += line.size + GAP;
+                    });
                 });
             }
         };
