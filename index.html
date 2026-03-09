@@ -343,7 +343,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 11:26</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 11:51</p>
             <p><strong>Objetivo:</strong> Análise de conexões LinkedIn para identificar leads actionables</p>
         </div>
 
@@ -377,23 +377,9 @@
         <!-- Charts -->
         <div class="chart-grid">
             <div class="chart-container">
-                <h2>Distribuição ICP vs Não-ICP</h2>
+                <h2>Distribuição ICP vs Não-ICP (por Empresa Única)</h2>
                 <div class="chart-wrapper">
                     <canvas id="icpChart"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <h2>Distribuição por Bucket</h2>
-                <div class="chart-wrapper">
-                    <canvas id="bucketChart"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <h2>Distribuição por Score</h2>
-                <div class="chart-wrapper">
-                    <canvas id="scoreChart"></canvas>
                 </div>
             </div>
 
@@ -670,7 +656,7 @@
 
     <script>
         // ICP Distribution Chart
-        const icpData = {"labels": ["Not ICP", "Uncategorized", "ICP \u2014 Very Low Priority", "ICP \u2014 Low Priority", "ICP \u2014 Medium Priority", "ICP \u2014 High Priority"], "values": [724, 200, 49, 44, 23, 15]};
+        const icpData = {"labels": ["Not ICP", "Uncategorized", "ICP \u2014 Very Low Priority", "ICP \u2014 Low Priority", "ICP \u2014 Medium Priority", "ICP \u2014 High Priority"], "values": [574, 139, 41, 35, 18, 13]};
         new Chart(document.getElementById('icpChart'), {
             type: 'doughnut',
             data: {
@@ -693,61 +679,6 @@
                 plugins: {
                     legend: {
                         position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Bucket Distribution Chart
-        new Chart(document.getElementById('bucketChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Bucket A', 'Bucket B', 'Bucket C'],
-                datasets: [{
-                    label: 'Quantidade',
-                    data: [320, 43, 692],
-                    backgroundColor: ['#4caf50', '#ff9800', '#f44336']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        // Score Distribution Chart
-        const scoreData = {"values": [0, 692, 43, 307, 13]};
-        new Chart(document.getElementById('scoreChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Score 1', 'Score 2', 'Score 3', 'Score 4', 'Score 5'],
-                datasets: [{
-                    label: 'Quantidade',
-                    data: scoreData.values,
-                    backgroundColor: '#2196f3'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
                     }
                 }
             }
