@@ -394,7 +394,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 15:33</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 15:35</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP.</p>
         </div>
 
@@ -6147,13 +6147,24 @@
             }
         });
 
-        // ICP Status Chart (Bridge Chart)
+        // ICP Status Chart (Waterfall Bridge Chart)
         const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects"], "values": [0, 1, 106]};
         const icpStatusTotal = icpStatusData.values.reduce((a, b) => a + b, 0);
 
-        // Create bridge chart data: Total ICPs, then breakdown
+        // Create waterfall data: Total ICPs, then stacked breakdown
         const bridgeLabels = ['Total ICPs', ...icpStatusData.labels];
-        const bridgeValues = [icpStatusTotal, ...icpStatusData.values];
+
+        // Calculate cumulative values for waterfall effect
+        let cumulative = 0;
+        const waterfallData = [
+            [0, icpStatusTotal],  // Total bar starts at 0
+            ...icpStatusData.values.map(value => {
+                const start = cumulative;
+                cumulative += value;
+                return [start, cumulative];  // Floating bar from start to end
+            })
+        ];
+
         const bridgeColors = ['#FF4757', '#1b5e20', '#f57f17', '#757575'];  // Vermelho para total, verde/amarelo/cinza para breakdown
 
         new Chart(document.getElementById('icpStatusChart'), {
@@ -6161,14 +6172,13 @@
             data: {
                 labels: bridgeLabels,
                 datasets: [{
-                    data: bridgeValues,
+                    data: waterfallData,
                     backgroundColor: bridgeColors,
                     borderColor: bridgeColors,
                     borderWidth: 2
                 }]
             },
             options: {
-                indexAxis: 'y',  // Horizontal bars
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
@@ -6178,10 +6188,11 @@
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                const value = context.parsed.x;
-                                if (context.dataIndex === 0) {
-                                    return `Total: ${value} empresas ICP`;
+                                const dataIndex = context.dataIndex;
+                                if (dataIndex === 0) {
+                                    return `Total: ${icpStatusTotal} empresas ICP`;
                                 } else {
+                                    const value = icpStatusData.values[dataIndex - 1];
                                     const percentage = ((value / icpStatusTotal) * 100).toFixed(1);
                                     return `${value} empresas (${percentage}%)`;
                                 }
@@ -6190,8 +6201,9 @@
                     }
                 },
                 scales: {
-                    x: {
+                    y: {
                         beginAtZero: true,
+                        max: icpStatusTotal + 5,
                         ticks: {
                             font: { size: 12 }
                         },
@@ -6199,7 +6211,7 @@
                             color: '#e0e0e0'
                         }
                     },
-                    y: {
+                    x: {
                         ticks: {
                             font: { size: 14, weight: 'bold' }
                         },
