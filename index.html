@@ -56,11 +56,29 @@
         }
 
         /* KPI Cards */
+        .kpi-section {
+            margin-bottom: 40px;
+        }
+
+        .kpi-owner-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FF4757;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-bottom: 30px;
+        }
+
+        .kpi-divider {
+            border-right: 3px solid #FF4757;
+            margin-right: 20px;
         }
 
         .kpi-card {
@@ -123,9 +141,16 @@
         }
 
         /* Chart Sections */
-        .chart-grid {
+        .chart-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-row-equal {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -135,6 +160,11 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .chart-container.featured {
+            border: 3px solid #FF4757;
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2);
         }
 
         .chart-container h2 {
@@ -343,50 +373,119 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 11:59</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 12:11</p>
             <p><strong>Objetivo:</strong> Análise de conexões LinkedIn para identificar leads actionables</p>
         </div>
 
-        <!-- KPI Cards -->
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <div class="kpi-label">Total de Conexões</div>
-                <div class="kpi-value">1055</div>
-                <div class="kpi-description">desde 23/02/2026</div>
+        <!-- KPI Cards por Owner -->
+        <div class="kpi-section">
+            <div class="kpi-owner-label">📊 Pedro</div>
+            <div class="kpi-grid">
+                <div class="kpi-card kpi-divider">
+                    <div class="kpi-label">Total de Conexões</div>
+                    <div class="kpi-value">130</div>
+                </div>
+
+                <div class="kpi-card success kpi-divider">
+                    <div class="kpi-label">Leads Actionables</div>
+                    <div class="kpi-value">6</div>
+                </div>
+
+                <div class="kpi-card warning kpi-divider">
+                    <div class="kpi-label">Taxa Actionable</div>
+                    <div class="kpi-value">4.6%</div>
+                </div>
             </div>
 
-            <div class="kpi-card info">
-                <div class="kpi-label">Empresas Únicas</div>
-                <div class="kpi-value">820</div>
-                <div class="kpi-description">Diversidade de contas</div>
+            <div class="kpi-owner-label">📊 Chris</div>
+            <div class="kpi-grid">
+                <div class="kpi-card kpi-divider">
+                    <div class="kpi-label">Total de Conexões</div>
+                    <div class="kpi-value">190</div>
+                </div>
+
+                <div class="kpi-card success kpi-divider">
+                    <div class="kpi-label">Leads Actionables</div>
+                    <div class="kpi-value">8</div>
+                </div>
+
+                <div class="kpi-card warning kpi-divider">
+                    <div class="kpi-label">Taxa Actionable</div>
+                    <div class="kpi-value">4.2%</div>
+                </div>
             </div>
 
-            <div class="kpi-card success">
-                <div class="kpi-label">Leads Actionables (ICP)</div>
-                <div class="kpi-value">16</div>
-                <div class="kpi-description">Alta/Média prioridade</div>
+            <div class="kpi-owner-label">📊 Consolidado</div>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total de Conexões</div>
+                    <div class="kpi-value">1055</div>
+                    <div class="kpi-description">desde 23/02/2026</div>
+                </div>
+
+                <div class="kpi-card info">
+                    <div class="kpi-label">Empresas Únicas</div>
+                    <div class="kpi-value">820</div>
+                </div>
+
+                <div class="kpi-card success">
+                    <div class="kpi-label">Leads Actionables</div>
+                    <div class="kpi-value">16</div>
+                </div>
             </div>
 
-            <div class="kpi-card warning">
-                <div class="kpi-label">Taxa Actionable</div>
-                <div class="kpi-value">1.5%</div>
-                <div class="kpi-description">% de leads prioritários</div>
+            <div class="kpi-grid" style="margin-top: -10px;">
+                <div class="kpi-card warning">
+                    <div class="kpi-label">Taxa Actionable</div>
+                    <div class="kpi-value">1.5%</div>
+                </div>
             </div>
         </div>
 
-        <!-- Charts -->
-        <div class="chart-grid">
-            <div class="chart-container">
-                <h2>Distribuição ICP vs Não-ICP (por Empresa Única)</h2>
+        <!-- Gráficos ICP -->
+        <div class="chart-row">
+            <div class="chart-container featured">
+                <h2>📊 Consolidado - Distribuição ICP</h2>
                 <div class="chart-wrapper">
                     <canvas id="icpChart"></canvas>
                 </div>
             </div>
 
             <div class="chart-container">
-                <h2>Timeline de Conexões</h2>
+                <h2>Pedro - ICP</h2>
+                <div class="chart-wrapper">
+                    <canvas id="pedroIcpChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Chris - ICP</h2>
+                <div class="chart-wrapper">
+                    <canvas id="chrisIcpChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline de Conexões -->
+        <div class="chart-row-equal">
+            <div class="chart-container featured">
+                <h2>📊 Consolidado - Timeline</h2>
                 <div class="chart-wrapper">
                     <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Pedro - Timeline</h2>
+                <div class="chart-wrapper">
+                    <canvas id="pedroTimelineChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Chris - Timeline</h2>
+                <div class="chart-wrapper">
+                    <canvas id="chrisTimelineChart"></canvas>
                 </div>
             </div>
         </div>
@@ -739,6 +838,132 @@
                         beginAtZero: true
                     }
                 }
+            }
+        });
+
+        // Pedro ICP Chart
+        const pedroIcpData = {"labels": ["Not ICP", "Uncategorized", "ICP \u2014 Low Priority", "ICP \u2014 Very Low Priority", "ICP \u2014 High Priority", "ICP \u2014 Medium Priority"], "values": [89, 18, 7, 6, 3, 3]};
+        const pedroIcpTotal = pedroIcpData.values.reduce((a, b) => a + b, 0);
+
+        new Chart(document.getElementById('pedroIcpChart'), {
+            type: 'doughnut',
+            data: {
+                labels: pedroIcpData.labels,
+                datasets: [{
+                    data: pedroIcpData.values,
+                    backgroundColor: ['#f44336', '#9e9e9e', '#ff9800', '#ffc107', '#8bc34a', '#4caf50']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 10 },
+                            generateLabels: function(chart) {
+                                const data = chart.data;
+                                return data.labels.map((label, i) => {
+                                    const value = data.datasets[0].data[i];
+                                    const percentage = ((value / pedroIcpTotal) * 100).toFixed(1);
+                                    return {
+                                        text: `${label}: ${value} (${percentage}%)`,
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                        hidden: false,
+                                        index: i
+                                    };
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chris ICP Chart
+        const chrisIcpData = {"labels": ["Not ICP", "Uncategorized", "ICP \u2014 Very Low Priority", "ICP \u2014 High Priority", "ICP \u2014 Low Priority", "ICP \u2014 Medium Priority"], "values": [127, 36, 9, 4, 4, 3]};
+        const chrisIcpTotal = chrisIcpData.values.reduce((a, b) => a + b, 0);
+
+        new Chart(document.getElementById('chrisIcpChart'), {
+            type: 'doughnut',
+            data: {
+                labels: chrisIcpData.labels,
+                datasets: [{
+                    data: chrisIcpData.values,
+                    backgroundColor: ['#f44336', '#9e9e9e', '#ff9800', '#ffc107', '#8bc34a', '#4caf50']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 10 },
+                            generateLabels: function(chart) {
+                                const data = chart.data;
+                                return data.labels.map((label, i) => {
+                                    const value = data.datasets[0].data[i];
+                                    const percentage = ((value / chrisIcpTotal) * 100).toFixed(1);
+                                    return {
+                                        text: `${label}: ${value} (${percentage}%)`,
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                        hidden: false,
+                                        index: i
+                                    };
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Pedro Timeline Chart
+        const pedroTimelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [59, 31, 7, 10, 5, 2, 2, 8, 1, 2, 1, 2]};
+        new Chart(document.getElementById('pedroTimelineChart'), {
+            type: 'line',
+            data: {
+                labels: pedroTimelineData.dates,
+                datasets: [{
+                    label: 'Conexões',
+                    data: pedroTimelineData.counts,
+                    borderColor: '#2196f3',
+                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Chris Timeline Chart
+        const chrisTimelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [75, 34, 8, 17, 9, 7, 6, 12, 12, 7, 3]};
+        new Chart(document.getElementById('chrisTimelineChart'), {
+            type: 'line',
+            data: {
+                labels: chrisTimelineData.dates,
+                datasets: [{
+                    label: 'Conexões',
+                    data: chrisTimelineData.counts,
+                    borderColor: '#4caf50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
             }
         });
 
