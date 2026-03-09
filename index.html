@@ -358,6 +358,62 @@
             font-size: 13px;
         }
 
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: white;
+            margin: 3% auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #FF4757;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .kpi-grid {
@@ -401,7 +457,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 17:01</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 17:05</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -417,8 +473,7 @@
                 <div>
                     <div class="kpi-value">820</div>
                     <div class="kpi-description">empresas únicas</div>
-                    <div class="kpi-breakdown">539 Chris | 419 Pedro</div>
-                    <div class="kpi-breakdown">138 em ambos</div>
+                    <div class="kpi-breakdown">539 Chris | 419 Pedro | 138 ambos</div>
                 </div>
             </div>
 
@@ -427,8 +482,7 @@
                 <div style="margin-bottom: 15px;">
                     <div class="kpi-value">107</div>
                     <div class="kpi-description">empresas ICP</div>
-                    <div class="kpi-breakdown">72 Chris | 51 Pedro</div>
-                    <div class="kpi-breakdown">16 em ambos</div>
+                    <div class="kpi-breakdown">72 Chris | 51 Pedro | 16 ambos</div>
                 </div>
                 <div>
                     <div class="kpi-value">13.0%</div>
@@ -437,8 +491,8 @@
                 </div>
             </div>
 
-            <div class="chart-in-grid" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #FF4757;">
-                <h2 style="margin: 0 0 15px 0; font-size: 16px; color: #333;">📊 Timeline de Conexões</h2>
+            <div class="chart-in-grid" id="timelineChartContainer" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #FF4757; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';" onmouseout="this.style.transform=''; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)';" onclick="openTimelineModal()">
+                <h2 style="margin: 0 0 15px 0; font-size: 16px; color: #333;">📊 Timeline de Conexões <span style="font-size: 12px; color: #999;">(clique para ampliar)</span></h2>
                 <div style="height: 200px;">
                     <canvas id="timelineChart"></canvas>
                 </div>
@@ -6390,6 +6444,134 @@
             rows.forEach(row => table.tBodies[0].appendChild(row));
             table.dataset.sortOrder = isAscending ? 'asc' : 'desc';
         }
+
+        // Timeline Modal
+        function openTimelineModal() {
+            // Create modal
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.id = 'timelineModal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeTimelineModal()">&times;</span>
+                    <h2 style="margin-bottom: 20px; color: #333;">📊 Timeline de Conexões (Consolidado + Pedro + Chris)</h2>
+                    <div style="height: 500px;">
+                        <canvas id="timelineChartModal"></canvas>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            // Show modal
+            setTimeout(() => {
+                modal.style.display = 'block';
+            }, 10);
+
+            // Close on outside click
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeTimelineModal();
+                }
+            });
+
+            // Recreate the timeline chart in the modal
+            const sortedDates = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}.dates;
+            const consolidatedCounts = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}.counts;
+            const pedroTimelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [227, 116, 30, 23, 13, 5, 10, 15, 12, 7, 4, 11]};
+            const chrisTimelineData = {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [251, 109, 28, 44, 13, 20, 15, 37, 33, 25, 7]};
+
+            const pedroCounts = sortedDates.map(date => {
+                const index = pedroTimelineData.dates.indexOf(date);
+                return index >= 0 ? pedroTimelineData.counts[index] : 0;
+            });
+
+            const chrisCounts = sortedDates.map(date => {
+                const index = chrisTimelineData.dates.indexOf(date);
+                return index >= 0 ? chrisTimelineData.counts[index] : 0;
+            });
+
+            new Chart(document.getElementById('timelineChartModal'), {
+                type: 'line',
+                data: {
+                    labels: sortedDates,
+                    datasets: [
+                        {
+                            label: 'Consolidado',
+                            data: consolidatedCounts,
+                            borderColor: '#FF4757',
+                            backgroundColor: 'rgba(255, 71, 87, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Pedro',
+                            data: pedroCounts,
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            fill: false,
+                            tension: 0.3,
+                            borderWidth: 2,
+                            borderDash: [5, 5]
+                        },
+                        {
+                            label: 'Chris',
+                            data: chrisCounts,
+                            borderColor: '#2196F3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            fill: false,
+                            tension: 0.3,
+                            borderWidth: 2,
+                            borderDash: [5, 5]
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { size: 14 }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: { size: 12 }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 11 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function closeTimelineModal() {
+            const modal = document.getElementById('timelineModal');
+            if (modal) {
+                modal.style.display = 'none';
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeTimelineModal();
+            }
+        });
     </script>
 </body>
 </html>
