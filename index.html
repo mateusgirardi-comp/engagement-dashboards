@@ -457,7 +457,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 17:17</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 17:19</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -6179,7 +6179,7 @@
             }
         });
 
-        // ICP Funnel Chart (Simplified view for main dashboard)
+        // ICP Funnel Chart (Funnel shape for main dashboard)
         const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [0, 1, 106, 95, 11]};
 
         // Extract values: [clientes, pipeline, prospects_total, prospects_sem_hr, prospects_com_hr]
@@ -6190,24 +6190,73 @@
         const prospectsComHR = icpStatusData.values[4];
         const icpStatusTotal = clientesCount + pipelineCount + prospectsTotal;
 
-        // Funnel: ICPs → Prospects → Prospects c/ HR
-        const funnelLabels = ['Total ICPs', 'Prospects', 'Prospects c/ HR'];
-        const funnelValues = [icpStatusTotal, prospectsTotal, prospectsComHR];
-        const funnelColors = ['#757575', '#FF4757', '#4CAF50'];
+        // Custom funnel plugin
+        const funnelPlugin = {
+            id: 'funnelChart',
+            afterDatasetsDraw: function(chart) {
+                const ctx = chart.ctx;
+                const chartArea = chart.chartArea;
+                const width = chartArea.right - chartArea.left;
+                const height = chartArea.bottom - chartArea.top;
+
+                const data = [
+                    { label: 'Total ICPs', value: icpStatusTotal, color: '#757575' },
+                    { label: 'Prospects', value: prospectsTotal, color: '#FF4757' },
+                    { label: 'Prospects c/ HR', value: prospectsComHR, color: '#4CAF50' }
+                ];
+
+                const maxValue = data[0].value;
+                const segmentHeight = height / data.length;
+
+                data.forEach((item, index) => {
+                    const y = chartArea.top + (index * segmentHeight);
+                    const barWidth = (item.value / maxValue) * width;
+                    const x = chartArea.left + (width - barWidth) / 2;
+
+                    // Draw trapezoid
+                    ctx.fillStyle = item.color;
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 3;
+
+                    if (index === 0) {
+                        // First segment - rectangle top
+                        ctx.fillRect(x, y, barWidth, segmentHeight);
+                        ctx.strokeRect(x, y, barWidth, segmentHeight);
+                    } else {
+                        // Calculate previous segment width for trapezoid
+                        const prevBarWidth = (data[index - 1].value / maxValue) * width;
+                        const prevX = chartArea.left + (width - prevBarWidth) / 2;
+
+                        ctx.beginPath();
+                        ctx.moveTo(prevX, y);
+                        ctx.lineTo(prevX + prevBarWidth, y);
+                        ctx.lineTo(x + barWidth, y + segmentHeight);
+                        ctx.lineTo(x, y + segmentHeight);
+                        ctx.closePath();
+                        ctx.fill();
+                        ctx.stroke();
+                    }
+
+                    // Draw label and value
+                    ctx.fillStyle = '#fff';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+
+                    const textY = y + segmentHeight / 2;
+                    ctx.fillText(item.label, chartArea.left + width / 2, textY - 10);
+                    ctx.fillText(item.value.toString(), chartArea.left + width / 2, textY + 10);
+                });
+            }
+        };
 
         new Chart(document.getElementById('icpFunnelChart'), {
             type: 'bar',
             data: {
-                labels: funnelLabels,
-                datasets: [{
-                    data: funnelValues,
-                    backgroundColor: funnelColors,
-                    borderColor: funnelColors,
-                    borderWidth: 2
-                }]
+                labels: [],
+                datasets: []
             },
             options: {
-                indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
@@ -6215,44 +6264,15 @@
                         display: false
                     },
                     tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const value = context.parsed.x;
-                                const label = context.label;
-                                if (label === 'Total ICPs') {
-                                    return `${value} empresas ICP`;
-                                } else if (label === 'Prospects') {
-                                    const percentage = ((value / icpStatusTotal) * 100).toFixed(1);
-                                    return `${value} prospects (${percentage}% dos ICPs)`;
-                                } else {
-                                    const percentage = ((value / prospectsTotal) * 100).toFixed(1);
-                                    return `${value} com contato HR (${percentage}% dos prospects)`;
-                                }
-                            }
-                        }
+                        enabled: false
                     }
                 },
                 scales: {
-                    x: {
-                        beginAtZero: true,
-                        max: icpStatusTotal + 10,
-                        ticks: {
-                            font: { size: 12 }
-                        },
-                        grid: {
-                            color: '#e0e0e0'
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            font: { size: 14, weight: 'bold' }
-                        },
-                        grid: {
-                            display: false
-                        }
-                    }
+                    x: { display: false },
+                    y: { display: false }
                 }
-            }
+            },
+            plugins: [funnelPlugin]
         });
 
         // Table filtering and sorting
