@@ -502,7 +502,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 20:12</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 20:46</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -5180,7 +5180,7 @@
                         value: prospectsTotal,
                         color: '#9E9E9E',
                         width: maxWidth * 0.7,
-                        label: 'Prospects',
+                        label: 'Empresas ICP limpas',
                         sublabel: `${((prospectsTotal / icpStatusTotal) * 100).toFixed(1)}% das empresas ICPs`,
                         note: '(exclui Clientes e Sales Pipeline)'
                     },
@@ -5188,9 +5188,10 @@
                         value: prospectsComHR,
                         color: '#FF4757',
                         width: maxWidth * 0.45,
-                        label: 'Prospects com HR',
-                        label2: 'related contact',
-                        sublabel: `${((prospectsComHR / prospectsTotal) * 100).toFixed(1)}% dos Prospects`
+                        label: 'Empresas ICP disponíveis',
+                        label2: 'para prospecção',
+                        sublabel: `${((prospectsComHR / prospectsTotal) * 100).toFixed(1)}% dos Prospects`,
+                        note: '(empresas com HR related contact)'
                     }
                 ];
 
