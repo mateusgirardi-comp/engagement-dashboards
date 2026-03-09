@@ -457,7 +457,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 17:32</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 17:36</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -6203,14 +6203,14 @@
                 const data = [
                     {
                         value: icpStatusTotal,
-                        color: '#9E9E9E',
+                        color: '#BDBDBD',
                         width: maxWidth,
                         label: 'Total empresas ICPs',
                         sublabel: null
                     },
                     {
                         value: prospectsTotal,
-                        color: '#FF4757',
+                        color: '#9E9E9E',
                         width: maxWidth * 0.7,
                         label: 'Prospects',
                         sublabel: `${((prospectsTotal / icpStatusTotal) * 100).toFixed(1)}% das empresas ICPs`,
@@ -6218,9 +6218,10 @@
                     },
                     {
                         value: prospectsComHR,
-                        color: '#4CAF50',
+                        color: '#FF4757',
                         width: maxWidth * 0.45,
-                        label: 'Prospects com HR related contact',
+                        label: 'Prospects com HR',
+                        label2: 'related contact',
                         sublabel: `${((prospectsComHR / prospectsTotal) * 100).toFixed(1)}% dos Prospects`
                     }
                 ];
@@ -6269,38 +6270,33 @@
                     const textY = y + segmentHeight / 2;
                     ctx.fillText(item.value.toString(), centerX, textY);
 
-                    // Draw labels on the LEFT side
-                    const leftX = centerX - maxWidth / 2 - 20;
-                    ctx.textAlign = 'right';
+                    // Draw labels on the RIGHT side
+                    const rightX = centerX + maxWidth / 2 + 20;
+                    ctx.textAlign = 'left';
                     ctx.fillStyle = '#333';
-                    ctx.font = 'bold 14px -apple-system, Arial';
+                    ctx.font = 'bold 18px -apple-system, Arial';
 
-                    // Main label
-                    ctx.fillText(item.label, leftX, textY - 15);
+                    // Main label (with optional second line)
+                    if (item.label2) {
+                        ctx.fillText(item.label, rightX, textY - 20);
+                        ctx.fillText(item.label2, rightX, textY - 3);
+                    } else {
+                        ctx.fillText(item.label, rightX, textY - 12);
+                    }
 
                     // Note (for second trapezoid)
                     if (item.note) {
                         ctx.font = '12px -apple-system, Arial';
                         ctx.fillStyle = '#666';
-                        ctx.fillText(item.note, leftX, textY);
+                        ctx.fillText(item.note, rightX, textY + 10);
                     }
 
                     // Sublabel (percentage)
                     if (item.sublabel) {
                         ctx.font = 'bold 13px -apple-system, Arial';
                         ctx.fillStyle = item.color;
-                        ctx.fillText(item.sublabel, leftX, textY + 18);
+                        ctx.fillText(item.sublabel, rightX, textY + (item.note ? 25 : 13));
                     }
-
-                    // Draw circle indicator on the right
-                    const rightX = centerX + maxWidth / 2 + 30;
-                    ctx.beginPath();
-                    ctx.arc(rightX, textY, 10, 0, Math.PI * 2);
-                    ctx.fillStyle = item.color;
-                    ctx.fill();
-                    ctx.strokeStyle = '#fff';
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
                 });
             }
         };
@@ -6328,8 +6324,8 @@
                 },
                 layout: {
                     padding: {
-                        left: 220,
-                        right: 60
+                        left: 20,
+                        right: 240
                     }
                 }
             },
