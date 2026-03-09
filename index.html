@@ -502,7 +502,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 20:46</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 20:47</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -554,7 +554,7 @@
             </div>
 
             <div class="chart-container featured" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';" onmouseout="this.style.transform=''; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)';" onclick="openWaterfallModal()">
-                <h2>🎯 Alcance total de ICPs para ICPs actionables <span style="font-size: 12px; color: #999; font-weight: normal;">(clique para ampliar)</span></h2>
+                <h2>🎯 Alcance total de ICPs para ICPs disponíveis para prospecção <span style="font-size: 12px; color: #999; font-weight: normal;">(clique para ampliar)</span></h2>
                 <div class="chart-wrapper" style="height: 350px;">
                     <canvas id="icpFunnelChart"></canvas>
                 </div>
@@ -5777,7 +5777,7 @@
             modal.innerHTML = `
                 <div class="modal-content">
                     <span class="modal-close" onclick="closeWaterfallModal()">&times;</span>
-                    <h2 style="margin-bottom: 20px; color: #333;">🎯 Alcance total de ICPs para ICPs actionables (Waterfall)</h2>
+                    <h2 style="margin-bottom: 20px; color: #333;">🎯 Alcance total de ICPs para ICPs disponíveis para prospecção (Waterfall)</h2>
                     <div style="height: 500px;">
                         <canvas id="icpStatusChartModal"></canvas>
                     </div>
