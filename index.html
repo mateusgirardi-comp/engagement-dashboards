@@ -394,7 +394,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 15:31</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 15:33</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP.</p>
         </div>
 
@@ -6147,44 +6147,64 @@
             }
         });
 
-        // ICP Status Chart (Cliente, Pipeline, Prospect)
+        // ICP Status Chart (Bridge Chart)
         const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects"], "values": [0, 1, 106]};
         const icpStatusTotal = icpStatusData.values.reduce((a, b) => a + b, 0);
 
+        // Create bridge chart data: Total ICPs, then breakdown
+        const bridgeLabels = ['Total ICPs', ...icpStatusData.labels];
+        const bridgeValues = [icpStatusTotal, ...icpStatusData.values];
+        const bridgeColors = ['#FF4757', '#1b5e20', '#f57f17', '#757575'];  // Vermelho para total, verde/amarelo/cinza para breakdown
+
         new Chart(document.getElementById('icpStatusChart'), {
-            type: 'doughnut',
+            type: 'bar',
             data: {
-                labels: icpStatusData.labels,
+                labels: bridgeLabels,
                 datasets: [{
-                    data: icpStatusData.values,
-                    backgroundColor: ['#1b5e20', '#f57f17', '#757575']  // Verde para clientes, amarelo para pipeline, cinza para prospects
+                    data: bridgeValues,
+                    backgroundColor: bridgeColors,
+                    borderColor: bridgeColors,
+                    borderWidth: 2
                 }]
             },
             options: {
+                indexAxis: 'y',  // Horizontal bars
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    centerText: {
-                        text: icpStatusTotal.toString(),
-                        subtext: 'empresas ICP'
-                    },
                     legend: {
-                        position: 'bottom',
-                        labels: {
-                            font: { size: 14 },
-                            generateLabels: function(chart) {
-                                const data = chart.data;
-                                return data.labels.map((label, i) => {
-                                    const value = data.datasets[0].data[i];
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.parsed.x;
+                                if (context.dataIndex === 0) {
+                                    return `Total: ${value} empresas ICP`;
+                                } else {
                                     const percentage = ((value / icpStatusTotal) * 100).toFixed(1);
-                                    return {
-                                        text: `${label}: ${value} (${percentage}%)`,
-                                        fillStyle: data.datasets[0].backgroundColor[i],
-                                        hidden: false,
-                                        index: i
-                                    };
-                                });
+                                    return `${value} empresas (${percentage}%)`;
+                                }
                             }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            color: '#e0e0e0'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            font: { size: 14, weight: 'bold' }
+                        },
+                        grid: {
+                            display: false
                         }
                     }
                 }
