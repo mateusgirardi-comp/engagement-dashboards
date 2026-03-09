@@ -227,6 +227,51 @@
             background: white;
         }
 
+        .icp-toggle-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .icp-toggle-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 13px;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+
+        .icp-toggle-btn:hover {
+            border-color: #FF4757;
+            color: #FF4757;
+        }
+
+        .icp-toggle-btn.active {
+            background: #FF4757;
+            border-color: #FF4757;
+            color: white;
+        }
+
+        .icp-toggle-clear {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            background: #f5f5f5;
+            color: #666;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .icp-toggle-clear:hover {
+            background: #eee;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -532,35 +577,17 @@
             </div>
 
             <div class="table-filters">
-                <div class="filter-group">
-                    <label style="display: block; margin-bottom: 8px;">Filtrar por Categoria ICP:</label>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
-                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — High Priority" onchange="filterTable()" style="margin-right: 6px;">
-                            Alta Prioridade
-                        </label>
-                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — Medium Priority" onchange="filterTable()" style="margin-right: 6px;">
-                            Média Prioridade
-                        </label>
-                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — Low Priority" onchange="filterTable()" style="margin-right: 6px;">
-                            Baixa Prioridade
-                        </label>
-                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — Very Low Priority" onchange="filterTable()" style="margin-right: 6px;">
-                            Muito Baixa Prioridade
-                        </label>
-                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" class="icp-filter-checkbox" value="ICP — Uncategorized" onchange="filterTable()" style="margin-right: 6px;">
-                            ICP - Não Categorizado
-                        </label>
-                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" class="icp-filter-checkbox" value="Uncategorized" onchange="filterTable()" style="margin-right: 6px;">
-                            Não Categorizado
-                        </label>
+                <div class="filter-group" style="align-items: flex-start; flex-direction: column; gap: 8px;">
+                    <label>Filtrar por Categoria ICP:</label>
+                    <div class="icp-toggle-group">
+                        <button class="icp-toggle-btn" data-value="ICP — High Priority" onclick="toggleICPFilter(this)">Alta Prioridade</button>
+                        <button class="icp-toggle-btn" data-value="ICP — Medium Priority" onclick="toggleICPFilter(this)">Média Prioridade</button>
+                        <button class="icp-toggle-btn" data-value="ICP — Low Priority" onclick="toggleICPFilter(this)">Baixa Prioridade</button>
+                        <button class="icp-toggle-btn" data-value="ICP — Very Low Priority" onclick="toggleICPFilter(this)">Muito Baixa Prioridade</button>
+                        <button class="icp-toggle-btn" data-value="ICP — Uncategorized" onclick="toggleICPFilter(this)">ICP - Não Categorizado</button>
+                        <button class="icp-toggle-btn" data-value="Uncategorized" onclick="toggleICPFilter(this)">Não Categorizado</button>
+                        <button class="icp-toggle-clear" onclick="clearICPFilters()">Limpar</button>
                     </div>
-                    <button onclick="clearICPFilters()" style="margin-top: 8px; padding: 4px 12px; font-size: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">Limpar</button>
                 </div>
 
                 <div class="filter-group">
@@ -6350,11 +6377,15 @@
             plugins: [funnelPlugin]
         });
 
+        function toggleICPFilter(btn) {
+            btn.classList.toggle('active');
+            filterTable();
+        }
+
         // Table filtering and sorting
         function filterTable() {
-            // Get selected ICP filters (multiple checkboxes)
-            const icpCheckboxes = document.querySelectorAll('.icp-filter-checkbox:checked');
-            const icpFilters = Array.from(icpCheckboxes).map(cb => cb.value);
+            // Get selected ICP filters (toggle buttons)
+            const icpFilters = Array.from(document.querySelectorAll('.icp-toggle-btn.active')).map(btn => btn.dataset.value);
 
             const l6Filter = document.getElementById('filterL6').value.toLowerCase();
             const hrFilter = document.getElementById('filterHR').value.toLowerCase();
@@ -6459,8 +6490,7 @@
         }
 
         function clearICPFilters() {
-            const checkboxes = document.querySelectorAll('.icp-filter-checkbox');
-            checkboxes.forEach(cb => cb.checked = false);
+            document.querySelectorAll('.icp-toggle-btn').forEach(btn => btn.classList.remove('active'));
             filterTable();
         }
 
