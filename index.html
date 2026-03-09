@@ -99,7 +99,6 @@
             font-size: 16px;
             font-weight: 700;
             color: #999;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 10px;
         }
@@ -110,20 +109,30 @@
             color: #FF4757;
             line-height: 1;
             margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .kpi-value-inline {
+            font-size: 13px;
+            color: #bbb;
+            display: inline;
+            margin-left: 12px;
+            vertical-align: baseline;
+            font-weight: 400;
         }
 
         .kpi-description {
             font-size: 13px;
             color: #bbb;
-            display: inline;
-            margin-right: 8px;
+            display: block;
+            margin-top: 8px;
         }
 
         .kpi-breakdown {
             font-size: 13px;
             color: #bbb;
-            display: inline;
-            margin-left: 8px;
+            display: block;
+            margin-top: 4px;
         }
 
         /* Chart Sections */
@@ -371,42 +380,41 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 14:18</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 14:24</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP.</p>
         </div>
 
         <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card">
-                <div class="kpi-label">Total de Conexões</div>
-                <div class="kpi-value">1055</div>
-                <div class="kpi-description">desde 23/02/2026</div>
+                <div class="kpi-label">Total de conexões</div>
+                <div>
+                    <span class="kpi-value">1055</span>
+                    <span class="kpi-value-inline">desde 23/02/2026</span>
+                </div>
                 <div class="kpi-breakdown">582 Chris | 473 Pedro</div>
             </div>
 
             <div class="kpi-card info">
-                <div class="kpi-label">Empresas Únicas</div>
+                <div class="kpi-label">Empresas únicas</div>
                 <div class="kpi-value">820</div>
                 <div class="kpi-breakdown">539 Chris | 419 Pedro</div>
-                <div class="kpi-breakdown" style="color: #FF4757; margin-top: 5px;">138 em ambos os perfis</div>
+                <div class="kpi-breakdown" style="color: #FF4757;">138 em ambos os perfis</div>
             </div>
 
             <div class="kpi-card">
                 <div class="kpi-label">Empresas ICP</div>
                 <div class="kpi-value">107</div>
-                <div style="margin-top: 8px;">
-                    <span class="kpi-breakdown">69 Chris | 51 Pedro</span>
-                    <span class="kpi-breakdown" style="color: #FF4757;">| 16 em ambos os perfis</span>
-                </div>
+                <div class="kpi-breakdown">69 Chris | 51 Pedro | <span style="color: #FF4757;">16 em ambos os perfis</span></div>
             </div>
 
             <div class="kpi-card">
                 <div class="kpi-label">Taxa ICP</div>
-                <div class="kpi-value">13.0%</div>
-                <div style="margin-top: 8px;">
-                    <span class="kpi-description">% empresas ICP / total empresas</span>
-                    <span class="kpi-breakdown">12.8% Chris | 12.2% Pedro</span>
+                <div>
+                    <span class="kpi-value">13.0%</span>
+                    <span class="kpi-value-inline">empresas ICP / total empresas</span>
                 </div>
+                <div class="kpi-breakdown">12.8% Chris | 12.2% Pedro</div>
             </div>
         </div>
 
