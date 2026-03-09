@@ -457,7 +457,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 17:24</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 17:32</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -6197,13 +6197,32 @@
                 const ctx = chart.ctx;
                 const chartArea = chart.chartArea;
                 const centerX = (chartArea.left + chartArea.right) / 2;
-                const maxWidth = 350;
+                const maxWidth = 300;
                 const height = chartArea.bottom - chartArea.top;
 
                 const data = [
-                    { label: 'Total ICPs', value: icpStatusTotal, color: '#9E9E9E', width: maxWidth },
-                    { label: 'Prospects', value: prospectsTotal, color: '#FF4757', width: maxWidth * 0.7 },
-                    { label: 'Prospects c/ HR', value: prospectsComHR, color: '#4CAF50', width: maxWidth * 0.45 }
+                    {
+                        value: icpStatusTotal,
+                        color: '#9E9E9E',
+                        width: maxWidth,
+                        label: 'Total empresas ICPs',
+                        sublabel: null
+                    },
+                    {
+                        value: prospectsTotal,
+                        color: '#FF4757',
+                        width: maxWidth * 0.7,
+                        label: 'Prospects',
+                        sublabel: `${((prospectsTotal / icpStatusTotal) * 100).toFixed(1)}% das empresas ICPs`,
+                        note: '(exclui Clientes e Sales Pipeline)'
+                    },
+                    {
+                        value: prospectsComHR,
+                        color: '#4CAF50',
+                        width: maxWidth * 0.45,
+                        label: 'Prospects com HR related contact',
+                        sublabel: `${((prospectsComHR / prospectsTotal) * 100).toFixed(1)}% dos Prospects`
+                    }
                 ];
 
                 const segmentHeight = (height - 40) / data.length;
@@ -6240,31 +6259,43 @@
                     ctx.shadowBlur = 6;
                     ctx.shadowOffsetY = 3;
 
-                    // Draw label and value
+                    // Draw ONLY number inside trapezoid
                     ctx.shadowColor = 'transparent';
                     ctx.fillStyle = '#fff';
-                    ctx.font = 'bold 16px -apple-system, Arial';
+                    ctx.font = 'bold 32px -apple-system, Arial';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
 
                     const textY = y + segmentHeight / 2;
-                    ctx.fillText(item.label, centerX, textY - 10);
+                    ctx.fillText(item.value.toString(), centerX, textY);
 
-                    ctx.font = 'bold 22px -apple-system, Arial';
-                    ctx.fillText(item.value.toString(), centerX, textY + 12);
+                    // Draw labels on the LEFT side
+                    const leftX = centerX - maxWidth / 2 - 20;
+                    ctx.textAlign = 'right';
+                    ctx.fillStyle = '#333';
+                    ctx.font = 'bold 14px -apple-system, Arial';
 
-                    // Draw percentage on the right
-                    const percentage = ((item.value / icpStatusTotal) * 100).toFixed(1);
-                    ctx.font = 'bold 16px -apple-system, Arial';
-                    ctx.fillStyle = item.color;
-                    ctx.textAlign = 'left';
+                    // Main label
+                    ctx.fillText(item.label, leftX, textY - 15);
 
+                    // Note (for second trapezoid)
+                    if (item.note) {
+                        ctx.font = '12px -apple-system, Arial';
+                        ctx.fillStyle = '#666';
+                        ctx.fillText(item.note, leftX, textY);
+                    }
+
+                    // Sublabel (percentage)
+                    if (item.sublabel) {
+                        ctx.font = 'bold 13px -apple-system, Arial';
+                        ctx.fillStyle = item.color;
+                        ctx.fillText(item.sublabel, leftX, textY + 18);
+                    }
+
+                    // Draw circle indicator on the right
                     const rightX = centerX + maxWidth / 2 + 30;
-                    ctx.fillText(`${percentage}%`, rightX, textY);
-
-                    // Draw circle indicator
                     ctx.beginPath();
-                    ctx.arc(rightX + 60, textY, 10, 0, Math.PI * 2);
+                    ctx.arc(rightX, textY, 10, 0, Math.PI * 2);
                     ctx.fillStyle = item.color;
                     ctx.fill();
                     ctx.strokeStyle = '#fff';
@@ -6297,7 +6328,8 @@
                 },
                 layout: {
                     padding: {
-                        right: 120
+                        left: 220,
+                        right: 60
                     }
                 }
             },
