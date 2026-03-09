@@ -457,7 +457,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 17:22</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 17:24</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -6179,7 +6179,7 @@
             }
         });
 
-        // ICP Funnel Chart (Classic funnel visualization)
+        // ICP Funnel Chart (Stacked trapezoids)
         const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [0, 1, 106, 95, 11]};
 
         // Extract values: [clientes, pipeline, prospects_total, prospects_sem_hr, prospects_com_hr]
@@ -6197,32 +6197,28 @@
                 const ctx = chart.ctx;
                 const chartArea = chart.chartArea;
                 const centerX = (chartArea.left + chartArea.right) / 2;
-                const width = Math.min(chartArea.right - chartArea.left, 400);
+                const maxWidth = 350;
                 const height = chartArea.bottom - chartArea.top;
 
                 const data = [
-                    { label: 'Total ICPs', value: icpStatusTotal, color: '#9E9E9E' },
-                    { label: 'Prospects', value: prospectsTotal, color: '#FF4757' },
-                    { label: 'Prospects c/ HR', value: prospectsComHR, color: '#4CAF50' }
+                    { label: 'Total ICPs', value: icpStatusTotal, color: '#9E9E9E', width: maxWidth },
+                    { label: 'Prospects', value: prospectsTotal, color: '#FF4757', width: maxWidth * 0.7 },
+                    { label: 'Prospects c/ HR', value: prospectsComHR, color: '#4CAF50', width: maxWidth * 0.45 }
                 ];
 
-                const maxValue = data[0].value;
-                const segmentHeight = height / data.length;
-                const minWidth = 60;
+                const segmentHeight = (height - 40) / data.length;
 
                 data.forEach((item, index) => {
-                    const y = chartArea.top + (index * segmentHeight);
-                    const topWidth = minWidth + ((maxValue - minWidth) / maxValue) * (data[0].value - (index > 0 ? (data[0].value - item.value) * 1.2 : 0));
-                    const bottomWidth = index < data.length - 1
-                        ? minWidth + ((maxValue - minWidth) / maxValue) * (data[0].value - (data[0].value - data[index + 1].value) * 1.2)
-                        : minWidth;
+                    const y = chartArea.top + 20 + (index * segmentHeight);
+                    const topWidth = item.width;
+                    const bottomWidth = index < data.length - 1 ? data[index + 1].width : item.width * 0.8;
 
                     const topLeft = centerX - (topWidth / 2);
                     const topRight = centerX + (topWidth / 2);
                     const bottomLeft = centerX - (bottomWidth / 2);
                     const bottomRight = centerX + (bottomWidth / 2);
 
-                    // Draw trapezoid segment
+                    // Draw trapezoid
                     ctx.beginPath();
                     ctx.moveTo(topLeft, y);
                     ctx.lineTo(topRight, y);
@@ -6230,48 +6226,45 @@
                     ctx.lineTo(bottomLeft, y + segmentHeight);
                     ctx.closePath();
 
-                    // Fill with gradient
-                    const gradient = ctx.createLinearGradient(centerX, y, centerX, y + segmentHeight);
-                    gradient.addColorStop(0, item.color);
-                    gradient.addColorStop(1, item.color + 'CC');
-                    ctx.fillStyle = gradient;
+                    // Fill with solid color
+                    ctx.fillStyle = item.color;
                     ctx.fill();
 
                     // White border
                     ctx.strokeStyle = '#fff';
-                    ctx.lineWidth = 3;
+                    ctx.lineWidth = 4;
                     ctx.stroke();
 
-                    // Add shadow
-                    ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-                    ctx.shadowBlur = 8;
-                    ctx.shadowOffsetY = 4;
+                    // Add subtle shadow
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+                    ctx.shadowBlur = 6;
+                    ctx.shadowOffsetY = 3;
 
                     // Draw label and value
                     ctx.shadowColor = 'transparent';
                     ctx.fillStyle = '#fff';
-                    ctx.font = 'bold 18px -apple-system, Arial';
+                    ctx.font = 'bold 16px -apple-system, Arial';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
 
                     const textY = y + segmentHeight / 2;
-                    ctx.fillText(item.label, centerX, textY - 12);
+                    ctx.fillText(item.label, centerX, textY - 10);
 
-                    ctx.font = 'bold 24px -apple-system, Arial';
+                    ctx.font = 'bold 22px -apple-system, Arial';
                     ctx.fillText(item.value.toString(), centerX, textY + 12);
 
                     // Draw percentage on the right
                     const percentage = ((item.value / icpStatusTotal) * 100).toFixed(1);
-                    ctx.font = 'bold 14px -apple-system, Arial';
+                    ctx.font = 'bold 16px -apple-system, Arial';
                     ctx.fillStyle = item.color;
                     ctx.textAlign = 'left';
 
-                    const rightX = centerX + (width / 2) + 20;
+                    const rightX = centerX + maxWidth / 2 + 30;
                     ctx.fillText(`${percentage}%`, rightX, textY);
 
                     // Draw circle indicator
                     ctx.beginPath();
-                    ctx.arc(rightX + 50, textY, 8, 0, Math.PI * 2);
+                    ctx.arc(rightX + 60, textY, 10, 0, Math.PI * 2);
                     ctx.fillStyle = item.color;
                     ctx.fill();
                     ctx.strokeStyle = '#fff';
@@ -6304,7 +6297,7 @@
                 },
                 layout: {
                     padding: {
-                        right: 100
+                        right: 120
                     }
                 }
             },
