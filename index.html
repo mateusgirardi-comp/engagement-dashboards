@@ -71,7 +71,7 @@
 
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
             margin-bottom: 30px;
         }
@@ -110,6 +110,7 @@
             line-height: 1;
             margin-bottom: 8px;
             display: inline-block;
+            white-space: nowrap;
         }
 
         .kpi-value-inline {
@@ -119,6 +120,7 @@
             margin-left: 12px;
             vertical-align: baseline;
             font-weight: 400;
+            white-space: nowrap;
         }
 
         .kpi-description {
@@ -126,13 +128,15 @@
             color: #bbb;
             display: block;
             margin-top: 8px;
+            line-height: 1.5;
         }
 
         .kpi-breakdown {
-            font-size: 13px;
+            font-size: 12px;
             color: #bbb;
             display: block;
             margin-top: 4px;
+            line-height: 1.5;
         }
 
         /* Chart Sections */
@@ -394,7 +398,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 16:48</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 16:55</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -416,16 +420,16 @@
             </div>
 
             <div class="kpi-card">
-                <div class="kpi-label">Empresas ICP</div>
-                <div class="kpi-value">107</div>
-                <div class="kpi-breakdown">72 Chris | 51 Pedro | 16 em ambos os perfis</div>
-            </div>
-
-            <div class="kpi-card">
-                <div class="kpi-label">Alcance de ICPs</div>
+                <div class="kpi-label">Empresas ICP & Alcance</div>
+                <div>
+                    <span class="kpi-value">107</span>
+                    <span class="kpi-value-inline">empresas ICP</span>
+                </div>
+                <div class="kpi-breakdown">72 Chris | 51 Pedro | 16 ambos</div>
+                <div style="height: 10px;"></div>
                 <div>
                     <span class="kpi-value">13.0%</span>
-                    <span class="kpi-value-inline">empresas únicas/ICP</span>
+                    <span class="kpi-value-inline">alcance (ICP/total)</span>
                 </div>
                 <div class="kpi-breakdown">13.4% Chris | 12.2% Pedro</div>
             </div>
