@@ -382,7 +382,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 12:57</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 13:03</p>
             <p><strong>Objetivo:</strong> Análise de conexões LinkedIn para identificar leads actionables</p>
         </div>
 
@@ -1012,6 +1012,30 @@
     </div>
 
     <script>
+        // Plugin para mostrar texto no centro do doughnut
+        const centerTextPlugin = {
+            id: 'centerText',
+            afterDatasetsDraw(chart, args, options) {
+                const {ctx, chartArea: {left, top, right, bottom}} = chart;
+                const centerX = (left + right) / 2;
+                const centerY = (top + bottom) / 2;
+
+                ctx.save();
+                ctx.font = 'bold 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif';
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(options.text || '', centerX, centerY - 10);
+
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif';
+                ctx.fillStyle = '#666';
+                ctx.fillText(options.subtext || '', centerX, centerY + 20);
+                ctx.restore();
+            }
+        };
+
+        Chart.register(centerTextPlugin);
+
         // ICP Distribution Chart
         const icpData = {"labels": ["Not ICP", "Uncategorized", "ICP \u2014 Very Low Priority", "ICP \u2014 Low Priority", "ICP \u2014 Medium Priority", "ICP \u2014 High Priority"], "values": [574, 139, 41, 35, 18, 13]};
         const icpTotal = icpData.values.reduce((a, b) => a + b, 0);
@@ -1036,6 +1060,10 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
+                    centerText: {
+                        text: icpTotal.toString(),
+                        subtext: 'empresas'
+                    },
                     legend: {
                         position: 'bottom',
                         labels: {
@@ -1165,6 +1193,10 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
+                    centerText: {
+                        text: pedroIcpTotal.toString(),
+                        subtext: 'empresas'
+                    },
                     legend: {
                         position: 'bottom',
                         labels: {
@@ -1205,6 +1237,10 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
+                    centerText: {
+                        text: chrisIcpTotal.toString(),
+                        subtext: 'empresas'
+                    },
                     legend: {
                         position: 'bottom',
                         labels: {
