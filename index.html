@@ -394,7 +394,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 15:24</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 15:29</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP.</p>
         </div>
 
@@ -6201,10 +6201,22 @@
             const table = document.getElementById('leadsTable');
             const rows = table.getElementsByTagName('tr');
 
+            // First, create a map of company -> status by reading all headers
+            const companyStatus = new Map();
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (row.classList.contains('company-header')) {
+                    const companyName = row.getAttribute('data-company');
+                    const status = row.getAttribute('data-status');
+                    const icpCategory = row.getAttribute('data-icp-category');
+                    companyStatus.set(companyName, {status: status, icpCategory: icpCategory});
+                }
+            }
+
             // Track which companies have visible contacts
             const visibleCompanies = new Set();
 
-            // First pass: filter contact rows
+            // First pass: filter contact rows (including company status check)
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
 
@@ -6218,10 +6230,15 @@
                     const cargo = cells[1].textContent.toLowerCase();
                     const hrRelated = row.getAttribute('data-hr-related').toLowerCase();
                     const l6 = cells[3].textContent.toLowerCase();
-                    const icpCategory = row.getAttribute('data-icp-category');
                     const company = row.getAttribute('data-company');
 
+                    // Get company info
+                    const companyInfo = companyStatus.get(company);
+                    const icpCategory = companyInfo ? companyInfo.icpCategory : '';
+                    const companyStatusValue = companyInfo ? companyInfo.status : '';
+
                     const matchesICP = !icpFilter || icpCategory === icpFilter;
+                    const matchesStatus = !statusFilter || companyStatusValue === statusFilter;
                     const matchesL6 = !l6Filter || l6.includes(l6Filter);
                     const matchesHR = !hrFilter || hrRelated.includes(hrFilter);
                     const matchesSearch = !searchInput ||
@@ -6229,7 +6246,7 @@
                         cargo.includes(searchInput) ||
                         company.toLowerCase().includes(searchInput);
 
-                    if (matchesICP && matchesL6 && matchesHR && matchesSearch) {
+                    if (matchesICP && matchesStatus && matchesL6 && matchesHR && matchesSearch) {
                         row.style.display = '';
                         visibleCompanies.add(company);
                     } else {
@@ -6238,7 +6255,7 @@
                 }
             }
 
-            // Second pass: show/hide company headers based on visible contacts and status filter
+            // Second pass: show/hide company headers based on visible contacts
             let visibleCompanyCount = 0;
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
