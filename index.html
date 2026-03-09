@@ -394,7 +394,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 15:35</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 15:40</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP.</p>
         </div>
 
@@ -6151,17 +6151,18 @@
         const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects"], "values": [0, 1, 106]};
         const icpStatusTotal = icpStatusData.values.reduce((a, b) => a + b, 0);
 
-        // Create waterfall data: Total ICPs, then stacked breakdown
+        // Create waterfall data: Total ICPs at top, then descending breakdown
         const bridgeLabels = ['Total ICPs', ...icpStatusData.labels];
 
-        // Calculate cumulative values for waterfall effect
-        let cumulative = 0;
+        // Calculate descending cumulative values for waterfall effect
+        let cumulativeDesc = icpStatusTotal;
         const waterfallData = [
-            [0, icpStatusTotal],  // Total bar starts at 0
+            [0, icpStatusTotal],  // Total bar: full height
             ...icpStatusData.values.map(value => {
-                const start = cumulative;
-                cumulative += value;
-                return [start, cumulative];  // Floating bar from start to end
+                const end = cumulativeDesc;
+                cumulativeDesc -= value;
+                const start = cumulativeDesc;
+                return [start, end];  // Floating bar descending from total
             })
         ];
 
