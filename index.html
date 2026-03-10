@@ -651,7 +651,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 10/03/2026 às 15:45</p>
+            <p><strong>Gerado em:</strong> 10/03/2026 às 17:13</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -684,14 +684,14 @@
             <div class="kpi-card">
                 <div class="kpi-label">ICPs Disponíveis para Prospecção</div>
                 <div style="margin-bottom: 15px;">
-                    <div class="kpi-value" id="kpi-actionable">30</div>
+                    <div class="kpi-value" id="kpi-actionable">14</div>
                     <div class="kpi-description">empresas ICP c/ contato HR ou C-Level</div>
-                    <div class="kpi-breakdown" id="kpi-actionable-breakdown">18 Chris | 19 Pedro | 7 ambos</div>
+                    <div class="kpi-breakdown" id="kpi-actionable-breakdown">7 Chris | 10 Pedro | 3 ambos</div>
                 </div>
                 <div>
-                    <div class="kpi-value" id="kpi-hr-rate">22.2%</div>
+                    <div class="kpi-value" id="kpi-hr-rate">10.4%</div>
                     <div class="kpi-description">do total de empresas ICP</div>
-                    <div class="kpi-breakdown" id="kpi-rate-breakdown">20.7% Chris | 25.3% Pedro</div>
+                    <div class="kpi-breakdown" id="kpi-rate-breakdown">8.0% Chris | 13.3% Pedro</div>
                 </div>
             </div>
 
@@ -5336,7 +5336,7 @@
         });
 
         // ICP Funnel Chart (Stacked trapezoids)
-        const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 112, 82, 30]};
+        const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 47, 33, 14]};
 
         // Extract values: [clientes, pipeline, prospects_total, prospects_sem_hr, prospects_com_hr]
         const clientesCount = icpStatusData.values[0];
@@ -5372,7 +5372,7 @@
                         value: fv.prospects,
                         color: '#9E9E9E',
                         width: maxWidth * 0.7,
-                        label: 'Empresas ICP limpas',
+                        label: 'ICP limpas — HQ no Brasil',
                         sublabel: fv.total > 0 ? `${((fv.prospects / fv.total) * 100).toFixed(1)}% das empresas ICPs` : '—',
                         note: '(exclui Clientes e Sales Pipeline)'
                     },
@@ -5383,7 +5383,7 @@
                         label: 'Empresas ICP disponíveis',
                         label2: 'para prospecção',
                         sublabel: fv.prospects > 0 ? `${((fv.hr / fv.prospects) * 100).toFixed(1)}% das Empresas ICP limpas` : '—',
-                        note: '(empresas com HR ou C-Level contact)'
+                        note: '(prospects BR c/ contato HR ou C-Level)'
                     }
                 ];
 
@@ -5595,7 +5595,7 @@
         });
 
         // Period data for master time filter
-        const PERIOD_DATA = {"all": {"total": 1055, "pedro_total": 473, "chris_total": 582, "unique_companies": 820, "pedro_unique": 419, "chris_unique": 539, "overlap_companies": 138, "num_icp": 135, "pedro_icp": 75, "chris_icp": 87, "overlap_icp": 27, "icp_rate": 16.5, "pedro_rate": 17.9, "chris_rate": 16.1, "prospects_with_hr": 30, "pedro_hr": 19, "chris_hr": 18, "overlap_hr": 7, "hr_rate": 22.2, "pedro_hr_rate": 25.3, "chris_hr_rate": 20.7, "timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [227, 116, 30, 23, 13, 5, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [251, 109, 28, 44, 13, 20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [624, 135, 61]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [313, 75, 31]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [414, 87, 38]}, "funnel": {"total": 135, "prospects": 112, "hr": 30}}, "week": {"total": 197, "pedro_total": 60, "chris_total": 137, "unique_companies": 178, "pedro_unique": 60, "chris_unique": 134, "overlap_companies": 16, "num_icp": 32, "pedro_icp": 16, "chris_icp": 21, "overlap_icp": 5, "icp_rate": 18.0, "pedro_rate": 26.7, "chris_rate": 15.7, "prospects_with_hr": 7, "pedro_hr": 4, "chris_hr": 4, "overlap_hr": 1, "hr_rate": 21.9, "pedro_hr_rate": 25.0, "chris_hr_rate": 19.0, "timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [123, 32, 23]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [36, 16, 8]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [96, 21, 17]}, "funnel": {"total": 32, "prospects": 23, "hr": 7}}, "day": {"total": 18, "pedro_total": 11, "chris_total": 7, "unique_companies": 16, "pedro_unique": 11, "chris_unique": 7, "overlap_companies": 2, "num_icp": 0, "pedro_icp": 0, "chris_icp": 0, "overlap_icp": 0, "icp_rate": 0.0, "pedro_rate": 0.0, "chris_rate": 0.0, "prospects_with_hr": 0, "pedro_hr": 0, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 0, "pedro_hr_rate": 0, "chris_hr_rate": 0, "timeline": {"dates": ["2026-03-06"], "counts": [18]}, "pedro_timeline": {"dates": ["2026-03-06"], "counts": [11]}, "chris_timeline": {"dates": ["2026-03-06"], "counts": [7]}, "icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [13, 3]}, "pedro_icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [8, 3]}, "chris_icp_distribution": {"labels": ["Uncategorized"], "values": [7]}, "funnel": {"total": 0, "prospects": 0, "hr": 0}}};
+        const PERIOD_DATA = {"all": {"total": 1055, "pedro_total": 473, "chris_total": 582, "unique_companies": 820, "pedro_unique": 419, "chris_unique": 539, "overlap_companies": 138, "num_icp": 135, "pedro_icp": 75, "chris_icp": 87, "overlap_icp": 27, "icp_rate": 16.5, "pedro_rate": 17.9, "chris_rate": 16.1, "prospects_with_hr": 14, "pedro_hr": 10, "chris_hr": 7, "overlap_hr": 3, "hr_rate": 10.4, "pedro_hr_rate": 13.3, "chris_hr_rate": 8.0, "timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [227, 116, 30, 23, 13, 5, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [251, 109, 28, 44, 13, 20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [624, 135, 61]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [313, 75, 31]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [414, 87, 38]}, "funnel": {"total": 135, "prospects": 112, "hr": 14}}, "week": {"total": 197, "pedro_total": 60, "chris_total": 137, "unique_companies": 178, "pedro_unique": 60, "chris_unique": 134, "overlap_companies": 16, "num_icp": 32, "pedro_icp": 16, "chris_icp": 21, "overlap_icp": 5, "icp_rate": 18.0, "pedro_rate": 26.7, "chris_rate": 15.7, "prospects_with_hr": 5, "pedro_hr": 3, "chris_hr": 2, "overlap_hr": 0, "hr_rate": 15.6, "pedro_hr_rate": 18.8, "chris_hr_rate": 9.5, "timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [123, 32, 23]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [36, 16, 8]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [96, 21, 17]}, "funnel": {"total": 32, "prospects": 23, "hr": 5}}, "day": {"total": 18, "pedro_total": 11, "chris_total": 7, "unique_companies": 16, "pedro_unique": 11, "chris_unique": 7, "overlap_companies": 2, "num_icp": 0, "pedro_icp": 0, "chris_icp": 0, "overlap_icp": 0, "icp_rate": 0.0, "pedro_rate": 0.0, "chris_rate": 0.0, "prospects_with_hr": 0, "pedro_hr": 0, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 0, "pedro_hr_rate": 0, "chris_hr_rate": 0, "timeline": {"dates": ["2026-03-06"], "counts": [18]}, "pedro_timeline": {"dates": ["2026-03-06"], "counts": [11]}, "chris_timeline": {"dates": ["2026-03-06"], "counts": [7]}, "icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [13, 3]}, "pedro_icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [8, 3]}, "chris_icp_distribution": {"labels": ["Uncategorized"], "values": [7]}, "funnel": {"total": 0, "prospects": 0, "hr": 0}}};
 
         function applyPeriodFilter(period) {
             // Update active button
@@ -6185,7 +6185,7 @@
             });
 
             // Get data
-            const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 112, 82, 30]};
+            const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 47, 33, 14]};
             const clientesCount = icpStatusData.values[0];
             const pipelineCount = icpStatusData.values[1];
             const prospectsTotal = icpStatusData.values[2];
@@ -6198,9 +6198,9 @@
                 'Total ICPs',
                 'Clientes Comp',
                 'Pipeline',
-                'Prospects',
-                'Prospects s/ HR ou C-Level',
-                'Prospects c/ HR ou C-Level'
+                'Prospects BR',
+                'Prospects BR s/ HR ou C-Level',
+                'Prospects BR c/ HR ou C-Level'
             ];
 
             let cumulative = icpStatusTotal;
