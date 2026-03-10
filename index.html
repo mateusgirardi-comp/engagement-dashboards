@@ -651,7 +651,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 10/03/2026 às 15:40</p>
+            <p><strong>Gerado em:</strong> 10/03/2026 às 15:45</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -684,14 +684,14 @@
             <div class="kpi-card">
                 <div class="kpi-label">ICPs Disponíveis para Prospecção</div>
                 <div style="margin-bottom: 15px;">
-                    <div class="kpi-value" id="kpi-actionable">11</div>
-                    <div class="kpi-description">empresas ICP c/ HR related contact</div>
-                    <div class="kpi-breakdown" id="kpi-actionable-breakdown">6 Chris | 8 Pedro | 3 ambos</div>
+                    <div class="kpi-value" id="kpi-actionable">30</div>
+                    <div class="kpi-description">empresas ICP c/ contato HR ou C-Level</div>
+                    <div class="kpi-breakdown" id="kpi-actionable-breakdown">18 Chris | 19 Pedro | 7 ambos</div>
                 </div>
                 <div>
-                    <div class="kpi-value" id="kpi-hr-rate">8.1%</div>
+                    <div class="kpi-value" id="kpi-hr-rate">22.2%</div>
                     <div class="kpi-description">do total de empresas ICP</div>
-                    <div class="kpi-breakdown" id="kpi-rate-breakdown">6.9% Chris | 10.7% Pedro</div>
+                    <div class="kpi-breakdown" id="kpi-rate-breakdown">20.7% Chris | 25.3% Pedro</div>
                 </div>
             </div>
 
@@ -787,7 +787,7 @@
                 </div>
 
                 <div class="filter-group">
-                    <label>Filtrar por HR Related:</label>
+                    <label>Filtrar por HR ou C-Level:</label>
                     <select id="filterHR" onchange="filterTable()">
                         <option value="">Todos</option>
                         <option value="Sim">Sim</option>
@@ -816,7 +816,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Cargo</th>
-                        <th>HR Related</th>
+                        <th>HR ou C-Level</th>
                         <th>L6+</th>
                         <th>Adicionado por</th>
                         <th>Data</th>
@@ -1101,10 +1101,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/camilla-matias-06345a105" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/camilla-matias-06345a105" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Camilla Matias</td>
                 <td>COO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-24</td>
@@ -1195,10 +1195,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Segura" data-dedup-key="https://www.linkedin.com/in/bebetobn" data-hr-related="Não" data-date="2026-03-03">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Segura" data-dedup-key="https://www.linkedin.com/in/bebetobn" data-hr-related="Sim" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Luís Alberto Nogueira</td>
                 <td>CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-03</td>
@@ -1224,10 +1224,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/igmarinelli" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/igmarinelli" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Igor Marinelli</td>
                 <td>🧢 Founder, CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -1282,10 +1282,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/maurolevidancona" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/maurolevidancona" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Mauro Levi D'Ancona</td>
                 <td>Co-Founder & CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -1412,10 +1412,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/matepencz" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/matepencz" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Mate Pencz</td>
                 <td>Founder and CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-24</td>
@@ -1600,10 +1600,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Conta Azul" data-dedup-key="https://www.linkedin.com/in/bruno-rodrigues-3344652a" data-hr-related="Não" data-date="2026-03-02">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Conta Azul" data-dedup-key="https://www.linkedin.com/in/bruno-rodrigues-3344652a" data-hr-related="Sim" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Bruno Rodrigues</td>
                 <td>Coordenador de Risco</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-03-02</td>
@@ -1914,10 +1914,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Kavak.com" data-dedup-key="https://www.linkedin.com/in/juancruzdelarua" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Kavak.com" data-dedup-key="https://www.linkedin.com/in/juancruzdelarua" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Juan Cruz de la Rúa</td>
                 <td>Founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
@@ -1997,10 +1997,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Olist" data-dedup-key="https://www.linkedin.com/in/raphael-levi" data-hr-related="Não" data-date="2026-02-25">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Olist" data-dedup-key="https://www.linkedin.com/in/raphael-levi" data-hr-related="Sim" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Raphael Levi</td>
                 <td>Founder • Startup exit • Lifelong learner</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-25</td>
@@ -2055,10 +2055,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="RD Station" data-dedup-key="https://www.linkedin.com/in/felipe-bizzi" data-hr-related="Não" data-date="2026-02-27">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="RD Station" data-dedup-key="https://www.linkedin.com/in/felipe-bizzi" data-hr-related="Sim" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Felipe Bizzi</td>
                 <td>Creative Coordinator</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-27</td>
@@ -2311,10 +2311,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-dedup-key="https://www.linkedin.com/in/caio-carinhena" data-hr-related="Não" data-date="2026-03-05">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-dedup-key="https://www.linkedin.com/in/caio-carinhena" data-hr-related="Sim" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Caio Carinhena</td>
                 <td>Co-Founder & CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-05</td>
@@ -2369,10 +2369,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Endeavor" data-dedup-key="https://www.linkedin.com/in/alan-glezer-cfa-9b11701" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Endeavor" data-dedup-key="https://www.linkedin.com/in/alan-glezer-cfa-9b11701" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Alan Glezer, CFA</td>
                 <td>Founder & Co-CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-24</td>
@@ -2463,10 +2463,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Impulso" data-dedup-key="https://www.linkedin.com/in/fabianamanfredi" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Impulso" data-dedup-key="https://www.linkedin.com/in/fabianamanfredi" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Fabiana Manfredi</td>
                 <td>CEO/GM Impulso RD Saúde</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
@@ -2499,10 +2499,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-dedup-key="https://www.linkedin.com/in/avelino-amaral-22729230" data-hr-related="Não" data-date="2026-03-04">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-dedup-key="https://www.linkedin.com/in/avelino-amaral-22729230" data-hr-related="Sim" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Avelino Amaral</td>
                 <td>CEO JA Business</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-04</td>
@@ -2510,10 +2510,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-dedup-key="https://www.linkedin.com/in/avelino-amaral-22729230" data-hr-related="Não" data-date="2026-03-02">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-dedup-key="https://www.linkedin.com/in/avelino-amaral-22729230" data-hr-related="Sim" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Avelino Amaral</td>
                 <td>CEO JA Business</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-03-02</td>
@@ -2528,10 +2528,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Jeeves" data-dedup-key="https://www.linkedin.com/in/gorenstein" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Jeeves" data-dedup-key="https://www.linkedin.com/in/gorenstein" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Gustavo Gorenstein</td>
                 <td>CEO Brasil</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-24</td>
@@ -2564,10 +2564,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="LG lugar de gente" data-dedup-key="https://www.linkedin.com/in/felipeazevedo" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="LG lugar de gente" data-dedup-key="https://www.linkedin.com/in/felipeazevedo" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Felipe Azevedo</td>
                 <td>CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-24</td>
@@ -2575,10 +2575,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="LG lugar de gente" data-dedup-key="https://www.linkedin.com/in/felipeazevedo/" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="LG lugar de gente" data-dedup-key="https://www.linkedin.com/in/felipeazevedo/" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Felipe Azevedo</td>
                 <td>CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
@@ -2755,10 +2755,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="SYOS" data-dedup-key="https://www.linkedin.com/in/rodrigo-stocco" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="SYOS" data-dedup-key="https://www.linkedin.com/in/rodrigo-stocco" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Rodrigo Stocco</td>
                 <td>Coordenador Comercial - Inside Sales & SDR</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-24</td>
@@ -2766,10 +2766,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="SYOS" data-dedup-key="https://www.linkedin.com/in/rodrigo-stocco/" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="SYOS" data-dedup-key="https://www.linkedin.com/in/rodrigo-stocco/" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rodrigo Stocco</td>
                 <td>Coordenador Comercial - Inside Sales & SDR</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
@@ -3034,10 +3034,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Xepelin" data-dedup-key="https://www.linkedin.com/in/sebastiankreis" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Xepelin" data-dedup-key="https://www.linkedin.com/in/sebastiankreis" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Sebastian Kreis</td>
                 <td>Co-Founder & CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -3099,10 +3099,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Aitana" data-dedup-key="https://www.linkedin.com/in/christian-rivera-md" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Aitana" data-dedup-key="https://www.linkedin.com/in/christian-rivera-md" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Christian Rivera, MD</td>
                 <td>CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-24</td>
@@ -3164,10 +3164,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="COOPERFORTE" data-dedup-key="https://www.linkedin.com/in/asclepius-soares" data-hr-related="Não" data-date="2026-02-27">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="COOPERFORTE" data-dedup-key="https://www.linkedin.com/in/asclepius-soares" data-hr-related="Sim" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Asclepius Soares</td>
                 <td>CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-27</td>
@@ -3182,10 +3182,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-dedup-key="https://www.linkedin.com/in/rodrigo-della-rocca" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-dedup-key="https://www.linkedin.com/in/rodrigo-della-rocca" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rodrigo Della Rocca</td>
                 <td>Founder and CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
@@ -3193,10 +3193,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-dedup-key="https://www.linkedin.com/in/rodrigo-della-rocca" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-dedup-key="https://www.linkedin.com/in/rodrigo-della-rocca" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rodrigo Della Rocca</td>
                 <td>Founder and CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -3301,10 +3301,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-dedup-key="https://www.linkedin.com/in/victorhochgreb" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-dedup-key="https://www.linkedin.com/in/victorhochgreb" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Victor Hochgreb</td>
                 <td>Founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-24</td>
@@ -3312,10 +3312,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-dedup-key="https://www.linkedin.com/in/victorhochgreb" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-dedup-key="https://www.linkedin.com/in/victorhochgreb" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Victor Hochgreb</td>
                 <td>Founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-24</td>
@@ -3330,10 +3330,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Grupo Edson Queiroz" data-dedup-key="https://www.linkedin.com/in/jorge-augusto-doria-nascimento-silva-904642a" data-hr-related="Não" data-date="2026-03-03">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Grupo Edson Queiroz" data-dedup-key="https://www.linkedin.com/in/jorge-augusto-doria-nascimento-silva-904642a" data-hr-related="Sim" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Jorge Augusto Doria Nascimento Silva</td>
                 <td>Diretor Executivo de Supply Chain</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td>Não</td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-03</td>
@@ -3478,10 +3478,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="MEV" data-dedup-key="https://www.linkedin.com/in/matheus-dressler-maia" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="MEV" data-dedup-key="https://www.linkedin.com/in/matheus-dressler-maia" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Matheus Dressler Maia</td>
                 <td>⚡️CEO & Co-Fundador @MEV, eletrificando frotas</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
@@ -3496,10 +3496,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Modaxo" data-dedup-key="https://www.linkedin.com/in/douglascardoso" data-hr-related="Não" data-date="2026-03-02">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Modaxo" data-dedup-key="https://www.linkedin.com/in/douglascardoso" data-hr-related="Sim" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Douglas Cardoso</td>
                 <td>CFO / Conselheiro (Board Member) / Financial Advisor (CEA)</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-02</td>
@@ -3853,10 +3853,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="iglu" data-dedup-key="https://www.linkedin.com/in/andersoncssilva" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="iglu" data-dedup-key="https://www.linkedin.com/in/andersoncssilva" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Anderson Silva</td>
                 <td>Founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -3961,10 +3961,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Allya" data-dedup-key="https://www.linkedin.com/in/marco-ferelli-allya" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Allya" data-dedup-key="https://www.linkedin.com/in/marco-ferelli-allya" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Marco Ferelli da 🅰️lly🅰️</td>
                 <td>Founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -3972,10 +3972,10 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Allya" data-dedup-key="https://www.linkedin.com/in/marco-ferelli-allya" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Allya" data-dedup-key="https://www.linkedin.com/in/marco-ferelli-allya" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Marco Ferelli da 🅰️lly🅰️</td>
                 <td>Founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
@@ -4044,10 +4044,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Beyon l Executive Search" data-dedup-key="https://www.linkedin.com/in/felipe-harmel-8b4aa01b" data-hr-related="Não" data-date="2026-02-24">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Beyon l Executive Search" data-dedup-key="https://www.linkedin.com/in/felipe-harmel-8b4aa01b" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Felipe  Harmel</td>
                 <td>Founder & Managing Partner</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-24</td>
@@ -4138,10 +4138,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Cedar Capital" data-dedup-key="https://www.linkedin.com/in/johncurtius" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Cedar Capital" data-dedup-key="https://www.linkedin.com/in/johncurtius" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">John Curtius</td>
                 <td>Founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -4304,10 +4304,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="DreamExperience" data-dedup-key="https://www.linkedin.com/in/fredarruda" data-hr-related="Não" data-date="2026-03-05">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="DreamExperience" data-dedup-key="https://www.linkedin.com/in/fredarruda" data-hr-related="Sim" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Fred Arruda</td>
                 <td>CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-05</td>
@@ -4459,10 +4459,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Icatu Seguros" data-dedup-key="https://www.linkedin.com/in/ronaldo-marques-1a829b148" data-hr-related="Não" data-date="2026-03-02">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Icatu Seguros" data-dedup-key="https://www.linkedin.com/in/ronaldo-marques-1a829b148" data-hr-related="Sim" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Ronaldo Marques</td>
                 <td>Diretor Executivo Comercial RJ/ES na Icatu Seguros</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td>Não</td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-02</td>
@@ -4589,10 +4589,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Lima Consulting Brasil" data-dedup-key="https://www.linkedin.com/in/fuchs" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Lima Consulting Brasil" data-dedup-key="https://www.linkedin.com/in/fuchs" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Herman Fuchs</td>
                 <td>Managing Partner</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td>Não</td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -4661,10 +4661,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Mani - Consultoria de Investimentos" data-dedup-key="https://www.linkedin.com/in/andre-bain" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Mani - Consultoria de Investimentos" data-dedup-key="https://www.linkedin.com/in/andre-bain" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">André Bain</td>
                 <td>Founder @Mani - The future of wealth management</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -4679,10 +4679,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Modulo Security Solutions" data-dedup-key="https://www.linkedin.com/in/albastos" data-hr-related="Não" data-date="2026-03-06">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Modulo Security Solutions" data-dedup-key="https://www.linkedin.com/in/albastos" data-hr-related="Sim" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Alberto Bastos</td>
                 <td>CEO & CTO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-03-06</td>
@@ -4769,10 +4769,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Prefeitura Municipal do Rio Grande" data-dedup-key="https://www.linkedin.com/in/vmendesmagalhaes" data-hr-related="Não" data-date="2026-03-06">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Prefeitura Municipal do Rio Grande" data-dedup-key="https://www.linkedin.com/in/vmendesmagalhaes" data-hr-related="Sim" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Vitor Magalhães</td>
                 <td>CEO da imblue</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-06</td>
@@ -4787,10 +4787,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="QRPoint" data-dedup-key="https://www.linkedin.com/in/eduardofiuzalobo" data-hr-related="Não" data-date="2026-02-27">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="QRPoint" data-dedup-key="https://www.linkedin.com/in/eduardofiuzalobo" data-hr-related="Sim" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Eduardo Fiuza Lobo</td>
                 <td>CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-27</td>
@@ -4805,10 +4805,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="SafeSpace" data-dedup-key="https://www.linkedin.com/in/rafaela-frankenthal" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="SafeSpace" data-dedup-key="https://www.linkedin.com/in/rafaela-frankenthal" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rafaela Angelini Frankenthal</td>
                 <td>Co-fundadora e CEO</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -4985,10 +4985,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Verssys Soluções Inteligentes" data-dedup-key="https://www.linkedin.com/in/vanessa-salles" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Verssys Soluções Inteligentes" data-dedup-key="https://www.linkedin.com/in/vanessa-salles" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Vanessa Salles</td>
                 <td>Co-founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
@@ -5021,10 +5021,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Zippi" data-dedup-key="https://www.linkedin.com/in/andre-bernardes" data-hr-related="Não" data-date="2026-02-23">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Zippi" data-dedup-key="https://www.linkedin.com/in/andre-bernardes" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">André Bernardes</td>
                 <td>co-founder</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
@@ -5057,10 +5057,10 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="yume" data-dedup-key="https://www.linkedin.com/in/miguel-miguel-broedel-dos-santos" data-hr-related="Não" data-date="2026-02-25">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="yume" data-dedup-key="https://www.linkedin.com/in/miguel-miguel-broedel-dos-santos" data-hr-related="Sim" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Miguel Broedel dos Santos</td>
                 <td>Desenvolvedor e Founder @yume| Automação + IA para empresas eliminarem processos manuais | Compartilho idéias, projetos e a real por trás de empreender tech</td>
-                <td>Não</td>
+                <td>Sim</td>
                 <td><span class="badge l6-yes">L6+</span></td>
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-25</td>
@@ -5336,7 +5336,7 @@
         });
 
         // ICP Funnel Chart (Stacked trapezoids)
-        const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 112, 101, 11]};
+        const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 112, 82, 30]};
 
         // Extract values: [clientes, pipeline, prospects_total, prospects_sem_hr, prospects_com_hr]
         const clientesCount = icpStatusData.values[0];
@@ -5383,7 +5383,7 @@
                         label: 'Empresas ICP disponíveis',
                         label2: 'para prospecção',
                         sublabel: fv.prospects > 0 ? `${((fv.hr / fv.prospects) * 100).toFixed(1)}% das Empresas ICP limpas` : '—',
-                        note: '(empresas com HR related contact)'
+                        note: '(empresas com HR ou C-Level contact)'
                     }
                 ];
 
@@ -5595,7 +5595,7 @@
         });
 
         // Period data for master time filter
-        const PERIOD_DATA = {"all": {"total": 1055, "pedro_total": 473, "chris_total": 582, "unique_companies": 820, "pedro_unique": 419, "chris_unique": 539, "overlap_companies": 138, "num_icp": 135, "pedro_icp": 75, "chris_icp": 87, "overlap_icp": 27, "icp_rate": 16.5, "pedro_rate": 17.9, "chris_rate": 16.1, "prospects_with_hr": 11, "pedro_hr": 8, "chris_hr": 6, "overlap_hr": 3, "hr_rate": 8.1, "pedro_hr_rate": 10.7, "chris_hr_rate": 6.9, "timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [227, 116, 30, 23, 13, 5, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [251, 109, 28, 44, 13, 20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [624, 135, 61]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [313, 75, 31]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [414, 87, 38]}, "funnel": {"total": 135, "prospects": 112, "hr": 11}}, "week": {"total": 197, "pedro_total": 60, "chris_total": 137, "unique_companies": 178, "pedro_unique": 60, "chris_unique": 134, "overlap_companies": 16, "num_icp": 32, "pedro_icp": 16, "chris_icp": 21, "overlap_icp": 5, "icp_rate": 18.0, "pedro_rate": 26.7, "chris_rate": 15.7, "prospects_with_hr": 2, "pedro_hr": 2, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 6.2, "pedro_hr_rate": 12.5, "chris_hr_rate": 0.0, "timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [123, 32, 23]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [36, 16, 8]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [96, 21, 17]}, "funnel": {"total": 32, "prospects": 23, "hr": 2}}, "day": {"total": 18, "pedro_total": 11, "chris_total": 7, "unique_companies": 16, "pedro_unique": 11, "chris_unique": 7, "overlap_companies": 2, "num_icp": 0, "pedro_icp": 0, "chris_icp": 0, "overlap_icp": 0, "icp_rate": 0.0, "pedro_rate": 0.0, "chris_rate": 0.0, "prospects_with_hr": 0, "pedro_hr": 0, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 0, "pedro_hr_rate": 0, "chris_hr_rate": 0, "timeline": {"dates": ["2026-03-06"], "counts": [18]}, "pedro_timeline": {"dates": ["2026-03-06"], "counts": [11]}, "chris_timeline": {"dates": ["2026-03-06"], "counts": [7]}, "icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [13, 3]}, "pedro_icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [8, 3]}, "chris_icp_distribution": {"labels": ["Uncategorized"], "values": [7]}, "funnel": {"total": 0, "prospects": 0, "hr": 0}}};
+        const PERIOD_DATA = {"all": {"total": 1055, "pedro_total": 473, "chris_total": 582, "unique_companies": 820, "pedro_unique": 419, "chris_unique": 539, "overlap_companies": 138, "num_icp": 135, "pedro_icp": 75, "chris_icp": 87, "overlap_icp": 27, "icp_rate": 16.5, "pedro_rate": 17.9, "chris_rate": 16.1, "prospects_with_hr": 30, "pedro_hr": 19, "chris_hr": 18, "overlap_hr": 7, "hr_rate": 22.2, "pedro_hr_rate": 25.3, "chris_hr_rate": 20.7, "timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [227, 116, 30, 23, 13, 5, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [251, 109, 28, 44, 13, 20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [624, 135, 61]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [313, 75, 31]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [414, 87, 38]}, "funnel": {"total": 135, "prospects": 112, "hr": 30}}, "week": {"total": 197, "pedro_total": 60, "chris_total": 137, "unique_companies": 178, "pedro_unique": 60, "chris_unique": 134, "overlap_companies": 16, "num_icp": 32, "pedro_icp": 16, "chris_icp": 21, "overlap_icp": 5, "icp_rate": 18.0, "pedro_rate": 26.7, "chris_rate": 15.7, "prospects_with_hr": 7, "pedro_hr": 4, "chris_hr": 4, "overlap_hr": 1, "hr_rate": 21.9, "pedro_hr_rate": 25.0, "chris_hr_rate": 19.0, "timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [123, 32, 23]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [36, 16, 8]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [96, 21, 17]}, "funnel": {"total": 32, "prospects": 23, "hr": 7}}, "day": {"total": 18, "pedro_total": 11, "chris_total": 7, "unique_companies": 16, "pedro_unique": 11, "chris_unique": 7, "overlap_companies": 2, "num_icp": 0, "pedro_icp": 0, "chris_icp": 0, "overlap_icp": 0, "icp_rate": 0.0, "pedro_rate": 0.0, "chris_rate": 0.0, "prospects_with_hr": 0, "pedro_hr": 0, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 0, "pedro_hr_rate": 0, "chris_hr_rate": 0, "timeline": {"dates": ["2026-03-06"], "counts": [18]}, "pedro_timeline": {"dates": ["2026-03-06"], "counts": [11]}, "chris_timeline": {"dates": ["2026-03-06"], "counts": [7]}, "icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [13, 3]}, "pedro_icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [8, 3]}, "chris_icp_distribution": {"labels": ["Uncategorized"], "values": [7]}, "funnel": {"total": 0, "prospects": 0, "hr": 0}}};
 
         function applyPeriodFilter(period) {
             // Update active button
@@ -6185,7 +6185,7 @@
             });
 
             // Get data
-            const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 112, 101, 11]};
+            const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 112, 82, 30]};
             const clientesCount = icpStatusData.values[0];
             const pipelineCount = icpStatusData.values[1];
             const prospectsTotal = icpStatusData.values[2];
@@ -6199,8 +6199,8 @@
                 'Clientes Comp',
                 'Pipeline',
                 'Prospects',
-                'Prospects s/ HR',
-                'Prospects c/ HR'
+                'Prospects s/ HR ou C-Level',
+                'Prospects c/ HR ou C-Level'
             ];
 
             let cumulative = icpStatusTotal;
@@ -6226,12 +6226,12 @@
             // Restart for prospects breakdown
             cumulative = prospectsTotal;
 
-            // Prospects sem HR
+            // Prospects sem HR ou C-Level
             start = cumulative;
             cumulative -= prospectsSemHR;
             waterfallData.push([cumulative, start]);
 
-            // Prospects com HR
+            // Prospects com HR ou C-Level
             start = cumulative;
             cumulative -= prospectsComHR;
             waterfallData.push([cumulative, start]);
