@@ -99,12 +99,46 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
+        .chart-title {
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #444 !important;
+            margin: 0 0 16px 0 !important;
+            padding-bottom: 12px !important;
+            border-bottom: 2px solid #ebebeb !important;
+            display: block !important;
+        }
+
+        .chart-title .hint {
+            font-size: 11px;
+            font-weight: 400;
+            color: #bbb;
+            margin-left: 6px;
+        }
+
         .kpi-label {
-            font-size: 16px;
-            font-weight: 700;
-            color: #999;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #444 !important;
+            margin: 0 0 16px 0 !important;
+            padding-bottom: 12px !important;
+            border-bottom: 2px solid #ebebeb !important;
+            display: block !important;
+        }
+
+        .chart-subtitle {
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #444 !important;
+            margin: 0 0 16px 0 !important;
+            padding-bottom: 12px !important;
+            border-bottom: 2px solid #ebebeb !important;
+            text-align: center !important;
+        }
+
+        .chart-subtitle.highlight {
+            color: #FF4757 !important;
+            border-bottom-color: #FF4757 !important;
         }
 
         .kpi-value {
@@ -169,13 +203,6 @@
             box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2);
         }
 
-        .chart-container h2 {
-            color: #FF4757;
-            font-size: 20px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #FF4757;
-            padding-bottom: 10px;
-        }
 
         .chart-wrapper {
             position: relative;
@@ -191,13 +218,6 @@
             margin-bottom: 30px;
         }
 
-        .table-section h2 {
-            color: #FF4757;
-            font-size: 24px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #FF4757;
-            padding-bottom: 10px;
-        }
 
         .table-filters {
             margin-bottom: 20px;
@@ -550,7 +570,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 22:12</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 23:16</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -583,19 +603,19 @@
             <div class="kpi-card">
                 <div class="kpi-label">ICPs Disponíveis para Prospecção</div>
                 <div style="margin-bottom: 15px;">
-                    <div class="kpi-value" id="kpi-actionable">11</div>
+                    <div class="kpi-value" id="kpi-actionable">19</div>
                     <div class="kpi-description">empresas ICP c/ HR related contact</div>
-                    <div class="kpi-breakdown" id="kpi-actionable-breakdown">6 Chris | 8 Pedro | 3 ambos</div>
+                    <div class="kpi-breakdown" id="kpi-actionable-breakdown">10 Chris | 15 Pedro | 6 ambos</div>
                 </div>
                 <div>
-                    <div class="kpi-value" id="kpi-hr-rate">8.1%</div>
-                    <div class="kpi-description">disponíveis / total ICP</div>
-                    <div class="kpi-breakdown" id="kpi-rate-breakdown">6.9% Chris | 10.7% Pedro</div>
+                    <div class="kpi-value" id="kpi-hr-rate">14.1%</div>
+                    <div class="kpi-description">do total de empresas ICP</div>
+                    <div class="kpi-breakdown" id="kpi-rate-breakdown">11.5% Chris | 20.0% Pedro</div>
                 </div>
             </div>
 
             <div class="chart-in-grid" id="timelineChartContainer" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #FF4757; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';" onmouseout="this.style.transform=''; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)';" onclick="openTimelineModal()">
-                <h2 style="margin: 0 0 15px 0; font-size: 16px; color: #333;">📊 Timeline de Conexões <span style="font-size: 12px; color: #999;">(clique para ampliar)</span></h2>
+                <h2 class="chart-title">📊 Timeline de Conexões <span class="hint">(clique para ampliar)</span></h2>
                 <div style="height: 200px;">
                     <canvas id="timelineChart"></canvas>
                 </div>
@@ -605,14 +625,14 @@
         <!-- Gráficos ICP & Bridge -->
         <div class="chart-row">
             <div class="chart-container featured" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';" onmouseout="this.style.transform=''; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)';" onclick="openIcpModal()">
-                <h2>📊 Consolidado - Distribuição ICP <span style="font-size: 12px; color: #999; font-weight: normal;">(clique para ampliar)</span></h2>
+                <h2 class="chart-title">📊 Consolidado - Distribuição ICP <span class="hint">(clique para ampliar)</span></h2>
                 <div class="chart-wrapper">
                     <canvas id="icpChart"></canvas>
                 </div>
             </div>
 
             <div class="chart-container featured" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';" onmouseout="this.style.transform=''; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)';" onclick="openWaterfallModal()">
-                <h2>🎯 Alcance total de ICPs para ICPs disponíveis para prospecção <span style="font-size: 12px; color: #999; font-weight: normal;">(clique para ampliar)</span></h2>
+                <h2 class="chart-title">🎯 Alcance total de ICPs para ICPs disponíveis para prospecção <span class="hint">(clique para ampliar)</span></h2>
                 <div class="chart-wrapper" style="height: 350px;">
                     <canvas id="icpFunnelChart"></canvas>
                 </div>
@@ -628,7 +648,7 @@
         <!-- Top Contacts Table -->
         <div class="table-section">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="margin: 0;">🎯 Abertura completa (ICP + Não Classificado)</h2>
+                <h2 class="chart-title">🎯 Abertura completa (ICP + Não Classificado)</h2>
                 <div id="tableCounter" style="background: #FF4757; color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold;">
                     📊 <span id="visibleCompaniesCount">196</span> empresas | <span id="visibleLeadsCount">229</span> contatos
                 </div>
@@ -695,662 +715,6 @@
                 </thead>
                 <tbody>
                     
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-status="Cliente">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 CRMBonus <span class="badge icp-high">High Priority</span> <span class="badge badge-client" title="Match com: CRM Bônus (94%)">🟢 Cliente Comp</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-dedup-key="https://www.linkedin.com/in/carolinaleite01" data-hr-related="Não" data-date="2026-03-03">
-                <td style="padding-left: 30px;">Carol Leite</td>
-                <td>Analista Folha de Pagamento</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-03-03</td>
-                <td><a href="https://www.linkedin.com/in/carolinaleite01" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-dedup-key="https://www.linkedin.com/in/carolinaleite01" data-hr-related="Não" data-date="2026-03-01">
-                <td style="padding-left: 30px;">Carol Leite</td>
-                <td>Analista Folha de Pagamento</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-03-01</td>
-                <td><a href="https://www.linkedin.com/in/carolinaleite01" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-status="Cliente">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Conta Simples <span class="badge icp-low">Low Priority</span> <span class="badge badge-client">🟢 Cliente Comp</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/beatriz-santana-trova" data-hr-related="Sim" data-date="2026-02-27">
-                <td style="padding-left: 30px;">Beatriz Santana Trova</td>
-                <td>Senior People Operations, Payroll & Benefits</td>
-                <td>Sim</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-27</td>
-                <td><a href="https://www.linkedin.com/in/beatriz-santana-trova" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/kellyjmesquita" data-hr-related="Sim" data-date="2026-02-26">
-                <td style="padding-left: 30px;">Kelly  Mesquita</td>
-                <td>Talent Acquisition Team Lead</td>
-                <td>Sim</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-26</td>
-                <td><a href="https://www.linkedin.com/in/kellyjmesquita" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/igor-souza-fonseca" data-hr-related="Não" data-date="2026-02-25">
-                <td style="padding-left: 30px;">Igor Fonseca</td>
-                <td>DHO</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-25</td>
-                <td><a href="https://www.linkedin.com/in/igor-souza-fonseca" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Genial Investimentos" data-status="Cliente">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Genial Investimentos <span class="badge icp-low">Low Priority</span> <span class="badge badge-client">🟢 Cliente Comp</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Genial Investimentos" data-dedup-key="https://www.linkedin.com/in/larissa-a-santos" data-hr-related="Sim" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Larissa Santos</td>
-                <td>Talent Attraction</td>
-                <td>Sim</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/larissa-a-santos" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-status="Cliente">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 QI Tech <span class="badge icp-low">Low Priority</span> <span class="badge badge-client">🟢 Cliente Comp</span> <span style="color: #666; font-weight: normal;">(5 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/leozbravo" data-hr-related="Sim" data-date="2026-03-04">
-                <td style="padding-left: 30px;">Leonardo  Bravo</td>
-                <td>HR Senior Manager</td>
-                <td>Sim</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-03-04</td>
-                <td><a href="https://www.linkedin.com/in/leozbravo" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/viniciussittart" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Vinícius Sittart Costa</td>
-                <td>Driving Payments</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/viniciussittart" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/viniciussittart" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Vinícius Sittart Costa</td>
-                <td>Driving Payments</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/viniciussittart" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/beni-sztokfisz-11303b145" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Beni Sztokfisz</td>
-                <td>Helping technology companies build better payments, credit and financial products</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/beni-sztokfisz-11303b145" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/sarah-carbaca-celin" data-hr-related="Sim" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Sarah Carbaca Celin</td>
-                <td>People & Culture</td>
-                <td>Sim</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/sarah-carbaca-celin" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="RecargaPay" data-status="Cliente">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 RecargaPay <span class="badge icp-low">Low Priority</span> <span class="badge badge-client">🟢 Cliente Comp</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="RecargaPay" data-dedup-key="https://www.linkedin.com/in/priscillamlopez" data-hr-related="Não" data-date="2026-02-26">
-                <td style="padding-left: 30px;">Priscilla Mistura Lopez</td>
-                <td>Relações com Investidores</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-26</td>
-                <td><a href="https://www.linkedin.com/in/priscillamlopez" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="enjoei" data-status="Cliente">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 enjoei <span class="badge icp-low">Low Priority</span> <span class="badge badge-client">🟢 Cliente Comp</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="enjoei" data-dedup-key="https://www.linkedin.com/in/césar-lincoln-137a51177" data-hr-related="Sim" data-date="2026-02-23">
-                <td style="padding-left: 30px;">César Lincoln</td>
-                <td>HR Business Partner</td>
-                <td>Sim</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/césar-lincoln-137a51177" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="iFood" data-status="Cliente">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 iFood <span class="badge icp-low">Low Priority</span> <span class="badge badge-client">🟢 Cliente Comp</span> <span style="color: #666; font-weight: normal;">(4 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/marcosfreiregurgel" data-hr-related="Não" data-date="2026-03-03">
-                <td style="padding-left: 30px;">Marcos Freire Gurgel</td>
-                <td>Revolutionizing how companies use AI 🚀</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-03-03</td>
-                <td><a href="https://www.linkedin.com/in/marcosfreiregurgel" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/marcosfreiregurgel" data-hr-related="Não" data-date="2026-03-03">
-                <td style="padding-left: 30px;">Marcos Freire Gurgel</td>
-                <td>Revolutionizing how companies use AI 🚀</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-03-03</td>
-                <td><a href="https://www.linkedin.com/in/marcosfreiregurgel" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/lucas-magno-couto" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Lucas Magno</td>
-                <td>Product Manager • Growth • Fintech • @iFood</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/lucas-magno-couto" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/carolinasjt" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Carolina Teixeira</td>
-                <td>Corporate Development</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/carolinasjt" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Brex" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Brex <span class="badge icp-high">High Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(4 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/jferrufino" data-hr-related="Não" data-date="2026-03-03">
-                <td style="padding-left: 30px;">Josh “FINO” Ferrufino</td>
-                <td>Strategic GTM - Startups</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-03-03</td>
-                <td><a href="https://www.linkedin.com/in/jferrufino" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/jferrufino" data-hr-related="Não" data-date="2026-03-03">
-                <td style="padding-left: 30px;">Josh “FINO” Ferrufino</td>
-                <td>Strategic GTM - Startups</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-03-03</td>
-                <td><a href="https://www.linkedin.com/in/jferrufino" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/thales-pereira-jesus" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Thales Pereira</td>
-                <td>Senior Software Engineer</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/thales-pereira-jesus" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/camilla-matias-06345a105" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Camilla Matias</td>
-                <td>COO</td>
-                <td>Não</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/camilla-matias-06345a105" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Galapagos Capital <span class="badge icp-high">High Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/daniele-gonçalves-18058b148" data-hr-related="Não" data-date="2026-03-03">
-                <td style="padding-left: 30px;">Daniele Gonçalves</td>
-                <td>Partner</td>
-                <td>Não</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-03-03</td>
-                <td><a href="https://www.linkedin.com/in/daniele-gonçalves-18058b148" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/guilhermeabritta1" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Guilherme Rocha</td>
-                <td>Financial Data Analyst</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/guilhermeabritta1" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/thomas-wever-a8848111a" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Thomas Wever</td>
-                <td>Investment Banking</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/thomas-wever-a8848111a" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Coaktion" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Coaktion <span class="badge icp-medium">Medium Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Coaktion" data-dedup-key="https://www.linkedin.com/in/flavia-b-rezende" data-hr-related="Sim" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Flávia Rezende</td>
-                <td>Executiva de RH</td>
-                <td>Sim</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/flavia-b-rezende" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="MaisTODOS" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 MaisTODOS <span class="badge icp-medium">Medium Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="MaisTODOS" data-dedup-key="https://www.linkedin.com/in/joaolucashallwasbueno" data-hr-related="Não" data-date="2026-03-01">
-                <td style="padding-left: 30px;">João Lucas Hallwas Bueno</td>
-                <td>Group Product Manager</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-03-01</td>
-                <td><a href="https://www.linkedin.com/in/joaolucashallwasbueno" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Segura" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Segura <span class="badge icp-medium">Medium Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Segura" data-dedup-key="https://www.linkedin.com/in/bebetobn" data-hr-related="Não" data-date="2026-03-03">
-                <td style="padding-left: 30px;">Luís Alberto Nogueira</td>
-                <td>CEO</td>
-                <td>Não</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-03-03</td>
-                <td><a href="https://www.linkedin.com/in/bebetobn" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 TRACTIAN <span class="badge icp-medium">Medium Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/sza-bianca" data-hr-related="Sim" data-date="2026-02-25">
-                <td style="padding-left: 30px;">Bianca de Souza</td>
-                <td>Tech Talent Acquisition l</td>
-                <td>Sim</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-25</td>
-                <td><a href="https://www.linkedin.com/in/sza-bianca" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/igmarinelli" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Igor Marinelli</td>
-                <td>🧢 Founder, CEO</td>
-                <td>Não</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/igmarinelli" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN 𝗕𝗥" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 TRACTIAN 𝗕𝗥 <span class="badge icp-medium">Medium Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN 𝗕𝗥" data-dedup-key="https://www.linkedin.com/in/luizadelgrande" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Luiza Del Grande</td>
-                <td>Head of Recruitment</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/luizadelgrande" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 180 Seguros <span class="badge icp-low">Low Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/patricia-siequeroli" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Patricia Siequeroli</td>
-                <td>Estratégia e Planejamento Comercial</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/patricia-siequeroli" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/patricia-siequeroli" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Patricia Siequeroli</td>
-                <td>Estratégia e Planejamento Comercial</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/patricia-siequeroli" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/maurolevidancona" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Mauro Levi D'Ancona</td>
-                <td>Co-Founder & CEO</td>
-                <td>Não</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/maurolevidancona" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Alice" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Alice <span class="badge icp-low">Low Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Alice" data-dedup-key="https://www.linkedin.com/in/guilherme-pandjiarjian-8928661bb" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Guilherme  Pandjiarjian</td>
-                <td>Making the world healthier</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/guilherme-pandjiarjian-8928661bb" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Azion" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Azion <span class="badge icp-low">Low Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Azion" data-dedup-key="https://www.linkedin.com/in/lucas-aguiar-0709b633" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Lucas Aguiar</td>
-                <td>Computer Engineer</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/lucas-aguiar-0709b633" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Azion" data-dedup-key="https://www.linkedin.com/in/lucas-br-aguiar" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Lucas Aguiar</td>
-                <td>Computer Engineer</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/lucas-br-aguiar" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Bionexo" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Bionexo <span class="badge icp-low">Low Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Bionexo" data-dedup-key="https://www.linkedin.com/in/mhbassomacedo" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Mateus Henrique Basso Macedo</td>
-                <td>Software Development Specialist</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/mhbassomacedo" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Flash" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Flash <span class="badge icp-low">Low Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Flash" data-dedup-key="https://www.linkedin.com/in/lucas-pirito-silva" data-hr-related="Sim" data-date="2026-03-04">
-                <td style="padding-left: 30px;">Lucas Pirito</td>
-                <td>Head of People</td>
-                <td>Sim</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-03-04</td>
-                <td><a href="https://www.linkedin.com/in/lucas-pirito-silva" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Juntos Somos Mais" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Juntos Somos Mais <span class="badge icp-low">Very Low Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Juntos Somos Mais" data-dedup-key="https://www.linkedin.com/in/davirizzo123" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Davi Rizzo</td>
-                <td>Business</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/davirizzo123" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Loft <span class="badge icp-low">Very Low Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/sanguedemonstro" data-hr-related="Não" data-date="2026-03-02">
-                <td style="padding-left: 30px;">João Paulo Melo</td>
-                <td>Staff Software Engineer na Loft</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-03-02</td>
-                <td><a href="https://www.linkedin.com/in/sanguedemonstro" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/matepencz" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Mate Pencz</td>
-                <td>Founder and CEO</td>
-                <td>Não</td>
-                <td><span class="badge l6-yes">L6+</span></td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/matepencz" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 Patria Investments <span class="badge icp-low">Very Low Priority</span> <span class="badge badge-pipeline" title="Match com: Pátria Investimentos (95%)">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-dedup-key="https://www.linkedin.com/in/thales-barbosa-816310185" data-hr-related="Não" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Thales Barbosa</td>
-                <td>Corporate M&A</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/thales-barbosa-816310185" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-dedup-key="https://www.linkedin.com/in/thales-barbosa-816310185/" data-hr-related="Não" data-date="2026-02-23">
-                <td style="padding-left: 30px;">Thales Barbosa</td>
-                <td>Corporate M&A</td>
-                <td>Não</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-23</td>
-                <td><a href="https://www.linkedin.com/in/thales-barbosa-816310185/" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-status="Pipeline">
-            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
-                🏢 wehandle <span class="badge icp-low">Very Low Priority</span> <span class="badge badge-pipeline">🟡 Pipeline</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
-            </td>
-        </tr>
-        
-
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-dedup-key="https://www.linkedin.com/in/tamiriisdias" data-hr-related="Sim" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Tamiris Dias</td>
-                <td>HR Manager @wehandle</td>
-                <td>Sim</td>
-                <td>Não</td>
-                <td><span class="badge badge-pedro">Pedro</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/tamiriisdias" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-dedup-key="https://www.linkedin.com/in/tamiriisdias" data-hr-related="Sim" data-date="2026-02-24">
-                <td style="padding-left: 30px;">Tamiris Dias</td>
-                <td>HR Manager @wehandle</td>
-                <td>Sim</td>
-                <td>Não</td>
-                <td><span class="badge badge-chris">Christophe</span></td>
-                <td>2026-02-24</td>
-                <td><a href="https://www.linkedin.com/in/tamiriisdias" class="linkedin-link" target="_blank">Ver perfil</a></td>
-            </tr>
-            
-
         <tr class="company-header" data-icp-category="ICP — High Priority" data-company="AlphaSense" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 AlphaSense <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
@@ -1445,6 +809,86 @@
             </tr>
             
 
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Brex" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Brex <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(4 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/jferrufino" data-hr-related="Não" data-date="2026-03-03">
+                <td style="padding-left: 30px;">Josh “FINO” Ferrufino</td>
+                <td>Strategic GTM - Startups</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-03-03</td>
+                <td><a href="https://www.linkedin.com/in/jferrufino" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/jferrufino" data-hr-related="Não" data-date="2026-03-03">
+                <td style="padding-left: 30px;">Josh “FINO” Ferrufino</td>
+                <td>Strategic GTM - Startups</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-03-03</td>
+                <td><a href="https://www.linkedin.com/in/jferrufino" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/thales-pereira-jesus" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Thales Pereira</td>
+                <td>Senior Software Engineer</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/thales-pereira-jesus" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/camilla-matias-06345a105" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Camilla Matias</td>
+                <td>COO</td>
+                <td>Não</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/camilla-matias-06345a105" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 CRMBonus <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-dedup-key="https://www.linkedin.com/in/carolinaleite01" data-hr-related="Não" data-date="2026-03-03">
+                <td style="padding-left: 30px;">Carol Leite</td>
+                <td>Analista Folha de Pagamento</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-03-03</td>
+                <td><a href="https://www.linkedin.com/in/carolinaleite01" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-dedup-key="https://www.linkedin.com/in/carolinaleite01" data-hr-related="Não" data-date="2026-03-01">
+                <td style="padding-left: 30px;">Carol Leite</td>
+                <td>Analista Folha de Pagamento</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-03-01</td>
+                <td><a href="https://www.linkedin.com/in/carolinaleite01" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
         <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Conexa Saúde" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Conexa Saúde <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
@@ -1525,6 +969,46 @@
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
                 <td><a href="https://www.linkedin.com/in/eintrater" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Galapagos Capital <span class="badge icp-high">High Priority</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/daniele-gonçalves-18058b148" data-hr-related="Não" data-date="2026-03-03">
+                <td style="padding-left: 30px;">Daniele Gonçalves</td>
+                <td>Partner</td>
+                <td>Não</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-03-03</td>
+                <td><a href="https://www.linkedin.com/in/daniele-gonçalves-18058b148" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/guilhermeabritta1" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Guilherme Rocha</td>
+                <td>Financial Data Analyst</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/guilhermeabritta1" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/thomas-wever-a8848111a" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Thomas Wever</td>
+                <td>Investment Banking</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/thomas-wever-a8848111a" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -1712,6 +1196,24 @@
             </tr>
             
 
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Coaktion" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Coaktion <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Coaktion" data-dedup-key="https://www.linkedin.com/in/flavia-b-rezende" data-hr-related="Sim" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Flávia Rezende</td>
+                <td>Executiva de RH</td>
+                <td>Sim</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/flavia-b-rezende" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
         <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Deel Local Payroll, powered by PaySpace" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Deel Local Payroll, powered by PaySpace <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
@@ -1810,6 +1312,24 @@
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-03-02</td>
                 <td><a href="https://www.linkedin.com/in/victor-satoh" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="MaisTODOS" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 MaisTODOS <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="MaisTODOS" data-dedup-key="https://www.linkedin.com/in/joaolucashallwasbueno" data-hr-related="Não" data-date="2026-03-01">
+                <td style="padding-left: 30px;">João Lucas Hallwas Bueno</td>
+                <td>Group Product Manager</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-03-01</td>
+                <td><a href="https://www.linkedin.com/in/joaolucashallwasbueno" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -1983,6 +1503,24 @@
             </tr>
             
 
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Segura" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Segura <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Segura" data-dedup-key="https://www.linkedin.com/in/bebetobn" data-hr-related="Não" data-date="2026-03-03">
+                <td style="padding-left: 30px;">Luís Alberto Nogueira</td>
+                <td>CEO</td>
+                <td>Não</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-03-03</td>
+                <td><a href="https://www.linkedin.com/in/bebetobn" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
         <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="Sem Parar" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Sem Parar <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
@@ -1998,6 +1536,53 @@
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
                 <td><a href="https://www.linkedin.com/in/gabrielportob" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 TRACTIAN <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/sza-bianca" data-hr-related="Sim" data-date="2026-02-25">
+                <td style="padding-left: 30px;">Bianca de Souza</td>
+                <td>Tech Talent Acquisition l</td>
+                <td>Sim</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-25</td>
+                <td><a href="https://www.linkedin.com/in/sza-bianca" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/igmarinelli" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Igor Marinelli</td>
+                <td>🧢 Founder, CEO</td>
+                <td>Não</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/igmarinelli" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN 𝗕𝗥" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 TRACTIAN 𝗕𝗥 <span class="badge icp-medium">Medium Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN 𝗕𝗥" data-dedup-key="https://www.linkedin.com/in/luizadelgrande" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Luiza Del Grande</td>
+                <td>Head of Recruitment</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/luizadelgrande" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -2084,6 +1669,64 @@
             </tr>
             
 
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 180 Seguros <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/patricia-siequeroli" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Patricia Siequeroli</td>
+                <td>Estratégia e Planejamento Comercial</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/patricia-siequeroli" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/patricia-siequeroli" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Patricia Siequeroli</td>
+                <td>Estratégia e Planejamento Comercial</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/patricia-siequeroli" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/maurolevidancona" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Mauro Levi D'Ancona</td>
+                <td>Co-Founder & CEO</td>
+                <td>Não</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/maurolevidancona" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Alice" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Alice <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Alice" data-dedup-key="https://www.linkedin.com/in/guilherme-pandjiarjian-8928661bb" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Guilherme  Pandjiarjian</td>
+                <td>Making the world healthier</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/guilherme-pandjiarjian-8928661bb" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
         <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="AppsFlyer" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 AppsFlyer <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
@@ -2120,6 +1763,35 @@
             </tr>
             
 
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Azion" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Azion <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Azion" data-dedup-key="https://www.linkedin.com/in/lucas-aguiar-0709b633" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Lucas Aguiar</td>
+                <td>Computer Engineer</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/lucas-aguiar-0709b633" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Azion" data-dedup-key="https://www.linkedin.com/in/lucas-br-aguiar" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Lucas Aguiar</td>
+                <td>Computer Engineer</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/lucas-br-aguiar" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
         <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Base Power Company" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Base Power Company <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
@@ -2135,6 +1807,24 @@
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-01</td>
                 <td><a href="https://www.linkedin.com/in/adam-bloom-71206b178" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Bionexo" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Bionexo <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Bionexo" data-dedup-key="https://www.linkedin.com/in/mhbassomacedo" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Mateus Henrique Basso Macedo</td>
+                <td>Software Development Specialist</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/mhbassomacedo" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -2214,6 +1904,46 @@
             </tr>
             
 
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Conta Simples <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(3 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/beatriz-santana-trova" data-hr-related="Sim" data-date="2026-02-27">
+                <td style="padding-left: 30px;">Beatriz Santana Trova</td>
+                <td>Senior People Operations, Payroll & Benefits</td>
+                <td>Sim</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-27</td>
+                <td><a href="https://www.linkedin.com/in/beatriz-santana-trova" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/kellyjmesquita" data-hr-related="Sim" data-date="2026-02-26">
+                <td style="padding-left: 30px;">Kelly  Mesquita</td>
+                <td>Talent Acquisition Team Lead</td>
+                <td>Sim</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-26</td>
+                <td><a href="https://www.linkedin.com/in/kellyjmesquita" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/igor-souza-fonseca" data-hr-related="Não" data-date="2026-02-25">
+                <td style="padding-left: 30px;">Igor Fonseca</td>
+                <td>DHO</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-25</td>
+                <td><a href="https://www.linkedin.com/in/igor-souza-fonseca" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
         <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="EXA" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 EXA <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
@@ -2287,6 +2017,42 @@
                 <td><span class="badge badge-pedro">Pedro</span></td>
                 <td>2026-02-23</td>
                 <td><a href="https://www.linkedin.com/in/michel-madeira/" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Flash" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Flash <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Flash" data-dedup-key="https://www.linkedin.com/in/lucas-pirito-silva" data-hr-related="Sim" data-date="2026-03-04">
+                <td style="padding-left: 30px;">Lucas Pirito</td>
+                <td>Head of People</td>
+                <td>Sim</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-03-04</td>
+                <td><a href="https://www.linkedin.com/in/lucas-pirito-silva" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="Genial Investimentos" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Genial Investimentos <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Genial Investimentos" data-dedup-key="https://www.linkedin.com/in/larissa-a-santos" data-hr-related="Sim" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Larissa Santos</td>
+                <td>Talent Attraction</td>
+                <td>Sim</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/larissa-a-santos" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -2564,6 +2330,68 @@
             </tr>
             
 
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 QI Tech <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(5 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/leozbravo" data-hr-related="Sim" data-date="2026-03-04">
+                <td style="padding-left: 30px;">Leonardo  Bravo</td>
+                <td>HR Senior Manager</td>
+                <td>Sim</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-03-04</td>
+                <td><a href="https://www.linkedin.com/in/leozbravo" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/viniciussittart" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Vinícius Sittart Costa</td>
+                <td>Driving Payments</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/viniciussittart" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/viniciussittart" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Vinícius Sittart Costa</td>
+                <td>Driving Payments</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/viniciussittart" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/beni-sztokfisz-11303b145" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Beni Sztokfisz</td>
+                <td>Helping technology companies build better payments, credit and financial products</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/beni-sztokfisz-11303b145" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/sarah-carbaca-celin" data-hr-related="Sim" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Sarah Carbaca Celin</td>
+                <td>People & Culture</td>
+                <td>Sim</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/sarah-carbaca-celin" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
         <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="RankMyApp" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 RankMyApp <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
@@ -2597,6 +2425,24 @@
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
                 <td><a href="https://www.linkedin.com/in/charlieminard" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="RecargaPay" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 RecargaPay <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="RecargaPay" data-dedup-key="https://www.linkedin.com/in/priscillamlopez" data-hr-related="Não" data-date="2026-02-26">
+                <td style="padding-left: 30px;">Priscilla Mistura Lopez</td>
+                <td>Relações com Investidores</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-26</td>
+                <td><a href="https://www.linkedin.com/in/priscillamlopez" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -2912,6 +2758,75 @@
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
                 <td><a href="https://www.linkedin.com/in/sebastiankreis" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="enjoei" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 enjoei <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="enjoei" data-dedup-key="https://www.linkedin.com/in/césar-lincoln-137a51177" data-hr-related="Sim" data-date="2026-02-23">
+                <td style="padding-left: 30px;">César Lincoln</td>
+                <td>HR Business Partner</td>
+                <td>Sim</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/césar-lincoln-137a51177" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Low Priority" data-company="iFood" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 iFood <span class="badge icp-low">Low Priority</span> <span style="color: #666; font-weight: normal;">(4 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/marcosfreiregurgel" data-hr-related="Não" data-date="2026-03-03">
+                <td style="padding-left: 30px;">Marcos Freire Gurgel</td>
+                <td>Revolutionizing how companies use AI 🚀</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-03-03</td>
+                <td><a href="https://www.linkedin.com/in/marcosfreiregurgel" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/marcosfreiregurgel" data-hr-related="Não" data-date="2026-03-03">
+                <td style="padding-left: 30px;">Marcos Freire Gurgel</td>
+                <td>Revolutionizing how companies use AI 🚀</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-03-03</td>
+                <td><a href="https://www.linkedin.com/in/marcosfreiregurgel" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/lucas-magno-couto" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Lucas Magno</td>
+                <td>Product Manager • Growth • Fintech • @iFood</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/lucas-magno-couto" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/carolinasjt" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Carolina Teixeira</td>
+                <td>Corporate Development</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/carolinasjt" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -3276,6 +3191,24 @@
             </tr>
             
 
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Juntos Somos Mais" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Juntos Somos Mais <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Juntos Somos Mais" data-dedup-key="https://www.linkedin.com/in/davirizzo123" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Davi Rizzo</td>
+                <td>Business</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/davirizzo123" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
         <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Kiln" data-status="Prospect">
             <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
                 🏢 Kiln <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(1 contato)</span>
@@ -3338,6 +3271,35 @@
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-04</td>
                 <td><a href="https://www.linkedin.com/in/summer-hutchison-6b8062198" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Loft <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/sanguedemonstro" data-hr-related="Não" data-date="2026-03-02">
+                <td style="padding-left: 30px;">João Paulo Melo</td>
+                <td>Staff Software Engineer na Loft</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-03-02</td>
+                <td><a href="https://www.linkedin.com/in/sanguedemonstro" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/matepencz" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Mate Pencz</td>
+                <td>Founder and CEO</td>
+                <td>Não</td>
+                <td><span class="badge l6-yes">L6+</span></td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/matepencz" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -3439,6 +3401,35 @@
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-03-04</td>
                 <td><a href="https://www.linkedin.com/in/eduardo-de-toledo-2b8329" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 Patria Investments <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-dedup-key="https://www.linkedin.com/in/thales-barbosa-816310185" data-hr-related="Não" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Thales Barbosa</td>
+                <td>Corporate M&A</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/thales-barbosa-816310185" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-dedup-key="https://www.linkedin.com/in/thales-barbosa-816310185/" data-hr-related="Não" data-date="2026-02-23">
+                <td style="padding-left: 30px;">Thales Barbosa</td>
+                <td>Corporate M&A</td>
+                <td>Não</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-23</td>
+                <td><a href="https://www.linkedin.com/in/thales-barbosa-816310185/" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -3749,6 +3740,35 @@
                 <td><span class="badge badge-chris">Christophe</span></td>
                 <td>2026-02-23</td>
                 <td><a href="https://www.linkedin.com/in/gestorademarketingdigital" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+        <tr class="company-header" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-status="Prospect">
+            <td colspan="7" style="background: #f5f7fa; font-weight: bold; padding: 12px;">
+                🏢 wehandle <span class="badge icp-low">Very Low Priority</span> <span style="color: #666; font-weight: normal;">(2 contatos)</span>
+            </td>
+        </tr>
+        
+
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-dedup-key="https://www.linkedin.com/in/tamiriisdias" data-hr-related="Sim" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Tamiris Dias</td>
+                <td>HR Manager @wehandle</td>
+                <td>Sim</td>
+                <td>Não</td>
+                <td><span class="badge badge-pedro">Pedro</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/tamiriisdias" class="linkedin-link" target="_blank">Ver perfil</a></td>
+            </tr>
+            
+
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-dedup-key="https://www.linkedin.com/in/tamiriisdias" data-hr-related="Sim" data-date="2026-02-24">
+                <td style="padding-left: 30px;">Tamiris Dias</td>
+                <td>HR Manager @wehandle</td>
+                <td>Sim</td>
+                <td>Não</td>
+                <td><span class="badge badge-chris">Christophe</span></td>
+                <td>2026-02-24</td>
+                <td><a href="https://www.linkedin.com/in/tamiriisdias" class="linkedin-link" target="_blank">Ver perfil</a></td>
             </tr>
             
 
@@ -5206,7 +5226,7 @@
         });
 
         // ICP Funnel Chart (Stacked trapezoids)
-        const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 112, 101, 11]};
+        const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [0, 0, 135, 116, 19]};
 
         // Extract values: [clientes, pipeline, prospects_total, prospects_sem_hr, prospects_com_hr]
         const clientesCount = icpStatusData.values[0];
@@ -5252,7 +5272,7 @@
                         width: maxWidth * 0.45,
                         label: 'Empresas ICP disponíveis',
                         label2: 'para prospecção',
-                        sublabel: fv.prospects > 0 ? `${((fv.hr / fv.prospects) * 100).toFixed(1)}% dos Prospects` : '—',
+                        sublabel: fv.prospects > 0 ? `${((fv.hr / fv.prospects) * 100).toFixed(1)}% das Empresas ICP limpas` : '—',
                         note: '(empresas com HR related contact)'
                     }
                 ];
@@ -5368,7 +5388,7 @@
         });
 
         // Period data for master time filter
-        const PERIOD_DATA = {"all": {"total": 1055, "pedro_total": 473, "chris_total": 582, "unique_companies": 820, "pedro_unique": 419, "chris_unique": 539, "overlap_companies": 138, "num_icp": 135, "pedro_icp": 75, "chris_icp": 87, "overlap_icp": 27, "icp_rate": 16.5, "pedro_rate": 17.9, "chris_rate": 16.1, "prospects_with_hr": 11, "pedro_hr": 8, "chris_hr": 6, "overlap_hr": 3, "hr_rate": 8.1, "pedro_hr_rate": 10.7, "chris_hr_rate": 6.9, "timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [227, 116, 30, 23, 13, 5, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [251, 109, 28, 44, 13, 20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [624, 135, 61]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [313, 75, 31]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [414, 87, 38]}, "funnel": {"total": 135, "prospects": 112, "hr": 11}}, "week": {"total": 197, "pedro_total": 60, "chris_total": 137, "unique_companies": 178, "pedro_unique": 60, "chris_unique": 134, "overlap_companies": 16, "num_icp": 32, "pedro_icp": 16, "chris_icp": 21, "overlap_icp": 5, "icp_rate": 18.0, "pedro_rate": 26.7, "chris_rate": 15.7, "prospects_with_hr": 2, "pedro_hr": 2, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 6.2, "pedro_hr_rate": 12.5, "chris_hr_rate": 0.0, "timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [123, 32, 23]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [36, 16, 8]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [96, 21, 17]}, "funnel": {"total": 32, "prospects": 23, "hr": 2}}, "day": {"total": 18, "pedro_total": 11, "chris_total": 7, "unique_companies": 16, "pedro_unique": 11, "chris_unique": 7, "overlap_companies": 2, "num_icp": 0, "pedro_icp": 0, "chris_icp": 0, "overlap_icp": 0, "icp_rate": 0.0, "pedro_rate": 0.0, "chris_rate": 0.0, "prospects_with_hr": 0, "pedro_hr": 0, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 0, "pedro_hr_rate": 0, "chris_hr_rate": 0, "timeline": {"dates": ["2026-03-06"], "counts": [18]}, "pedro_timeline": {"dates": ["2026-03-06"], "counts": [11]}, "chris_timeline": {"dates": ["2026-03-06"], "counts": [7]}, "icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [13, 3]}, "pedro_icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [8, 3]}, "chris_icp_distribution": {"labels": ["Uncategorized"], "values": [7]}, "funnel": {"total": 0, "prospects": 0, "hr": 0}}};
+        const PERIOD_DATA = {"all": {"total": 1055, "pedro_total": 473, "chris_total": 582, "unique_companies": 820, "pedro_unique": 419, "chris_unique": 539, "overlap_companies": 138, "num_icp": 135, "pedro_icp": 75, "chris_icp": 87, "overlap_icp": 27, "icp_rate": 16.5, "pedro_rate": 17.9, "chris_rate": 16.1, "prospects_with_hr": 19, "pedro_hr": 15, "chris_hr": 10, "overlap_hr": 6, "hr_rate": 14.1, "pedro_hr_rate": 20.0, "chris_hr_rate": 11.5, "timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [227, 116, 30, 23, 13, 5, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [251, 109, 28, 44, 13, 20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [624, 135, 61]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [313, 75, 31]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [414, 87, 38]}, "funnel": {"total": 135, "prospects": 135, "hr": 19}}, "week": {"total": 197, "pedro_total": 60, "chris_total": 137, "unique_companies": 178, "pedro_unique": 60, "chris_unique": 134, "overlap_companies": 16, "num_icp": 32, "pedro_icp": 16, "chris_icp": 21, "overlap_icp": 5, "icp_rate": 18.0, "pedro_rate": 26.7, "chris_rate": 15.7, "prospects_with_hr": 4, "pedro_hr": 4, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 12.5, "pedro_hr_rate": 25.0, "chris_hr_rate": 0.0, "timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [20, 15, 37, 33, 25, 7]}, "icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [123, 32, 23]}, "pedro_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [36, 16, 8]}, "chris_icp_distribution": {"labels": ["Not ICP", "ICP", "Uncategorized"], "values": [96, 21, 17]}, "funnel": {"total": 32, "prospects": 32, "hr": 4}}, "day": {"total": 18, "pedro_total": 11, "chris_total": 7, "unique_companies": 16, "pedro_unique": 11, "chris_unique": 7, "overlap_companies": 2, "num_icp": 0, "pedro_icp": 0, "chris_icp": 0, "overlap_icp": 0, "icp_rate": 0.0, "pedro_rate": 0.0, "chris_rate": 0.0, "prospects_with_hr": 0, "pedro_hr": 0, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 0, "pedro_hr_rate": 0, "chris_hr_rate": 0, "timeline": {"dates": ["2026-03-06"], "counts": [18]}, "pedro_timeline": {"dates": ["2026-03-06"], "counts": [11]}, "chris_timeline": {"dates": ["2026-03-06"], "counts": [7]}, "icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [13, 3]}, "pedro_icp_distribution": {"labels": ["Uncategorized", "Not ICP"], "values": [8, 3]}, "chris_icp_distribution": {"labels": ["Uncategorized"], "values": [7]}, "funnel": {"total": 0, "prospects": 0, "hr": 0}}};
 
         function applyPeriodFilter(period) {
             // Update active button
@@ -5614,7 +5634,7 @@
             modal.innerHTML = `
                 <div class="modal-content">
                     <span class="modal-close" onclick="closeTimelineModal()">&times;</span>
-                    <h2 style="margin-bottom: 20px; color: #333;">📊 Timeline de Conexões (Consolidado + Pedro + Chris)</h2>
+                    <h2 class="chart-title">📊 Timeline de Conexões (Consolidado + Pedro + Chris)</h2>
                     <div style="height: 500px;">
                         <canvas id="timelineChartModal"></canvas>
                     </div>
@@ -5735,22 +5755,22 @@
             modal.innerHTML = `
                 <div class="modal-content" style="max-width: 1400px;">
                     <span class="modal-close" onclick="closeIcpModal()">&times;</span>
-                    <h2 style="margin-bottom: 30px; color: #333;">📊 Distribuição ICP: Consolidado + Pedro + Chris</h2>
+                    <h2 class="chart-title">📊 Distribuição ICP: Consolidado + Pedro + Chris</h2>
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 30px;">
                         <div style="border: 3px solid #FF4757; border-radius: 12px; padding: 20px; background: #fff;">
-                            <h3 style="text-align: center; margin-bottom: 15px; color: #FF4757; font-size: 20px;">Consolidado</h3>
+                            <h3 class="chart-subtitle highlight">Consolidado</h3>
                             <div style="height: 450px;">
                                 <canvas id="icpChartModal"></canvas>
                             </div>
                         </div>
                         <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 20px; background: #fafafa;">
-                            <h3 style="text-align: center; margin-bottom: 15px; color: #666; font-size: 16px;">Pedro</h3>
+                            <h3 class="chart-subtitle">Pedro</h3>
                             <div style="height: 450px;">
                                 <canvas id="pedroIcpChartModal"></canvas>
                             </div>
                         </div>
                         <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 20px; background: #fafafa;">
-                            <h3 style="text-align: center; margin-bottom: 15px; color: #666; font-size: 16px;">Chris</h3>
+                            <h3 class="chart-subtitle">Chris</h3>
                             <div style="height: 450px;">
                                 <canvas id="chrisIcpChartModal"></canvas>
                             </div>
@@ -5937,7 +5957,7 @@
             modal.innerHTML = `
                 <div class="modal-content">
                     <span class="modal-close" onclick="closeWaterfallModal()">&times;</span>
-                    <h2 style="margin-bottom: 20px; color: #333;">🎯 Alcance total de ICPs para ICPs disponíveis para prospecção (Waterfall)</h2>
+                    <h2 class="chart-title">🎯 Alcance total de ICPs para ICPs disponíveis para prospecção (Waterfall)</h2>
                     <div style="height: 500px;">
                         <canvas id="icpStatusChartModal"></canvas>
                     </div>
@@ -5958,7 +5978,7 @@
             });
 
             // Get data
-            const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [7, 16, 112, 101, 11]};
+            const icpStatusData = {"labels": ["Clientes Comp", "Pipeline", "Prospects", "Prospects s/ HR", "Prospects c/ HR"], "values": [0, 0, 135, 116, 19]};
             const clientesCount = icpStatusData.values[0];
             const pipelineCount = icpStatusData.values[1];
             const prospectsTotal = icpStatusData.values[2];
