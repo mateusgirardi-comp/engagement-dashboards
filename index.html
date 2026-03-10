@@ -272,6 +272,54 @@
             background: #eee;
         }
 
+        .master-time-filter {
+            background: white;
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #FF4757;
+        }
+
+        .time-filter-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        .time-toggle-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .time-toggle-btn {
+            padding: 7px 18px;
+            border: 1.5px solid #ddd;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+
+        .time-toggle-btn:hover {
+            border-color: #FF4757;
+            color: #FF4757;
+        }
+
+        .time-toggle-btn.active {
+            background: #FF4757;
+            border-color: #FF4757;
+            color: white;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -502,8 +550,18 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 20:53</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 22:03</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
+        </div>
+
+        <!-- Master Time Filter -->
+        <div class="master-time-filter">
+            <span class="time-filter-label">🗓 Período:</span>
+            <div class="time-toggle-group">
+                <button class="time-toggle-btn active" data-period="all"  onclick="applyPeriodFilter('all')">Todo o período</button>
+                <button class="time-toggle-btn"        data-period="week" onclick="applyPeriodFilter('week')">Última semana</button>
+                <button class="time-toggle-btn"        data-period="day"  onclick="applyPeriodFilter('day')">Último dia</button>
+            </div>
         </div>
 
         <!-- KPI Cards -->
@@ -511,28 +569,28 @@
             <div class="kpi-card">
                 <div class="kpi-label">Conexões & Empresas</div>
                 <div style="margin-bottom: 15px;">
-                    <div class="kpi-value">1055</div>
+                    <div class="kpi-value" id="kpi-total">1055</div>
                     <div class="kpi-description">conexões desde 23/02/2026</div>
-                    <div class="kpi-breakdown">582 Chris | 473 Pedro</div>
+                    <div class="kpi-breakdown" id="kpi-connections-breakdown">582 Chris | 473 Pedro</div>
                 </div>
                 <div>
-                    <div class="kpi-value">820</div>
+                    <div class="kpi-value" id="kpi-unique">820</div>
                     <div class="kpi-description">empresas únicas</div>
-                    <div class="kpi-breakdown">539 Chris | 419 Pedro | 138 ambos</div>
+                    <div class="kpi-breakdown" id="kpi-companies-breakdown">539 Chris | 419 Pedro | 138 ambos</div>
                 </div>
             </div>
 
             <div class="kpi-card">
                 <div class="kpi-label">ICPs Disponíveis para Prospecção</div>
                 <div style="margin-bottom: 15px;">
-                    <div class="kpi-value">11</div>
+                    <div class="kpi-value" id="kpi-actionable">11</div>
                     <div class="kpi-description">empresas ICP c/ HR related contact</div>
-                    <div class="kpi-breakdown">6 Chris | 8 Pedro | 3 ambos</div>
+                    <div class="kpi-breakdown" id="kpi-actionable-breakdown">6 Chris | 8 Pedro | 3 ambos</div>
                 </div>
                 <div>
-                    <div class="kpi-value">8.1%</div>
+                    <div class="kpi-value" id="kpi-hr-rate">8.1%</div>
                     <div class="kpi-description">disponíveis / total ICP</div>
-                    <div class="kpi-breakdown">6.9% Chris | 10.7% Pedro</div>
+                    <div class="kpi-breakdown" id="kpi-rate-breakdown">6.9% Chris | 10.7% Pedro</div>
                 </div>
             </div>
 
@@ -644,7 +702,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-dedup-key="https://www.linkedin.com/in/carolinaleite01" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-dedup-key="https://www.linkedin.com/in/carolinaleite01" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Carol Leite</td>
                 <td>Analista Folha de Pagamento</td>
                 <td>Não</td>
@@ -655,7 +713,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-dedup-key="https://www.linkedin.com/in/carolinaleite01" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CRMBonus" data-dedup-key="https://www.linkedin.com/in/carolinaleite01" data-hr-related="Não" data-date="2026-03-01">
                 <td style="padding-left: 30px;">Carol Leite</td>
                 <td>Analista Folha de Pagamento</td>
                 <td>Não</td>
@@ -673,7 +731,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/beatriz-santana-trova" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/beatriz-santana-trova" data-hr-related="Sim" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Beatriz Santana Trova</td>
                 <td>Senior People Operations, Payroll & Benefits</td>
                 <td>Sim</td>
@@ -684,7 +742,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/kellyjmesquita" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/kellyjmesquita" data-hr-related="Sim" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Kelly  Mesquita</td>
                 <td>Talent Acquisition Team Lead</td>
                 <td>Sim</td>
@@ -695,7 +753,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/igor-souza-fonseca" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Conta Simples" data-dedup-key="https://www.linkedin.com/in/igor-souza-fonseca" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Igor Fonseca</td>
                 <td>DHO</td>
                 <td>Não</td>
@@ -713,7 +771,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Genial Investimentos" data-dedup-key="https://www.linkedin.com/in/larissa-a-santos" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Genial Investimentos" data-dedup-key="https://www.linkedin.com/in/larissa-a-santos" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Larissa Santos</td>
                 <td>Talent Attraction</td>
                 <td>Sim</td>
@@ -731,7 +789,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/leozbravo" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/leozbravo" data-hr-related="Sim" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Leonardo  Bravo</td>
                 <td>HR Senior Manager</td>
                 <td>Sim</td>
@@ -742,7 +800,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/viniciussittart" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/viniciussittart" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Vinícius Sittart Costa</td>
                 <td>Driving Payments</td>
                 <td>Não</td>
@@ -753,7 +811,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/viniciussittart" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/viniciussittart" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Vinícius Sittart Costa</td>
                 <td>Driving Payments</td>
                 <td>Não</td>
@@ -764,7 +822,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/beni-sztokfisz-11303b145" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/beni-sztokfisz-11303b145" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Beni Sztokfisz</td>
                 <td>Helping technology companies build better payments, credit and financial products</td>
                 <td>Não</td>
@@ -775,7 +833,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/sarah-carbaca-celin" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="QI Tech" data-dedup-key="https://www.linkedin.com/in/sarah-carbaca-celin" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Sarah Carbaca Celin</td>
                 <td>People & Culture</td>
                 <td>Sim</td>
@@ -793,7 +851,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="RecargaPay" data-dedup-key="https://www.linkedin.com/in/priscillamlopez" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="RecargaPay" data-dedup-key="https://www.linkedin.com/in/priscillamlopez" data-hr-related="Não" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Priscilla Mistura Lopez</td>
                 <td>Relações com Investidores</td>
                 <td>Não</td>
@@ -811,7 +869,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="enjoei" data-dedup-key="https://www.linkedin.com/in/césar-lincoln-137a51177" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="enjoei" data-dedup-key="https://www.linkedin.com/in/césar-lincoln-137a51177" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">César Lincoln</td>
                 <td>HR Business Partner</td>
                 <td>Sim</td>
@@ -829,7 +887,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/marcosfreiregurgel" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/marcosfreiregurgel" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Marcos Freire Gurgel</td>
                 <td>Revolutionizing how companies use AI 🚀</td>
                 <td>Não</td>
@@ -840,7 +898,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/marcosfreiregurgel" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/marcosfreiregurgel" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Marcos Freire Gurgel</td>
                 <td>Revolutionizing how companies use AI 🚀</td>
                 <td>Não</td>
@@ -851,7 +909,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/lucas-magno-couto" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/lucas-magno-couto" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Lucas Magno</td>
                 <td>Product Manager • Growth • Fintech • @iFood</td>
                 <td>Não</td>
@@ -862,7 +920,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/carolinasjt" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="iFood" data-dedup-key="https://www.linkedin.com/in/carolinasjt" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Carolina Teixeira</td>
                 <td>Corporate Development</td>
                 <td>Não</td>
@@ -880,7 +938,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/jferrufino" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/jferrufino" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Josh “FINO” Ferrufino</td>
                 <td>Strategic GTM - Startups</td>
                 <td>Não</td>
@@ -891,7 +949,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/jferrufino" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/jferrufino" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Josh “FINO” Ferrufino</td>
                 <td>Strategic GTM - Startups</td>
                 <td>Não</td>
@@ -902,7 +960,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/thales-pereira-jesus" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/thales-pereira-jesus" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Thales Pereira</td>
                 <td>Senior Software Engineer</td>
                 <td>Não</td>
@@ -913,7 +971,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/camilla-matias-06345a105" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Brex" data-dedup-key="https://www.linkedin.com/in/camilla-matias-06345a105" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Camilla Matias</td>
                 <td>COO</td>
                 <td>Não</td>
@@ -931,7 +989,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/daniele-gonçalves-18058b148" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/daniele-gonçalves-18058b148" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Daniele Gonçalves</td>
                 <td>Partner</td>
                 <td>Não</td>
@@ -942,7 +1000,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/guilhermeabritta1" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/guilhermeabritta1" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Guilherme Rocha</td>
                 <td>Financial Data Analyst</td>
                 <td>Não</td>
@@ -953,7 +1011,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/thomas-wever-a8848111a" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Galapagos Capital" data-dedup-key="https://www.linkedin.com/in/thomas-wever-a8848111a" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Thomas Wever</td>
                 <td>Investment Banking</td>
                 <td>Não</td>
@@ -971,7 +1029,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Coaktion" data-dedup-key="https://www.linkedin.com/in/flavia-b-rezende" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Coaktion" data-dedup-key="https://www.linkedin.com/in/flavia-b-rezende" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Flávia Rezende</td>
                 <td>Executiva de RH</td>
                 <td>Sim</td>
@@ -989,7 +1047,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="MaisTODOS" data-dedup-key="https://www.linkedin.com/in/joaolucashallwasbueno" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="MaisTODOS" data-dedup-key="https://www.linkedin.com/in/joaolucashallwasbueno" data-hr-related="Não" data-date="2026-03-01">
                 <td style="padding-left: 30px;">João Lucas Hallwas Bueno</td>
                 <td>Group Product Manager</td>
                 <td>Não</td>
@@ -1007,7 +1065,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Segura" data-dedup-key="https://www.linkedin.com/in/bebetobn" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Segura" data-dedup-key="https://www.linkedin.com/in/bebetobn" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Luís Alberto Nogueira</td>
                 <td>CEO</td>
                 <td>Não</td>
@@ -1025,7 +1083,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/sza-bianca" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/sza-bianca" data-hr-related="Sim" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Bianca de Souza</td>
                 <td>Tech Talent Acquisition l</td>
                 <td>Sim</td>
@@ -1036,7 +1094,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/igmarinelli" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN" data-dedup-key="https://www.linkedin.com/in/igmarinelli" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Igor Marinelli</td>
                 <td>🧢 Founder, CEO</td>
                 <td>Não</td>
@@ -1054,7 +1112,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN 𝗕𝗥" data-dedup-key="https://www.linkedin.com/in/luizadelgrande" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="TRACTIAN 𝗕𝗥" data-dedup-key="https://www.linkedin.com/in/luizadelgrande" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Luiza Del Grande</td>
                 <td>Head of Recruitment</td>
                 <td>Não</td>
@@ -1072,7 +1130,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/patricia-siequeroli" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/patricia-siequeroli" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Patricia Siequeroli</td>
                 <td>Estratégia e Planejamento Comercial</td>
                 <td>Não</td>
@@ -1083,7 +1141,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/patricia-siequeroli" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/patricia-siequeroli" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Patricia Siequeroli</td>
                 <td>Estratégia e Planejamento Comercial</td>
                 <td>Não</td>
@@ -1094,7 +1152,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/maurolevidancona" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="180 Seguros" data-dedup-key="https://www.linkedin.com/in/maurolevidancona" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Mauro Levi D'Ancona</td>
                 <td>Co-Founder & CEO</td>
                 <td>Não</td>
@@ -1112,7 +1170,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Alice" data-dedup-key="https://www.linkedin.com/in/guilherme-pandjiarjian-8928661bb" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Alice" data-dedup-key="https://www.linkedin.com/in/guilherme-pandjiarjian-8928661bb" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Guilherme  Pandjiarjian</td>
                 <td>Making the world healthier</td>
                 <td>Não</td>
@@ -1130,7 +1188,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Azion" data-dedup-key="https://www.linkedin.com/in/lucas-aguiar-0709b633" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Azion" data-dedup-key="https://www.linkedin.com/in/lucas-aguiar-0709b633" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Lucas Aguiar</td>
                 <td>Computer Engineer</td>
                 <td>Não</td>
@@ -1141,7 +1199,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Azion" data-dedup-key="https://www.linkedin.com/in/lucas-br-aguiar" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Azion" data-dedup-key="https://www.linkedin.com/in/lucas-br-aguiar" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Lucas Aguiar</td>
                 <td>Computer Engineer</td>
                 <td>Não</td>
@@ -1159,7 +1217,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Bionexo" data-dedup-key="https://www.linkedin.com/in/mhbassomacedo" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Bionexo" data-dedup-key="https://www.linkedin.com/in/mhbassomacedo" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Mateus Henrique Basso Macedo</td>
                 <td>Software Development Specialist</td>
                 <td>Não</td>
@@ -1177,7 +1235,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Flash" data-dedup-key="https://www.linkedin.com/in/lucas-pirito-silva" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Flash" data-dedup-key="https://www.linkedin.com/in/lucas-pirito-silva" data-hr-related="Sim" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Lucas Pirito</td>
                 <td>Head of People</td>
                 <td>Sim</td>
@@ -1195,7 +1253,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Juntos Somos Mais" data-dedup-key="https://www.linkedin.com/in/davirizzo123" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Juntos Somos Mais" data-dedup-key="https://www.linkedin.com/in/davirizzo123" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Davi Rizzo</td>
                 <td>Business</td>
                 <td>Não</td>
@@ -1213,7 +1271,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/sanguedemonstro" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/sanguedemonstro" data-hr-related="Não" data-date="2026-03-02">
                 <td style="padding-left: 30px;">João Paulo Melo</td>
                 <td>Staff Software Engineer na Loft</td>
                 <td>Não</td>
@@ -1224,7 +1282,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/matepencz" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Loft" data-dedup-key="https://www.linkedin.com/in/matepencz" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Mate Pencz</td>
                 <td>Founder and CEO</td>
                 <td>Não</td>
@@ -1242,7 +1300,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-dedup-key="https://www.linkedin.com/in/thales-barbosa-816310185" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-dedup-key="https://www.linkedin.com/in/thales-barbosa-816310185" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Thales Barbosa</td>
                 <td>Corporate M&A</td>
                 <td>Não</td>
@@ -1253,7 +1311,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-dedup-key="https://www.linkedin.com/in/thales-barbosa-816310185/" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Patria Investments" data-dedup-key="https://www.linkedin.com/in/thales-barbosa-816310185/" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Thales Barbosa</td>
                 <td>Corporate M&A</td>
                 <td>Não</td>
@@ -1271,7 +1329,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-dedup-key="https://www.linkedin.com/in/tamiriisdias" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-dedup-key="https://www.linkedin.com/in/tamiriisdias" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Tamiris Dias</td>
                 <td>HR Manager @wehandle</td>
                 <td>Sim</td>
@@ -1282,7 +1340,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-dedup-key="https://www.linkedin.com/in/tamiriisdias" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="wehandle" data-dedup-key="https://www.linkedin.com/in/tamiriisdias" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Tamiris Dias</td>
                 <td>HR Manager @wehandle</td>
                 <td>Sim</td>
@@ -1300,7 +1358,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="AlphaSense" data-dedup-key="https://www.linkedin.com/in/joao-alves-777727b4" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="AlphaSense" data-dedup-key="https://www.linkedin.com/in/joao-alves-777727b4" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Joao Alves</td>
                 <td>AI Adoption Specialist</td>
                 <td>Não</td>
@@ -1311,7 +1369,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="AlphaSense" data-dedup-key="https://www.linkedin.com/in/joao-alves-777727b4" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="AlphaSense" data-dedup-key="https://www.linkedin.com/in/joao-alves-777727b4" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Joao Alves</td>
                 <td>AI Adoption Specialist</td>
                 <td>Não</td>
@@ -1329,7 +1387,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Asaas" data-dedup-key="https://www.linkedin.com/in/junior-beltrao" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Asaas" data-dedup-key="https://www.linkedin.com/in/junior-beltrao" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Júnior Beltrão</td>
                 <td>Chief Revenue Officer</td>
                 <td>Não</td>
@@ -1340,7 +1398,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Asaas" data-dedup-key="https://www.linkedin.com/in/junior-beltrao" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Asaas" data-dedup-key="https://www.linkedin.com/in/junior-beltrao" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Júnior Beltrão</td>
                 <td>Chief Revenue Officer</td>
                 <td>Não</td>
@@ -1358,7 +1416,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="BCG X" data-dedup-key="https://www.linkedin.com/in/wilgner-lopes-848a59193" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="BCG X" data-dedup-key="https://www.linkedin.com/in/wilgner-lopes-848a59193" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Wilgner Lopes</td>
                 <td>Software Engineer - BCG X</td>
                 <td>Não</td>
@@ -1376,7 +1434,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Baseten" data-dedup-key="https://www.linkedin.com/in/jaimin-khakhria-8b0b37144" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Baseten" data-dedup-key="https://www.linkedin.com/in/jaimin-khakhria-8b0b37144" data-hr-related="Não" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Jaimin Khakhria</td>
                 <td>AI/ML Inference</td>
                 <td>Não</td>
@@ -1394,7 +1452,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Conexa Saúde" data-dedup-key="https://www.linkedin.com/in/zefigueiredo" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Conexa Saúde" data-dedup-key="https://www.linkedin.com/in/zefigueiredo" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Jose Figueiredo</td>
                 <td>Revenue Operations Leader</td>
                 <td>Não</td>
@@ -1412,7 +1470,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Conta Azul" data-dedup-key="https://www.linkedin.com/in/bruno-rodrigues-3344652a" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Conta Azul" data-dedup-key="https://www.linkedin.com/in/bruno-rodrigues-3344652a" data-hr-related="Não" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Bruno Rodrigues</td>
                 <td>Coordenador de Risco</td>
                 <td>Não</td>
@@ -1430,7 +1488,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CoreWeave" data-dedup-key="https://www.linkedin.com/in/mattbarnes827" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="CoreWeave" data-dedup-key="https://www.linkedin.com/in/mattbarnes827" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Matthew Barnes</td>
                 <td>GTM</td>
                 <td>Não</td>
@@ -1448,7 +1506,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Faire" data-dedup-key="https://www.linkedin.com/in/eintrater" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Faire" data-dedup-key="https://www.linkedin.com/in/eintrater" data-hr-related="Não" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Evan Intrater</td>
                 <td>Director</td>
                 <td>Não</td>
@@ -1459,7 +1517,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Faire" data-dedup-key="https://www.linkedin.com/in/eintrater" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Faire" data-dedup-key="https://www.linkedin.com/in/eintrater" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Evan Intrater</td>
                 <td>Director</td>
                 <td>Não</td>
@@ -1477,7 +1535,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Harvey" data-dedup-key="https://www.linkedin.com/in/kaela-olsen" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Harvey" data-dedup-key="https://www.linkedin.com/in/kaela-olsen" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Kaela Olsen</td>
                 <td>Strategy & Ops</td>
                 <td>Não</td>
@@ -1495,7 +1553,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Mercai" data-dedup-key="https://www.linkedin.com/in/sky-tsoi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Mercai" data-dedup-key="https://www.linkedin.com/in/sky-tsoi" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Sky Tsoi</td>
                 <td>Bridging Asia</td>
                 <td>Não</td>
@@ -1513,7 +1571,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Senior Sistemas" data-dedup-key="https://www.linkedin.com/in/rafael-yoshioka-6b042a28" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Senior Sistemas" data-dedup-key="https://www.linkedin.com/in/rafael-yoshioka-6b042a28" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rafael Yoshioka</td>
                 <td>Proprietário(a), Hypnobox</td>
                 <td>Não</td>
@@ -1531,7 +1589,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Talkdesk" data-dedup-key="https://www.linkedin.com/in/ambuje" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Talkdesk" data-dedup-key="https://www.linkedin.com/in/ambuje" data-hr-related="Não" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Ambuje Gupta</td>
                 <td>AI Scientist</td>
                 <td>Não</td>
@@ -1549,7 +1607,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Tools for Humanity" data-dedup-key="https://www.linkedin.com/in/lucianopasqualini" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Tools for Humanity" data-dedup-key="https://www.linkedin.com/in/lucianopasqualini" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Luciano Pasqualini</td>
                 <td>Head of Product</td>
                 <td>Não</td>
@@ -1567,7 +1625,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="VR" data-dedup-key="https://www.linkedin.com/in/marianarepassos" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="VR" data-dedup-key="https://www.linkedin.com/in/marianarepassos" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Mariana  Passos 🏳️‍🌈</td>
                 <td>Head of Marketing</td>
                 <td>Não</td>
@@ -1585,7 +1643,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Wellhub" data-dedup-key="https://www.linkedin.com/in/nataliaalvesdebarros" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — High Priority" data-company="Wellhub" data-dedup-key="https://www.linkedin.com/in/nataliaalvesdebarros" data-hr-related="Sim" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Natália Alves (she/her)</td>
                 <td>VP of People -  Global Talent Strategy and Experience</td>
                 <td>Sim</td>
@@ -1603,7 +1661,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Aceleradora Bluefields" data-dedup-key="https://www.linkedin.com/in/jefersonrodrigodasilva" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Aceleradora Bluefields" data-dedup-key="https://www.linkedin.com/in/jefersonrodrigodasilva" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Jeferson Rodrigo da Silva</td>
                 <td>Head de Inovação Corporativa</td>
                 <td>Não</td>
@@ -1614,7 +1672,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Aceleradora Bluefields" data-dedup-key="https://www.linkedin.com/in/jefersonrodrigodasilva" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Aceleradora Bluefields" data-dedup-key="https://www.linkedin.com/in/jefersonrodrigodasilva" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Jeferson Rodrigo da Silva</td>
                 <td>Head de Inovação Corporativa</td>
                 <td>Não</td>
@@ -1625,7 +1683,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Aceleradora Bluefields" data-dedup-key="https://www.linkedin.com/in/jefersonrodrigodasilva/" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Aceleradora Bluefields" data-dedup-key="https://www.linkedin.com/in/jefersonrodrigodasilva/" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Jeferson Rodrigo da Silva</td>
                 <td>Head de Inovação Corporativa</td>
                 <td>Não</td>
@@ -1643,7 +1701,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="BairesDev" data-dedup-key="https://www.linkedin.com/in/luiz-francisco-silva-522a39131" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="BairesDev" data-dedup-key="https://www.linkedin.com/in/luiz-francisco-silva-522a39131" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Luiz Francisco Silva</td>
                 <td>Automation and Software Engineering</td>
                 <td>Não</td>
@@ -1661,7 +1719,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Deel Local Payroll, powered by PaySpace" data-dedup-key="https://www.linkedin.com/in/johnmackenziesmith" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Deel Local Payroll, powered by PaySpace" data-dedup-key="https://www.linkedin.com/in/johnmackenziesmith" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">John Mackenzie Smith</td>
                 <td>Líder Executivo</td>
                 <td>Não</td>
@@ -1672,7 +1730,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Deel Local Payroll, powered by PaySpace" data-dedup-key="https://www.linkedin.com/in/johnmackenziesmith" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Deel Local Payroll, powered by PaySpace" data-dedup-key="https://www.linkedin.com/in/johnmackenziesmith" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">John Mackenzie Smith</td>
                 <td>Líder Executivo</td>
                 <td>Não</td>
@@ -1690,7 +1748,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Etched" data-dedup-key="https://www.linkedin.com/in/gracelqi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Etched" data-dedup-key="https://www.linkedin.com/in/gracelqi" data-hr-related="Não" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Grace Qi</td>
                 <td>Core Ops</td>
                 <td>Não</td>
@@ -1708,7 +1766,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Karsten S.A." data-dedup-key="https://www.linkedin.com/in/brunobarbosacloud" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Karsten S.A." data-dedup-key="https://www.linkedin.com/in/brunobarbosacloud" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Bruno Barbosa</td>
                 <td>Supervisor de Infraestrutura</td>
                 <td>Não</td>
@@ -1726,7 +1784,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Kavak.com" data-dedup-key="https://www.linkedin.com/in/juancruzdelarua" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Kavak.com" data-dedup-key="https://www.linkedin.com/in/juancruzdelarua" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Juan Cruz de la Rúa</td>
                 <td>Founder</td>
                 <td>Não</td>
@@ -1744,7 +1802,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="L.E.K. Consulting" data-dedup-key="https://www.linkedin.com/in/victor-satoh" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="L.E.K. Consulting" data-dedup-key="https://www.linkedin.com/in/victor-satoh" data-hr-related="Não" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Victor Hoshikawa Satoh</td>
                 <td>Intern</td>
                 <td>Não</td>
@@ -1762,7 +1820,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Matrix Energia" data-dedup-key="https://www.linkedin.com/in/eduardosamaha" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Matrix Energia" data-dedup-key="https://www.linkedin.com/in/eduardosamaha" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Eduardo Samaha</td>
                 <td>Strategic Partnerships</td>
                 <td>Não</td>
@@ -1780,7 +1838,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Merge" data-dedup-key="https://www.linkedin.com/in/logansimpson1" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Merge" data-dedup-key="https://www.linkedin.com/in/logansimpson1" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Logan Simpson</td>
                 <td>GTM</td>
                 <td>Não</td>
@@ -1791,7 +1849,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Merge" data-dedup-key="https://www.linkedin.com/in/logansimpson1" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Merge" data-dedup-key="https://www.linkedin.com/in/logansimpson1" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Logan Simpson</td>
                 <td>GTM</td>
                 <td>Não</td>
@@ -1809,7 +1867,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Olist" data-dedup-key="https://www.linkedin.com/in/raphael-levi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Olist" data-dedup-key="https://www.linkedin.com/in/raphael-levi" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Raphael Levi</td>
                 <td>Founder • Startup exit • Lifelong learner</td>
                 <td>Não</td>
@@ -1820,7 +1878,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Olist" data-dedup-key="https://www.linkedin.com/in/mrusso" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Olist" data-dedup-key="https://www.linkedin.com/in/mrusso" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Marcelo Russo</td>
                 <td>Finance Director</td>
                 <td>Não</td>
@@ -1831,7 +1889,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Olist" data-dedup-key="https://www.linkedin.com/in/felippegaleb" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Olist" data-dedup-key="https://www.linkedin.com/in/felippegaleb" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Felippe Galeb</td>
                 <td>C-Level</td>
                 <td>Não</td>
@@ -1849,7 +1907,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Playtech" data-dedup-key="https://www.linkedin.com/in/daniela-godoy-26612021" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Playtech" data-dedup-key="https://www.linkedin.com/in/daniela-godoy-26612021" data-hr-related="Sim" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Daniela Godoy</td>
                 <td>Talent Management</td>
                 <td>Sim</td>
@@ -1867,7 +1925,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="RD Station" data-dedup-key="https://www.linkedin.com/in/felipe-bizzi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="RD Station" data-dedup-key="https://www.linkedin.com/in/felipe-bizzi" data-hr-related="Não" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Felipe Bizzi</td>
                 <td>Creative Coordinator</td>
                 <td>Não</td>
@@ -1878,7 +1936,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="RD Station" data-dedup-key="https://www.linkedin.com/in/rafaelrosseto" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="RD Station" data-dedup-key="https://www.linkedin.com/in/rafaelrosseto" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Rafael Rosseto</td>
                 <td>Executive of Product</td>
                 <td>Não</td>
@@ -1896,7 +1954,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Rimini Street Brazil" data-dedup-key="https://www.linkedin.com/in/raphaelcarvalhohumanresources" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Rimini Street Brazil" data-dedup-key="https://www.linkedin.com/in/raphaelcarvalhohumanresources" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Raphael Carvalho</td>
                 <td>Human Resources & Culture Director</td>
                 <td>Sim</td>
@@ -1914,7 +1972,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Seedtag" data-dedup-key="https://www.linkedin.com/in/owen-jean-aimee-bb3235a9" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Seedtag" data-dedup-key="https://www.linkedin.com/in/owen-jean-aimee-bb3235a9" data-hr-related="Não" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Owen Jean-Aimee</td>
                 <td>Senior Sales Director</td>
                 <td>Não</td>
@@ -1932,7 +1990,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Sem Parar" data-dedup-key="https://www.linkedin.com/in/gabrielportob" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Sem Parar" data-dedup-key="https://www.linkedin.com/in/gabrielportob" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Gabriel Porto</td>
                 <td>CMPO</td>
                 <td>Não</td>
@@ -1950,7 +2008,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Telnyx" data-dedup-key="https://www.linkedin.com/in/josh-ornovitz" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Telnyx" data-dedup-key="https://www.linkedin.com/in/josh-ornovitz" data-hr-related="Não" data-date="2026-03-01">
                 <td style="padding-left: 30px;">Josh Ornovitz</td>
                 <td>Voice AI</td>
                 <td>Não</td>
@@ -1968,7 +2026,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Toku (YC S21)" data-dedup-key="https://www.linkedin.com/in/cristina-etcheberry-toku" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Toku (YC S21)" data-dedup-key="https://www.linkedin.com/in/cristina-etcheberry-toku" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Cristina Etcheberry</td>
                 <td>Toku is the Financial Operating System for Latin American Enterprises</td>
                 <td>Não</td>
@@ -1986,7 +2044,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Vestwell" data-dedup-key="https://www.linkedin.com/in/austin-smith-543844306" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="Vestwell" data-dedup-key="https://www.linkedin.com/in/austin-smith-543844306" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Austin Smith</td>
                 <td>Business Development</td>
                 <td>Não</td>
@@ -2004,7 +2062,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="invygo" data-dedup-key="https://www.linkedin.com/in/saulomarti" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="invygo" data-dedup-key="https://www.linkedin.com/in/saulomarti" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Saulo Marti</td>
                 <td>CMO</td>
                 <td>Não</td>
@@ -2015,7 +2073,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="invygo" data-dedup-key="https://www.linkedin.com/in/saulomarti" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Medium Priority" data-company="invygo" data-dedup-key="https://www.linkedin.com/in/saulomarti" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Saulo Marti</td>
                 <td>CMO</td>
                 <td>Não</td>
@@ -2033,7 +2091,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="AppsFlyer" data-dedup-key="https://www.linkedin.com/in/julianrodriguezhortal" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="AppsFlyer" data-dedup-key="https://www.linkedin.com/in/julianrodriguezhortal" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Julián Rodríguez Hortal</td>
                 <td>Sr. Account Manager</td>
                 <td>Não</td>
@@ -2051,7 +2109,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Auvo Tecnologia" data-dedup-key="https://www.linkedin.com/in/vandressaluz" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Auvo Tecnologia" data-dedup-key="https://www.linkedin.com/in/vandressaluz" data-hr-related="Não" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Vandressa Luz</td>
                 <td>Sales Manager</td>
                 <td>Não</td>
@@ -2069,7 +2127,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Base Power Company" data-dedup-key="https://www.linkedin.com/in/adam-bloom-71206b178" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Base Power Company" data-dedup-key="https://www.linkedin.com/in/adam-bloom-71206b178" data-hr-related="Não" data-date="2026-03-01">
                 <td style="padding-left: 30px;">Adam Bloom</td>
                 <td>Deployments</td>
                 <td>Não</td>
@@ -2087,7 +2145,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Bloq.it" data-dedup-key="https://www.linkedin.com/in/lorenzogama" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Bloq.it" data-dedup-key="https://www.linkedin.com/in/lorenzogama" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Lorenzo Gama</td>
                 <td>Public Relations & Events</td>
                 <td>Não</td>
@@ -2105,7 +2163,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Brellium" data-dedup-key="https://www.linkedin.com/in/diogo-stahnke" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Brellium" data-dedup-key="https://www.linkedin.com/in/diogo-stahnke" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Diogo Stahnke</td>
                 <td>Software Engineer</td>
                 <td>Não</td>
@@ -2123,7 +2181,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-dedup-key="https://www.linkedin.com/in/caio-carinhena" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-dedup-key="https://www.linkedin.com/in/caio-carinhena" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Caio Carinhena</td>
                 <td>Co-Founder & CEO</td>
                 <td>Não</td>
@@ -2134,7 +2192,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-dedup-key="https://www.linkedin.com/in/danielafariasmoreira" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-dedup-key="https://www.linkedin.com/in/danielafariasmoreira" data-hr-related="Sim" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Daniela Farias</td>
                 <td>People & Culture</td>
                 <td>Sim</td>
@@ -2145,7 +2203,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-dedup-key="https://www.linkedin.com/in/julianomontesvieira" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Clinicorp Solutions" data-dedup-key="https://www.linkedin.com/in/julianomontesvieira" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Juliano Montes Vieira</td>
                 <td>Revenue Growth Director</td>
                 <td>Não</td>
@@ -2163,7 +2221,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="EXA" data-dedup-key="https://www.linkedin.com/in/roberta-lerin-lovisi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="EXA" data-dedup-key="https://www.linkedin.com/in/roberta-lerin-lovisi" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Roberta Lerin Lovisi</td>
                 <td>Business Strategy</td>
                 <td>Não</td>
@@ -2181,7 +2239,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Endeavor" data-dedup-key="https://www.linkedin.com/in/alan-glezer-cfa-9b11701" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Endeavor" data-dedup-key="https://www.linkedin.com/in/alan-glezer-cfa-9b11701" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Alan Glezer, CFA</td>
                 <td>Founder & Co-CEO</td>
                 <td>Não</td>
@@ -2192,7 +2250,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Endeavor" data-dedup-key="https://www.linkedin.com/in/letícia-broering" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Endeavor" data-dedup-key="https://www.linkedin.com/in/letícia-broering" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Letícia Broering L. Alban</td>
                 <td>Senior Manager - Entrepreneur Selection</td>
                 <td>Não</td>
@@ -2210,7 +2268,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="FitBank" data-dedup-key="https://www.linkedin.com/in/michel-madeira" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="FitBank" data-dedup-key="https://www.linkedin.com/in/michel-madeira" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Michel Madeira (米歇尔)</td>
                 <td>Partner</td>
                 <td>Não</td>
@@ -2221,7 +2279,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="FitBank" data-dedup-key="https://www.linkedin.com/in/michel-madeira/" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="FitBank" data-dedup-key="https://www.linkedin.com/in/michel-madeira/" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Michel Madeira</td>
                 <td>Partner</td>
                 <td>Não</td>
@@ -2239,7 +2297,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Gi Group Holding" data-dedup-key="https://www.linkedin.com/in/gabrielateixeirademelo" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Gi Group Holding" data-dedup-key="https://www.linkedin.com/in/gabrielateixeirademelo" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Gabriela Teixeira de Melo</td>
                 <td>Gestora de Projetos de Tecnologia e Processos</td>
                 <td>Não</td>
@@ -2257,7 +2315,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Hand Talk by Sorenson" data-dedup-key="https://www.linkedin.com/in/cristianesilva-pro" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Hand Talk by Sorenson" data-dedup-key="https://www.linkedin.com/in/cristianesilva-pro" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Cristiane Silva</td>
                 <td>Sales Executive</td>
                 <td>Não</td>
@@ -2275,7 +2333,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Impulso" data-dedup-key="https://www.linkedin.com/in/fabianamanfredi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Impulso" data-dedup-key="https://www.linkedin.com/in/fabianamanfredi" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Fabiana Manfredi</td>
                 <td>CEO/GM Impulso RD Saúde</td>
                 <td>Não</td>
@@ -2293,7 +2351,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Inbrands" data-dedup-key="https://www.linkedin.com/in/thais-marques-gerentejuridico" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Inbrands" data-dedup-key="https://www.linkedin.com/in/thais-marques-gerentejuridico" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Thaís Marques</td>
                 <td>Gerente Jurídica/ Head of Legal/ Legal Counsel/ Advogada/ Trabalhista/ Cível/ Consumidor Governança/ Varejo/ Atacado/Franquia/  Compliance</td>
                 <td>Não</td>
@@ -2311,7 +2369,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-dedup-key="https://www.linkedin.com/in/avelino-amaral-22729230" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-dedup-key="https://www.linkedin.com/in/avelino-amaral-22729230" data-hr-related="Não" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Avelino Amaral</td>
                 <td>CEO JA Business</td>
                 <td>Não</td>
@@ -2322,7 +2380,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-dedup-key="https://www.linkedin.com/in/avelino-amaral-22729230" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="JA Horses" data-dedup-key="https://www.linkedin.com/in/avelino-amaral-22729230" data-hr-related="Não" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Avelino Amaral</td>
                 <td>CEO JA Business</td>
                 <td>Não</td>
@@ -2340,7 +2398,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Jeeves" data-dedup-key="https://www.linkedin.com/in/gorenstein" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Jeeves" data-dedup-key="https://www.linkedin.com/in/gorenstein" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Gustavo Gorenstein</td>
                 <td>CEO Brasil</td>
                 <td>Não</td>
@@ -2358,7 +2416,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Kearney" data-dedup-key="https://www.linkedin.com/in/vinicius-lacerda" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Kearney" data-dedup-key="https://www.linkedin.com/in/vinicius-lacerda" data-hr-related="Não" data-date="2026-03-01">
                 <td style="padding-left: 30px;">Vinicius Lacerda</td>
                 <td>Business Analyst</td>
                 <td>Não</td>
@@ -2376,7 +2434,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="LG lugar de gente" data-dedup-key="https://www.linkedin.com/in/felipeazevedo" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="LG lugar de gente" data-dedup-key="https://www.linkedin.com/in/felipeazevedo" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Felipe Azevedo</td>
                 <td>CEO</td>
                 <td>Não</td>
@@ -2387,7 +2445,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="LG lugar de gente" data-dedup-key="https://www.linkedin.com/in/felipeazevedo/" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="LG lugar de gente" data-dedup-key="https://www.linkedin.com/in/felipeazevedo/" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Felipe Azevedo</td>
                 <td>CEO</td>
                 <td>Não</td>
@@ -2405,7 +2463,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Marlabs Brasil" data-dedup-key="https://www.linkedin.com/in/diegomotta" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Marlabs Brasil" data-dedup-key="https://www.linkedin.com/in/diegomotta" data-hr-related="Não" data-date="2026-03-01">
                 <td style="padding-left: 30px;">Diego Motta</td>
                 <td>Senior Product Manager</td>
                 <td>Não</td>
@@ -2423,7 +2481,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Numeric" data-dedup-key="https://www.linkedin.com/in/luc-ayoub-5338b7175" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Numeric" data-dedup-key="https://www.linkedin.com/in/luc-ayoub-5338b7175" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Luc Ayoub</td>
                 <td>Account Executive</td>
                 <td>Não</td>
@@ -2441,7 +2499,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="OLX Brasil" data-dedup-key="https://www.linkedin.com/in/pamlorena" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="OLX Brasil" data-dedup-key="https://www.linkedin.com/in/pamlorena" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Pamela Lorena Figueira</td>
                 <td>Executiva de crescimento e escala</td>
                 <td>Não</td>
@@ -2459,7 +2517,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="PSW Digital" data-dedup-key="https://www.linkedin.com/in/andrielle-ferraz-pereira" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="PSW Digital" data-dedup-key="https://www.linkedin.com/in/andrielle-ferraz-pereira" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Andrielle Pereira</td>
                 <td>Marketing Specialist</td>
                 <td>Não</td>
@@ -2477,7 +2535,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Pilot.com" data-dedup-key="https://www.linkedin.com/in/danielguthorn" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Pilot.com" data-dedup-key="https://www.linkedin.com/in/danielguthorn" data-hr-related="Não" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Daniel Guthorn</td>
                 <td>Business Development</td>
                 <td>Não</td>
@@ -2495,7 +2553,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="PostHog" data-dedup-key="https://www.linkedin.com/in/fercgomes" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="PostHog" data-dedup-key="https://www.linkedin.com/in/fercgomes" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Fernando Gomes</td>
                 <td>Product Engineer</td>
                 <td>Não</td>
@@ -2513,7 +2571,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="RankMyApp" data-dedup-key="https://www.linkedin.com/in/nicolemarquesf" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="RankMyApp" data-dedup-key="https://www.linkedin.com/in/nicolemarquesf" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Nicole Marques</td>
                 <td>Talent Advisor</td>
                 <td>Sim</td>
@@ -2531,7 +2589,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="RapidSOS" data-dedup-key="https://www.linkedin.com/in/charlieminard" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="RapidSOS" data-dedup-key="https://www.linkedin.com/in/charlieminard" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Charlie Minard</td>
                 <td>Enterprise Account Executive</td>
                 <td>Não</td>
@@ -2549,7 +2607,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Redpin" data-dedup-key="https://www.linkedin.com/in/thomasdias" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Redpin" data-dedup-key="https://www.linkedin.com/in/thomasdias" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Thomás Dias</td>
                 <td>Product Leadership</td>
                 <td>Não</td>
@@ -2567,7 +2625,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="SYOS" data-dedup-key="https://www.linkedin.com/in/rodrigo-stocco" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="SYOS" data-dedup-key="https://www.linkedin.com/in/rodrigo-stocco" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Rodrigo Stocco</td>
                 <td>Coordenador Comercial - Inside Sales & SDR</td>
                 <td>Não</td>
@@ -2578,7 +2636,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="SYOS" data-dedup-key="https://www.linkedin.com/in/rodrigo-stocco/" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="SYOS" data-dedup-key="https://www.linkedin.com/in/rodrigo-stocco/" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rodrigo Stocco</td>
                 <td>Coordenador Comercial - Inside Sales & SDR</td>
                 <td>Não</td>
@@ -2596,7 +2654,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Stealth FinTech Startup" data-dedup-key="https://www.linkedin.com/in/ai-treasury-management" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Stealth FinTech Startup" data-dedup-key="https://www.linkedin.com/in/ai-treasury-management" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">andre castelo</td>
                 <td>stealth</td>
                 <td>Não</td>
@@ -2614,7 +2672,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Sólides" data-dedup-key="https://www.linkedin.com/in/caio-rossetti" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Sólides" data-dedup-key="https://www.linkedin.com/in/caio-rossetti" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Caio Rossetti</td>
                 <td>M&A</td>
                 <td>Não</td>
@@ -2625,7 +2683,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Sólides" data-dedup-key="https://www.linkedin.com/in/caio-rossetti" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Sólides" data-dedup-key="https://www.linkedin.com/in/caio-rossetti" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Caio Rossetti</td>
                 <td>M&A</td>
                 <td>Não</td>
@@ -2636,7 +2694,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Sólides" data-dedup-key="https://www.linkedin.com/in/gabriel-tess" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Sólides" data-dedup-key="https://www.linkedin.com/in/gabriel-tess" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Gabriel Tess</td>
                 <td>M&A & Corporate Development</td>
                 <td>Não</td>
@@ -2647,7 +2705,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Sólides" data-dedup-key="https://www.linkedin.com/in/gabriel-tess" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Sólides" data-dedup-key="https://www.linkedin.com/in/gabriel-tess" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Gabriel Tess</td>
                 <td>M&A & Corporate Development</td>
                 <td>Não</td>
@@ -2665,7 +2723,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Tech Seals" data-dedup-key="https://www.linkedin.com/in/helioribeiropro" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Tech Seals" data-dedup-key="https://www.linkedin.com/in/helioribeiropro" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Helio Ribeiro</td>
                 <td>Data & AI Manager</td>
                 <td>Não</td>
@@ -2683,7 +2741,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Tequaly" data-dedup-key="https://www.linkedin.com/in/fabio-de-avila-73390a53" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Tequaly" data-dedup-key="https://www.linkedin.com/in/fabio-de-avila-73390a53" data-hr-related="Sim" data-date="2026-02-28">
                 <td style="padding-left: 30px;">Fabio de Avila</td>
                 <td>Recursos Humanos</td>
                 <td>Sim</td>
@@ -2701,7 +2759,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="The Carlyle Group" data-dedup-key="https://www.linkedin.com/in/daniel-ducic" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="The Carlyle Group" data-dedup-key="https://www.linkedin.com/in/daniel-ducic" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Daniel Ducic</td>
                 <td>Carlyle</td>
                 <td>Não</td>
@@ -2719,7 +2777,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="The Davey Tree Expert Company" data-dedup-key="https://www.linkedin.com/in/benjamin-rogers-76381525a" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="The Davey Tree Expert Company" data-dedup-key="https://www.linkedin.com/in/benjamin-rogers-76381525a" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Benjamin Rogers</td>
                 <td>Santa Clara University Alumni</td>
                 <td>Não</td>
@@ -2737,7 +2795,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Traba" data-dedup-key="https://www.linkedin.com/in/luisenriquelasso" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Traba" data-dedup-key="https://www.linkedin.com/in/luisenriquelasso" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Luis Enrique Lasso De La Lastra</td>
                 <td>Head of People</td>
                 <td>Sim</td>
@@ -2748,7 +2806,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Traba" data-dedup-key="https://www.linkedin.com/in/luisenriquelasso" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Traba" data-dedup-key="https://www.linkedin.com/in/luisenriquelasso" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Luis Enrique Lasso De La Lastra</td>
                 <td>Head of People</td>
                 <td>Sim</td>
@@ -2759,7 +2817,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Traba" data-dedup-key="https://www.linkedin.com/in/dimitri-giovanoudas-82b278174" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Traba" data-dedup-key="https://www.linkedin.com/in/dimitri-giovanoudas-82b278174" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Dimitri Giovanoudas</td>
                 <td>Strategy & Ops</td>
                 <td>Não</td>
@@ -2770,7 +2828,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Traba" data-dedup-key="https://www.linkedin.com/in/dimitri-giovanoudas-82b278174" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Traba" data-dedup-key="https://www.linkedin.com/in/dimitri-giovanoudas-82b278174" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Dimitri Giovanoudas</td>
                 <td>Strategy & Ops</td>
                 <td>Não</td>
@@ -2788,7 +2846,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Transfeera" data-dedup-key="https://www.linkedin.com/in/nunesf" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Transfeera" data-dedup-key="https://www.linkedin.com/in/nunesf" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Fernando Nunes</td>
                 <td>De Startup a Scale-up</td>
                 <td>Não</td>
@@ -2799,7 +2857,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Transfeera" data-dedup-key="https://www.linkedin.com/in/nunesf" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Transfeera" data-dedup-key="https://www.linkedin.com/in/nunesf" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Fernando Nunes</td>
                 <td>De Startup a Scale-up</td>
                 <td>Não</td>
@@ -2810,7 +2868,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Transfeera" data-dedup-key="https://www.linkedin.com/in/nunesf/" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Transfeera" data-dedup-key="https://www.linkedin.com/in/nunesf/" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Fernando Nunes</td>
                 <td>De Startup a Scale-up</td>
                 <td>Não</td>
@@ -2828,7 +2886,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="UOL" data-dedup-key="https://www.linkedin.com/in/davidschurmann" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="UOL" data-dedup-key="https://www.linkedin.com/in/davidschurmann" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">David Schurmann</td>
                 <td>Film Director & Producer</td>
                 <td>Não</td>
@@ -2846,7 +2904,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Xepelin" data-dedup-key="https://www.linkedin.com/in/sebastiankreis" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Low Priority" data-company="Xepelin" data-dedup-key="https://www.linkedin.com/in/sebastiankreis" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Sebastian Kreis</td>
                 <td>Co-Founder & CEO</td>
                 <td>Não</td>
@@ -2864,7 +2922,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="4intelligence Data Science" data-dedup-key="https://www.linkedin.com/in/rfmendonca" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="4intelligence Data Science" data-dedup-key="https://www.linkedin.com/in/rfmendonca" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rafael Mendonça</td>
                 <td>CTO</td>
                 <td>Não</td>
@@ -2882,7 +2940,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="7shifts" data-dedup-key="https://www.linkedin.com/in/justin-holmes-a84b8453" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="7shifts" data-dedup-key="https://www.linkedin.com/in/justin-holmes-a84b8453" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Justin Holmes</td>
                 <td>CMO</td>
                 <td>Não</td>
@@ -2893,7 +2951,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="7shifts" data-dedup-key="https://www.linkedin.com/in/justin-holmes-a84b8453" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="7shifts" data-dedup-key="https://www.linkedin.com/in/justin-holmes-a84b8453" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Justin Holmes</td>
                 <td>CMO</td>
                 <td>Não</td>
@@ -2911,7 +2969,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Aitana" data-dedup-key="https://www.linkedin.com/in/christian-rivera-md" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Aitana" data-dedup-key="https://www.linkedin.com/in/christian-rivera-md" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Christian Rivera, MD</td>
                 <td>CEO</td>
                 <td>Não</td>
@@ -2929,7 +2987,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="AmorSaúde Brasil" data-dedup-key="https://www.linkedin.com/in/paulo-jonas-rick-7a773794" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="AmorSaúde Brasil" data-dedup-key="https://www.linkedin.com/in/paulo-jonas-rick-7a773794" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Paulo Jonas Rick</td>
                 <td>Product Owner na AmorSaúde Brasil</td>
                 <td>Não</td>
@@ -2947,7 +3005,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Barte" data-dedup-key="https://www.linkedin.com/in/daniel-zaborowsky-graicer-345a45212" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Barte" data-dedup-key="https://www.linkedin.com/in/daniel-zaborowsky-graicer-345a45212" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Daniel Zaborowsky Graicer</td>
                 <td>Head of Business Development</td>
                 <td>Não</td>
@@ -2958,7 +3016,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Barte" data-dedup-key="https://www.linkedin.com/in/davi-vanderlei-93961a220" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Barte" data-dedup-key="https://www.linkedin.com/in/davi-vanderlei-93961a220" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Davi Vanderlei</td>
                 <td>Strategy & Operations @Barte</td>
                 <td>Não</td>
@@ -2976,7 +3034,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="COOPERFORTE" data-dedup-key="https://www.linkedin.com/in/asclepius-soares" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="COOPERFORTE" data-dedup-key="https://www.linkedin.com/in/asclepius-soares" data-hr-related="Não" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Asclepius Soares</td>
                 <td>CEO</td>
                 <td>Não</td>
@@ -2994,7 +3052,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-dedup-key="https://www.linkedin.com/in/rodrigo-della-rocca" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-dedup-key="https://www.linkedin.com/in/rodrigo-della-rocca" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rodrigo Della Rocca</td>
                 <td>Founder and CEO</td>
                 <td>Não</td>
@@ -3005,7 +3063,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-dedup-key="https://www.linkedin.com/in/rodrigo-della-rocca" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="CondoConta" data-dedup-key="https://www.linkedin.com/in/rodrigo-della-rocca" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rodrigo Della Rocca</td>
                 <td>Founder and CEO</td>
                 <td>Não</td>
@@ -3023,7 +3081,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Cooperativa Central Ailos" data-dedup-key="https://www.linkedin.com/in/michele-mary-768120b8" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Cooperativa Central Ailos" data-dedup-key="https://www.linkedin.com/in/michele-mary-768120b8" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Michele Mary</td>
                 <td>Empreendedora</td>
                 <td>Não</td>
@@ -3041,7 +3099,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Cubos Tecnologia" data-dedup-key="https://www.linkedin.com/in/rafael-lemos-belmonte" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Cubos Tecnologia" data-dedup-key="https://www.linkedin.com/in/rafael-lemos-belmonte" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rafael Lemos</td>
                 <td>Senior Backend Engineer & Tech Lead</td>
                 <td>Não</td>
@@ -3059,7 +3117,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="ELSA, Corp" data-dedup-key="https://www.linkedin.com/in/laizmaiochi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="ELSA, Corp" data-dedup-key="https://www.linkedin.com/in/laizmaiochi" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Laiz Maiochi</td>
                 <td>Delivering effective solutions to complex challenges that drives business impact</td>
                 <td>Não</td>
@@ -3077,7 +3135,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Empresa de Trens Urbanos de Porto Alegre S.A. - Trensurb" data-dedup-key="https://www.linkedin.com/in/claudia-carvalho-posdnyakov" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Empresa de Trens Urbanos de Porto Alegre S.A. - Trensurb" data-dedup-key="https://www.linkedin.com/in/claudia-carvalho-posdnyakov" data-hr-related="Não" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Claudia Carvalho Posdnyakov, CFO, CCA e CCF ibgc, CRC, CRA, EMBA</td>
                 <td>Conselho Administração e Fiscal Certificada IBGC- Conselho Consultivo- Perícia Contábil -  Consultoria - Comissão de Finanças e Contabilidade do IBGC</td>
                 <td>Não</td>
@@ -3095,7 +3153,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="FIEMG" data-dedup-key="https://www.linkedin.com/in/rubensantunes" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="FIEMG" data-dedup-key="https://www.linkedin.com/in/rubensantunes" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Rubens Antunes</td>
                 <td>Analista de Remuneração</td>
                 <td>Não</td>
@@ -3113,7 +3171,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-dedup-key="https://www.linkedin.com/in/victorhochgreb" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-dedup-key="https://www.linkedin.com/in/victorhochgreb" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Victor Hochgreb</td>
                 <td>Founder</td>
                 <td>Não</td>
@@ -3124,7 +3182,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-dedup-key="https://www.linkedin.com/in/victorhochgreb" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="GoBots" data-dedup-key="https://www.linkedin.com/in/victorhochgreb" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Victor Hochgreb</td>
                 <td>Founder</td>
                 <td>Não</td>
@@ -3142,7 +3200,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Grupo Edson Queiroz" data-dedup-key="https://www.linkedin.com/in/jorge-augusto-doria-nascimento-silva-904642a" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Grupo Edson Queiroz" data-dedup-key="https://www.linkedin.com/in/jorge-augusto-doria-nascimento-silva-904642a" data-hr-related="Não" data-date="2026-03-03">
                 <td style="padding-left: 30px;">Jorge Augusto Doria Nascimento Silva</td>
                 <td>Diretor Executivo de Supply Chain</td>
                 <td>Não</td>
@@ -3160,7 +3218,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Grupo Jacto" data-dedup-key="https://www.linkedin.com/in/erodrigues2025" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Grupo Jacto" data-dedup-key="https://www.linkedin.com/in/erodrigues2025" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Eladian Rodrigues</td>
                 <td>Organizational Transformation</td>
                 <td>Não</td>
@@ -3178,7 +3236,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Halexistar Indústria Farmacêutica S/A" data-dedup-key="https://www.linkedin.com/in/mauricioasgomes" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Halexistar Indústria Farmacêutica S/A" data-dedup-key="https://www.linkedin.com/in/mauricioasgomes" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Maurício Andrade</td>
                 <td>Head of Finance and HR</td>
                 <td>Sim</td>
@@ -3196,7 +3254,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Inven" data-dedup-key="https://www.linkedin.com/in/mitch-d-miller" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Inven" data-dedup-key="https://www.linkedin.com/in/mitch-d-miller" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Mitch Miller</td>
                 <td>Senior Account Executive</td>
                 <td>Não</td>
@@ -3207,7 +3265,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Inven" data-dedup-key="https://www.linkedin.com/in/mitch-d-miller/" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Inven" data-dedup-key="https://www.linkedin.com/in/mitch-d-miller/" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Mitch Miller</td>
                 <td>Senior Account Executive</td>
                 <td>Não</td>
@@ -3225,7 +3283,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Kiln" data-dedup-key="https://www.linkedin.com/in/tarik-remila-709a3221" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Kiln" data-dedup-key="https://www.linkedin.com/in/tarik-remila-709a3221" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Tarik Remila</td>
                 <td>Startup Investor</td>
                 <td>Não</td>
@@ -3243,7 +3301,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Kombo" data-dedup-key="https://www.linkedin.com/in/natalia-uszynski" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Kombo" data-dedup-key="https://www.linkedin.com/in/natalia-uszynski" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Natalia Uszyñski</td>
                 <td>Kombo - Unified API for HR, ATS & LMS</td>
                 <td>Sim</td>
@@ -3254,7 +3312,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Kombo" data-dedup-key="https://www.linkedin.com/in/natalia-uszynski" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Kombo" data-dedup-key="https://www.linkedin.com/in/natalia-uszynski" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Natalia Uszyñski</td>
                 <td>Kombo - Unified API for HR, ATS & LMS</td>
                 <td>Sim</td>
@@ -3272,7 +3330,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Leader Bank" data-dedup-key="https://www.linkedin.com/in/summer-hutchison-6b8062198" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Leader Bank" data-dedup-key="https://www.linkedin.com/in/summer-hutchison-6b8062198" data-hr-related="Não" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Summer Hutchison</td>
                 <td>VC/PE & Tech Banking Associate</td>
                 <td>Não</td>
@@ -3290,7 +3348,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="MEV" data-dedup-key="https://www.linkedin.com/in/matheus-dressler-maia" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="MEV" data-dedup-key="https://www.linkedin.com/in/matheus-dressler-maia" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Matheus Dressler Maia</td>
                 <td>⚡️CEO & Co-Fundador @MEV, eletrificando frotas</td>
                 <td>Não</td>
@@ -3308,7 +3366,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Modaxo" data-dedup-key="https://www.linkedin.com/in/douglascardoso" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Modaxo" data-dedup-key="https://www.linkedin.com/in/douglascardoso" data-hr-related="Não" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Douglas Cardoso</td>
                 <td>CFO / Conselheiro (Board Member) / Financial Advisor (CEA)</td>
                 <td>Não</td>
@@ -3326,7 +3384,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Nectar" data-dedup-key="https://www.linkedin.com/in/alexandreferrari" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Nectar" data-dedup-key="https://www.linkedin.com/in/alexandreferrari" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Alexandre Ferrari</td>
                 <td>Growth Specialist</td>
                 <td>Não</td>
@@ -3337,7 +3395,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Nectar" data-dedup-key="https://www.linkedin.com/in/alexandreferrari/" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Nectar" data-dedup-key="https://www.linkedin.com/in/alexandreferrari/" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Alexandre Ferrari</td>
                 <td>Growth Specialist</td>
                 <td>Não</td>
@@ -3355,7 +3413,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="NotCo" data-dedup-key="https://www.linkedin.com/in/griffin-boutwell" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="NotCo" data-dedup-key="https://www.linkedin.com/in/griffin-boutwell" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Griffin Boutwell</td>
                 <td>Food Scientist II - Applied AI Specialist</td>
                 <td>Não</td>
@@ -3373,7 +3431,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="OceanPact Serviços Marítimos" data-dedup-key="https://www.linkedin.com/in/eduardo-de-toledo-2b8329" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="OceanPact Serviços Marítimos" data-dedup-key="https://www.linkedin.com/in/eduardo-de-toledo-2b8329" data-hr-related="Não" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Eduardo de Toledo</td>
                 <td>Diretor Financeiro e de RI</td>
                 <td>Não</td>
@@ -3391,7 +3449,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Portal Telemedicina" data-dedup-key="https://www.linkedin.com/in/rachel-moghrabi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Portal Telemedicina" data-dedup-key="https://www.linkedin.com/in/rachel-moghrabi" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rachel Moghrabi</td>
                 <td>International and National Operations</td>
                 <td>Não</td>
@@ -3409,7 +3467,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Prodesp" data-dedup-key="https://www.linkedin.com/in/dvdoliveira" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Prodesp" data-dedup-key="https://www.linkedin.com/in/dvdoliveira" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">David Oliveira</td>
                 <td>Head of HR</td>
                 <td>Sim</td>
@@ -3427,7 +3485,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Radiante Engenharia de Telecomunicações" data-dedup-key="https://www.linkedin.com/in/jhone-penha-3a90889a" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Radiante Engenharia de Telecomunicações" data-dedup-key="https://www.linkedin.com/in/jhone-penha-3a90889a" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Jhone Penha</td>
                 <td>--</td>
                 <td>Não</td>
@@ -3445,7 +3503,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Randstad Brasil" data-dedup-key="https://www.linkedin.com/in/vanessalimaoliveirasantos" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Randstad Brasil" data-dedup-key="https://www.linkedin.com/in/vanessalimaoliveirasantos" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Vanessa Lima Oliveira</td>
                 <td>Mãe da Alicia</td>
                 <td>Não</td>
@@ -3463,7 +3521,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="SYSTRA Brasil" data-dedup-key="https://www.linkedin.com/in/leandro-santos-a1867b32" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="SYSTRA Brasil" data-dedup-key="https://www.linkedin.com/in/leandro-santos-a1867b32" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Leandro Santos</td>
                 <td>Analista Contábil</td>
                 <td>Não</td>
@@ -3481,7 +3539,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Santander Corporate & Investment Banking" data-dedup-key="https://www.linkedin.com/in/eduardo-d-orsi-6b044670" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Santander Corporate & Investment Banking" data-dedup-key="https://www.linkedin.com/in/eduardo-d-orsi-6b044670" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Eduardo d'Orsi</td>
                 <td>Senior Cash Management & Transaction Banking Leader</td>
                 <td>Não</td>
@@ -3499,7 +3557,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Senior Frontend Contractor" data-dedup-key="https://www.linkedin.com/in/wescosta" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Senior Frontend Contractor" data-dedup-key="https://www.linkedin.com/in/wescosta" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Wesley Costa</td>
                 <td>Senior Frontend Engineer</td>
                 <td>Não</td>
@@ -3510,7 +3568,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Senior Frontend Contractor" data-dedup-key="https://www.linkedin.com/in/wescosta" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Senior Frontend Contractor" data-dedup-key="https://www.linkedin.com/in/wescosta" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Wesley Costa</td>
                 <td>Senior Frontend Engineer</td>
                 <td>Não</td>
@@ -3528,7 +3586,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Slash" data-dedup-key="https://www.linkedin.com/in/nicolas-gutierrez-seelenberger" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Slash" data-dedup-key="https://www.linkedin.com/in/nicolas-gutierrez-seelenberger" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Nicolas Gutierrez Seelenberger</td>
                 <td>Startups</td>
                 <td>Não</td>
@@ -3546,7 +3604,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="StartSe" data-dedup-key="https://www.linkedin.com/in/jorgepbosch" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="StartSe" data-dedup-key="https://www.linkedin.com/in/jorgepbosch" data-hr-related="Não" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Jorge Bosch</td>
                 <td>Partner</td>
                 <td>Não</td>
@@ -3564,7 +3622,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Stoque" data-dedup-key="https://www.linkedin.com/in/monalisamoreira" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Stoque" data-dedup-key="https://www.linkedin.com/in/monalisamoreira" data-hr-related="Sim" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Monalisa Moreira</td>
                 <td>Head de Recursos Humanos</td>
                 <td>Sim</td>
@@ -3582,7 +3640,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Volaris Group" data-dedup-key="https://www.linkedin.com/in/rafael-frazzon-b83895145" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Volaris Group" data-dedup-key="https://www.linkedin.com/in/rafael-frazzon-b83895145" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rafael Frazzon</td>
                 <td>M&A and Business Development</td>
                 <td>Não</td>
@@ -3600,7 +3658,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Vórtx" data-dedup-key="https://www.linkedin.com/in/beatriz-cassemiro" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="Vórtx" data-dedup-key="https://www.linkedin.com/in/beatriz-cassemiro" data-hr-related="Não" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Beatriz Cassemiro Rosado</td>
                 <td>Manufacturing Engineering student</td>
                 <td>Não</td>
@@ -3618,7 +3676,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="goFlux" data-dedup-key="https://www.linkedin.com/in/nobregasleo" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="goFlux" data-dedup-key="https://www.linkedin.com/in/nobregasleo" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Leonardo Nobrega</td>
                 <td>Growth Marketing</td>
                 <td>Não</td>
@@ -3629,7 +3687,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="goFlux" data-dedup-key="https://www.linkedin.com/in/luis-martinez-bab4a121" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="goFlux" data-dedup-key="https://www.linkedin.com/in/luis-martinez-bab4a121" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Luis Fernando Martinez</td>
                 <td>Entrepreneur</td>
                 <td>Não</td>
@@ -3647,7 +3705,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="green4T" data-dedup-key="https://www.linkedin.com/in/fernandoand" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="green4T" data-dedup-key="https://www.linkedin.com/in/fernandoand" data-hr-related="Não" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Fernando Andrade</td>
                 <td>Strategy</td>
                 <td>Não</td>
@@ -3665,7 +3723,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="iglu" data-dedup-key="https://www.linkedin.com/in/andersoncssilva" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="iglu" data-dedup-key="https://www.linkedin.com/in/andersoncssilva" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Anderson Silva</td>
                 <td>Founder</td>
                 <td>Não</td>
@@ -3683,7 +3741,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="inChurch" data-dedup-key="https://www.linkedin.com/in/gestorademarketingdigital" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="ICP — Very Low Priority" data-company="inChurch" data-dedup-key="https://www.linkedin.com/in/gestorademarketingdigital" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Lívia  Siqueira</td>
                 <td>Customer Success</td>
                 <td>Não</td>
@@ -3701,7 +3759,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Abria - Associação Brasileira de Inteligência Artificial" data-dedup-key="https://www.linkedin.com/in/ricardo-albuquerque-53430337" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Abria - Associação Brasileira de Inteligência Artificial" data-dedup-key="https://www.linkedin.com/in/ricardo-albuquerque-53430337" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Ricardo Albuquerque</td>
                 <td>Organizer - @GoogleDevelopersGroup de Barueri-São Paulo</td>
                 <td>Não</td>
@@ -3719,7 +3777,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Acargo" data-dedup-key="https://www.linkedin.com/in/juanalbah" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Acargo" data-dedup-key="https://www.linkedin.com/in/juanalbah" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Juan Andres Alba Hache</td>
                 <td>How can tech empower us?</td>
                 <td>Não</td>
@@ -3737,7 +3795,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="AgriShift :: Hub de Experiências Imersivas" data-dedup-key="https://www.linkedin.com/in/macppg" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="AgriShift :: Hub de Experiências Imersivas" data-dedup-key="https://www.linkedin.com/in/macppg" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Marco Aurelio Chaves M Oliveira</td>
                 <td>Executive with over 20 years of experience in Strategic Management</td>
                 <td>Não</td>
@@ -3755,7 +3813,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Aliadas" data-dedup-key="https://www.linkedin.com/in/ali-klemt-a2053b128" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Aliadas" data-dedup-key="https://www.linkedin.com/in/ali-klemt-a2053b128" data-hr-related="Não" data-date="2026-03-04">
                 <td style="padding-left: 30px;">Ali Klemt</td>
                 <td>Pensadora contemporânea</td>
                 <td>Não</td>
@@ -3773,7 +3831,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Allya" data-dedup-key="https://www.linkedin.com/in/marco-ferelli-allya" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Allya" data-dedup-key="https://www.linkedin.com/in/marco-ferelli-allya" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Marco Ferelli da 🅰️lly🅰️</td>
                 <td>Founder</td>
                 <td>Não</td>
@@ -3784,7 +3842,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Allya" data-dedup-key="https://www.linkedin.com/in/marco-ferelli-allya" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Allya" data-dedup-key="https://www.linkedin.com/in/marco-ferelli-allya" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Marco Ferelli da 🅰️lly🅰️</td>
                 <td>Founder</td>
                 <td>Não</td>
@@ -3802,7 +3860,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Americas" data-dedup-key="https://www.linkedin.com/in/willian-moraes-6b529a4a" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Americas" data-dedup-key="https://www.linkedin.com/in/willian-moraes-6b529a4a" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Willian Moraes</td>
                 <td>Senior Support Analyst</td>
                 <td>Não</td>
@@ -3820,7 +3878,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Aprix" data-dedup-key="https://www.linkedin.com/in/álvaro-englert-24676612b" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Aprix" data-dedup-key="https://www.linkedin.com/in/álvaro-englert-24676612b" data-hr-related="Sim" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Álvaro Englert</td>
                 <td>HR Director</td>
                 <td>Sim</td>
@@ -3838,7 +3896,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="ArcelorMittal Brasil" data-dedup-key="https://www.linkedin.com/in/júlia-lucas-diniz-ferreira-32a6b723" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="ArcelorMittal Brasil" data-dedup-key="https://www.linkedin.com/in/júlia-lucas-diniz-ferreira-32a6b723" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Júlia Lucas Diniz Ferreira</td>
                 <td>Gerente de Remuneração Total e Relações Trabalhistas</td>
                 <td>Não</td>
@@ -3856,7 +3914,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Beyon l Executive Search" data-dedup-key="https://www.linkedin.com/in/felipe-harmel-8b4aa01b" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Beyon l Executive Search" data-dedup-key="https://www.linkedin.com/in/felipe-harmel-8b4aa01b" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Felipe  Harmel</td>
                 <td>Founder & Managing Partner</td>
                 <td>Não</td>
@@ -3874,7 +3932,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Blip" data-dedup-key="https://www.linkedin.com/in/c-menezes" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Blip" data-dedup-key="https://www.linkedin.com/in/c-menezes" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Caio Menezes</td>
                 <td>Leadership</td>
                 <td>Não</td>
@@ -3885,7 +3943,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Blip" data-dedup-key="https://www.linkedin.com/in/c-menezes" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Blip" data-dedup-key="https://www.linkedin.com/in/c-menezes" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Caio Menezes</td>
                 <td>Leadership</td>
                 <td>Não</td>
@@ -3903,7 +3961,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Boutique Executive Search" data-dedup-key="https://www.linkedin.com/in/dreborges" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Boutique Executive Search" data-dedup-key="https://www.linkedin.com/in/dreborges" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Andre Borges</td>
                 <td>Executive Search Leader</td>
                 <td>Não</td>
@@ -3914,7 +3972,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Boutique Executive Search" data-dedup-key="https://www.linkedin.com/in/dreborges" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Boutique Executive Search" data-dedup-key="https://www.linkedin.com/in/dreborges" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Andre Borges</td>
                 <td>Executive Search Leader</td>
                 <td>Não</td>
@@ -3932,7 +3990,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Cayena" data-dedup-key="https://www.linkedin.com/in/rodrigosouzaops" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Cayena" data-dedup-key="https://www.linkedin.com/in/rodrigosouzaops" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Rodrigo Souza</td>
                 <td>Head of Growth</td>
                 <td>Não</td>
@@ -3950,7 +4008,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Cedar Capital" data-dedup-key="https://www.linkedin.com/in/johncurtius" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Cedar Capital" data-dedup-key="https://www.linkedin.com/in/johncurtius" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">John Curtius</td>
                 <td>Founder</td>
                 <td>Não</td>
@@ -3968,7 +4026,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Cielo" data-dedup-key="https://www.linkedin.com/in/pedro-souza-gonsales" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Cielo" data-dedup-key="https://www.linkedin.com/in/pedro-souza-gonsales" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Pedro Gonsales</td>
                 <td>Estagiário</td>
                 <td>Não</td>
@@ -3986,7 +4044,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Coca-Cola Andina" data-dedup-key="https://www.linkedin.com/in/alexandre-gangemi-aba17b2" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Coca-Cola Andina" data-dedup-key="https://www.linkedin.com/in/alexandre-gangemi-aba17b2" data-hr-related="Sim" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Alexandre Gangemi</td>
                 <td>Gerente RH</td>
                 <td>Sim</td>
@@ -4004,7 +4062,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Comp" data-dedup-key="https://www.linkedin.com/in/gabrielhgobi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Comp" data-dedup-key="https://www.linkedin.com/in/gabrielhgobi" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Gabriel Gobi</td>
                 <td>nan</td>
                 <td>Não</td>
@@ -4015,7 +4073,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Comp" data-dedup-key="https://www.linkedin.com/in/gabrielhgobi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Comp" data-dedup-key="https://www.linkedin.com/in/gabrielhgobi" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Gabriel Gobi</td>
                 <td>nan</td>
                 <td>Não</td>
@@ -4033,7 +4091,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Concrejato Engenharia" data-dedup-key="https://www.linkedin.com/in/renatafda" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Concrejato Engenharia" data-dedup-key="https://www.linkedin.com/in/renatafda" data-hr-related="Sim" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Renata Fernandes</td>
                 <td>Executiva de RH</td>
                 <td>Sim</td>
@@ -4051,7 +4109,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Connected Executive Search" data-dedup-key="https://www.linkedin.com/in/rtakle" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Connected Executive Search" data-dedup-key="https://www.linkedin.com/in/rtakle" data-hr-related="Sim" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Richard Takle</td>
                 <td>SaaS Recruiter</td>
                 <td>Sim</td>
@@ -4069,7 +4127,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Corpb! Educação Executiva" data-dedup-key="https://www.linkedin.com/in/regina-almeida-053612b9" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Corpb! Educação Executiva" data-dedup-key="https://www.linkedin.com/in/regina-almeida-053612b9" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Regina Almeida</td>
                 <td>Relationship Executive</td>
                 <td>Não</td>
@@ -4087,7 +4145,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="DNA Educação" data-dedup-key="https://www.linkedin.com/in/lucaspaiva-gtme" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="DNA Educação" data-dedup-key="https://www.linkedin.com/in/lucaspaiva-gtme" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Lucas Paiva</td>
                 <td>Entrepreneur in house building AI for enterprise</td>
                 <td>Não</td>
@@ -4098,7 +4156,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="DNA Educação" data-dedup-key="https://www.linkedin.com/in/lucaspaiva-gtme" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="DNA Educação" data-dedup-key="https://www.linkedin.com/in/lucaspaiva-gtme" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Lucas Paiva</td>
                 <td>Entrepreneur in house building AI for enterprise</td>
                 <td>Não</td>
@@ -4116,7 +4174,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="DreamExperience" data-dedup-key="https://www.linkedin.com/in/fredarruda" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="DreamExperience" data-dedup-key="https://www.linkedin.com/in/fredarruda" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Fred Arruda</td>
                 <td>CEO</td>
                 <td>Não</td>
@@ -4134,7 +4192,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="FACAMP - Faculdades de Campinas" data-dedup-key="https://www.linkedin.com/in/paulolemos" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="FACAMP - Faculdades de Campinas" data-dedup-key="https://www.linkedin.com/in/paulolemos" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Prof Paulo Lemos</td>
                 <td>| Professor | Educator | Consultant | Entrepreneurship | Innovation | Strategy |</td>
                 <td>Não</td>
@@ -4152,7 +4210,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="FENICIO" data-dedup-key="https://www.linkedin.com/in/mariofaccioni" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="FENICIO" data-dedup-key="https://www.linkedin.com/in/mariofaccioni" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Mário R Faccioni JR</td>
                 <td>Sales</td>
                 <td>Não</td>
@@ -4163,7 +4221,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="FENICIO" data-dedup-key="https://www.linkedin.com/in/mariofaccioni" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="FENICIO" data-dedup-key="https://www.linkedin.com/in/mariofaccioni" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Mário R Faccioni JR</td>
                 <td>Sales</td>
                 <td>Não</td>
@@ -4181,7 +4239,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="FIR Capital Partners" data-dedup-key="https://www.linkedin.com/in/geraldomoura" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="FIR Capital Partners" data-dedup-key="https://www.linkedin.com/in/geraldomoura" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Geraldo Moura</td>
                 <td>Partner FIR Capital</td>
                 <td>Não</td>
@@ -4199,7 +4257,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Film Actor" data-dedup-key="https://www.linkedin.com/in/sharon-srour-022a823a9" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Film Actor" data-dedup-key="https://www.linkedin.com/in/sharon-srour-022a823a9" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Sharon Srour</td>
                 <td>Actor</td>
                 <td>Não</td>
@@ -4217,7 +4275,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="G4 Educação" data-dedup-key="https://www.linkedin.com/in/vinícius-alves-b826a613" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="G4 Educação" data-dedup-key="https://www.linkedin.com/in/vinícius-alves-b826a613" data-hr-related="Não" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Vinícius Alves</td>
                 <td>Diretor Financeiro</td>
                 <td>Não</td>
@@ -4235,7 +4293,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Gerdau" data-dedup-key="https://www.linkedin.com/in/jefferson-marko-03579914" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Gerdau" data-dedup-key="https://www.linkedin.com/in/jefferson-marko-03579914" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Jefferson Marko</td>
                 <td>Inspiring our team to transform!</td>
                 <td>Não</td>
@@ -4253,7 +4311,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="ITEN Concessionária do Centro de Gestão Integrada do Distrito Federal S.A." data-dedup-key="https://www.linkedin.com/in/rodneikojima" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="ITEN Concessionária do Centro de Gestão Integrada do Distrito Federal S.A." data-dedup-key="https://www.linkedin.com/in/rodneikojima" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rodnei Kojima .'.</td>
                 <td>Self-motivated; Disruptive Innovation Business-Oriented for Boosted Growth; Technology-Driven for Digital Transformation</td>
                 <td>Não</td>
@@ -4271,7 +4329,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Icatu Seguros" data-dedup-key="https://www.linkedin.com/in/ronaldo-marques-1a829b148" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Icatu Seguros" data-dedup-key="https://www.linkedin.com/in/ronaldo-marques-1a829b148" data-hr-related="Não" data-date="2026-03-02">
                 <td style="padding-left: 30px;">Ronaldo Marques</td>
                 <td>Diretor Executivo Comercial RJ/ES na Icatu Seguros</td>
                 <td>Não</td>
@@ -4289,7 +4347,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="InFinance Insper" data-dedup-key="https://www.linkedin.com/in/antonio-vilarinho-dias1" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="InFinance Insper" data-dedup-key="https://www.linkedin.com/in/antonio-vilarinho-dias1" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Antonio Vilarinho Dias</td>
                 <td>Capital Solutions I InFinance Insper</td>
                 <td>Não</td>
@@ -4307,7 +4365,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Invisible Keyboard" data-dedup-key="https://www.linkedin.com/in/danielafrominvisiblekeyboard" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Invisible Keyboard" data-dedup-key="https://www.linkedin.com/in/danielafrominvisiblekeyboard" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Dani DC.</td>
                 <td>Making content people trust</td>
                 <td>Sim</td>
@@ -4325,7 +4383,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Joint SDG Fund" data-dedup-key="https://www.linkedin.com/in/elainesmithgenser" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Joint SDG Fund" data-dedup-key="https://www.linkedin.com/in/elainesmithgenser" data-hr-related="Não" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Elaine Smith Genser</td>
                 <td>United Nations Joint SDG Fund responsible for engagement and partnerships development</td>
                 <td>Não</td>
@@ -4336,7 +4394,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Joint SDG Fund" data-dedup-key="https://www.linkedin.com/in/elainesmithgenser" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Joint SDG Fund" data-dedup-key="https://www.linkedin.com/in/elainesmithgenser" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Elaine Smith Genser</td>
                 <td>United Nations Joint SDG Fund responsible for engagement and partnerships development</td>
                 <td>Não</td>
@@ -4354,7 +4412,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Jusbrasil Soluções" data-dedup-key="https://www.linkedin.com/in/fmmoreno" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Jusbrasil Soluções" data-dedup-key="https://www.linkedin.com/in/fmmoreno" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Felipe Moreno</td>
                 <td>Jusbrasil</td>
                 <td>Não</td>
@@ -4372,7 +4430,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="LEAG GROUP Brasil" data-dedup-key="https://www.linkedin.com/in/andre-camargo1" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="LEAG GROUP Brasil" data-dedup-key="https://www.linkedin.com/in/andre-camargo1" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">André Camargo</td>
                 <td>Country Manager of LEAG GROUP</td>
                 <td>Não</td>
@@ -4383,7 +4441,7 @@
             </tr>
             
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="LEAG GROUP Brasil" data-dedup-key="https://www.linkedin.com/in/andre-camargo1" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="LEAG GROUP Brasil" data-dedup-key="https://www.linkedin.com/in/andre-camargo1" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">André Camargo</td>
                 <td>Country Manager of LEAG GROUP</td>
                 <td>Não</td>
@@ -4401,7 +4459,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Lima Consulting Brasil" data-dedup-key="https://www.linkedin.com/in/fuchs" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Lima Consulting Brasil" data-dedup-key="https://www.linkedin.com/in/fuchs" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Herman Fuchs</td>
                 <td>Managing Partner</td>
                 <td>Não</td>
@@ -4419,7 +4477,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Logical IT" data-dedup-key="https://www.linkedin.com/in/janaina-moreira-30325095" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Logical IT" data-dedup-key="https://www.linkedin.com/in/janaina-moreira-30325095" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Janaina Moreira</td>
                 <td>Head de Pessoas & Cultura</td>
                 <td>Sim</td>
@@ -4437,7 +4495,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="MCassab" data-dedup-key="https://www.linkedin.com/in/cláudia-ramos-50821131" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="MCassab" data-dedup-key="https://www.linkedin.com/in/cláudia-ramos-50821131" data-hr-related="Sim" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Cláudia Ramos</td>
                 <td>Executive HR Manager</td>
                 <td>Sim</td>
@@ -4455,7 +4513,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Mainú Capital" data-dedup-key="https://www.linkedin.com/in/alexandre-liuzzi" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Mainú Capital" data-dedup-key="https://www.linkedin.com/in/alexandre-liuzzi" data-hr-related="Não" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Alexandre Liuzzi</td>
                 <td>Entrepreneur</td>
                 <td>Não</td>
@@ -4473,7 +4531,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Mani - Consultoria de Investimentos" data-dedup-key="https://www.linkedin.com/in/andre-bain" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Mani - Consultoria de Investimentos" data-dedup-key="https://www.linkedin.com/in/andre-bain" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">André Bain</td>
                 <td>Founder @Mani - The future of wealth management</td>
                 <td>Não</td>
@@ -4491,7 +4549,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Modulo Security Solutions" data-dedup-key="https://www.linkedin.com/in/albastos" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Modulo Security Solutions" data-dedup-key="https://www.linkedin.com/in/albastos" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Alberto Bastos</td>
                 <td>CEO & CTO</td>
                 <td>Não</td>
@@ -4509,7 +4567,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Nextar" data-dedup-key="https://www.linkedin.com/in/larissa-crepaldi-doreto-4aa760120" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Nextar" data-dedup-key="https://www.linkedin.com/in/larissa-crepaldi-doreto-4aa760120" data-hr-related="Sim" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Larissa Crepaldi Doreto</td>
                 <td>Líder de RH</td>
                 <td>Sim</td>
@@ -4527,7 +4585,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="No time for social network" data-dedup-key="https://www.linkedin.com/in/rafaelfontessouza" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="No time for social network" data-dedup-key="https://www.linkedin.com/in/rafaelfontessouza" data-hr-related="Não" data-date="2026-03-05">
                 <td style="padding-left: 30px;">Rafael Fontes</td>
                 <td>Technology, Security & Performance</td>
                 <td>Não</td>
@@ -4545,7 +4603,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="PicPay" data-dedup-key="https://www.linkedin.com/in/guilherme-vinicius-hortale-motta-7b6635182" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="PicPay" data-dedup-key="https://www.linkedin.com/in/guilherme-vinicius-hortale-motta-7b6635182" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Guilherme Vinicius Hortale Motta</td>
                 <td>Strategy & Planning at</td>
                 <td>Não</td>
@@ -4563,7 +4621,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Ploomes" data-dedup-key="https://www.linkedin.com/in/rafael-iamonti" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Ploomes" data-dedup-key="https://www.linkedin.com/in/rafael-iamonti" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Rafael Iamonti</td>
                 <td>Head Growth & Marketing</td>
                 <td>Não</td>
@@ -4581,7 +4639,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Prefeitura Municipal do Rio Grande" data-dedup-key="https://www.linkedin.com/in/vmendesmagalhaes" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Prefeitura Municipal do Rio Grande" data-dedup-key="https://www.linkedin.com/in/vmendesmagalhaes" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Vitor Magalhães</td>
                 <td>CEO da imblue</td>
                 <td>Não</td>
@@ -4599,7 +4657,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="QRPoint" data-dedup-key="https://www.linkedin.com/in/eduardofiuzalobo" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="QRPoint" data-dedup-key="https://www.linkedin.com/in/eduardofiuzalobo" data-hr-related="Não" data-date="2026-02-27">
                 <td style="padding-left: 30px;">Eduardo Fiuza Lobo</td>
                 <td>CEO</td>
                 <td>Não</td>
@@ -4617,7 +4675,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="SafeSpace" data-dedup-key="https://www.linkedin.com/in/rafaela-frankenthal" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="SafeSpace" data-dedup-key="https://www.linkedin.com/in/rafaela-frankenthal" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Rafaela Angelini Frankenthal</td>
                 <td>Co-fundadora e CEO</td>
                 <td>Não</td>
@@ -4635,7 +4693,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Sankhya Gestão de Negócios" data-dedup-key="https://www.linkedin.com/in/beckerjess" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Sankhya Gestão de Negócios" data-dedup-key="https://www.linkedin.com/in/beckerjess" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Jéssica Becker</td>
                 <td>Especialista</td>
                 <td>Não</td>
@@ -4653,7 +4711,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Shape Digital" data-dedup-key="https://www.linkedin.com/in/letícia-miranda-12049645" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Shape Digital" data-dedup-key="https://www.linkedin.com/in/letícia-miranda-12049645" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Letícia Miranda</td>
                 <td>Especialista</td>
                 <td>Não</td>
@@ -4671,7 +4729,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Squad" data-dedup-key="https://www.linkedin.com/in/amelia-metters-77b86b1a8" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Squad" data-dedup-key="https://www.linkedin.com/in/amelia-metters-77b86b1a8" data-hr-related="Não" data-date="2026-02-26">
                 <td style="padding-left: 30px;">Amelia Metters</td>
                 <td>Growth</td>
                 <td>Não</td>
@@ -4689,7 +4747,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Sumitomo Mitsui Banking Corporation – SMBC Group" data-dedup-key="https://www.linkedin.com/in/cintia-tavares-malta-5362a0ba" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Sumitomo Mitsui Banking Corporation – SMBC Group" data-dedup-key="https://www.linkedin.com/in/cintia-tavares-malta-5362a0ba" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Cintia Tavares Malta</td>
                 <td>DIR</td>
                 <td>Não</td>
@@ -4707,7 +4765,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Techfin ERP Finance - uma empresa TOTVS e ITAÚ" data-dedup-key="https://www.linkedin.com/in/caio-vaz" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Techfin ERP Finance - uma empresa TOTVS e ITAÚ" data-dedup-key="https://www.linkedin.com/in/caio-vaz" data-hr-related="Não" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Caio Vaz</td>
                 <td>Head of Strategy & Revenue Intelligence</td>
                 <td>Não</td>
@@ -4725,7 +4783,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="The HEINEKEN Company" data-dedup-key="https://www.linkedin.com/in/gabriel-antonio-tr" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="The HEINEKEN Company" data-dedup-key="https://www.linkedin.com/in/gabriel-antonio-tr" data-hr-related="Sim" data-date="2026-03-06">
                 <td style="padding-left: 30px;">Gabriel Antonio Tavares Rodrigues</td>
                 <td>HR Analyst</td>
                 <td>Sim</td>
@@ -4743,7 +4801,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Tivita" data-dedup-key="https://www.linkedin.com/in/luizagundim" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Tivita" data-dedup-key="https://www.linkedin.com/in/luizagundim" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Luiza Gundim</td>
                 <td>Finance & Strategy</td>
                 <td>Não</td>
@@ -4761,7 +4819,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="UNICRED DO BRASIL" data-dedup-key="https://www.linkedin.com/in/talissonesouza" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="UNICRED DO BRASIL" data-dedup-key="https://www.linkedin.com/in/talissonesouza" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Talisson Souza</td>
                 <td>Engenheiro de Banco de Dados</td>
                 <td>Não</td>
@@ -4779,7 +4837,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Venture Fund (Stealth)" data-dedup-key="https://www.linkedin.com/in/ephraimyarmak" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Venture Fund (Stealth)" data-dedup-key="https://www.linkedin.com/in/ephraimyarmak" data-hr-related="Não" data-date="2026-02-24">
                 <td style="padding-left: 30px;">Ephraim Yarmak</td>
                 <td>Investing in Mentches</td>
                 <td>Não</td>
@@ -4797,7 +4855,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Verssys Soluções Inteligentes" data-dedup-key="https://www.linkedin.com/in/vanessa-salles" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Verssys Soluções Inteligentes" data-dedup-key="https://www.linkedin.com/in/vanessa-salles" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Vanessa Salles</td>
                 <td>Co-founder</td>
                 <td>Não</td>
@@ -4815,7 +4873,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="YouRH by Umentor" data-dedup-key="https://www.linkedin.com/in/william-barboza-211118113" data-hr-related="Sim">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="YouRH by Umentor" data-dedup-key="https://www.linkedin.com/in/william-barboza-211118113" data-hr-related="Sim" data-date="2026-03-05">
                 <td style="padding-left: 30px;">William Barboza</td>
                 <td>Head of People</td>
                 <td>Sim</td>
@@ -4833,7 +4891,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Zippi" data-dedup-key="https://www.linkedin.com/in/andre-bernardes" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="Zippi" data-dedup-key="https://www.linkedin.com/in/andre-bernardes" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">André Bernardes</td>
                 <td>co-founder</td>
                 <td>Não</td>
@@ -4851,7 +4909,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="ai2c" data-dedup-key="https://www.linkedin.com/in/fabriziobozzetto" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="ai2c" data-dedup-key="https://www.linkedin.com/in/fabriziobozzetto" data-hr-related="Não" data-date="2026-02-23">
                 <td style="padding-left: 30px;">Fabrizio Bozzetto</td>
                 <td>CRO</td>
                 <td>Não</td>
@@ -4869,7 +4927,7 @@
         </tr>
         
 
-            <tr class="company-lead" data-icp-category="Uncategorized" data-company="yume" data-dedup-key="https://www.linkedin.com/in/miguel-miguel-broedel-dos-santos" data-hr-related="Não">
+            <tr class="company-lead" data-icp-category="Uncategorized" data-company="yume" data-dedup-key="https://www.linkedin.com/in/miguel-miguel-broedel-dos-santos" data-hr-related="Não" data-date="2026-02-25">
                 <td style="padding-left: 30px;">Miguel Broedel dos Santos</td>
                 <td>Desenvolvedor e Founder @yume| Automação + IA para empresas eliminarem processos manuais | Compartilho idéias, projetos e a real por trás de empreender tech</td>
                 <td>Não</td>
@@ -5006,7 +5064,7 @@
             return index >= 0 ? chrisTimelineData.counts[index] : 0;
         });
 
-        new Chart(document.getElementById('timelineChart'), {
+        window.timelineChartInstance = new Chart(document.getElementById('timelineChart'), {
             type: 'line',
             data: {
                 labels: sortedDates,
@@ -5305,6 +5363,77 @@
             plugins: [funnelPlugin]
         });
 
+        // Period data for master time filter
+        const PERIOD_DATA = {"all": {"total": 1055, "pedro_total": 473, "chris_total": 582, "unique_companies": 820, "pedro_unique": 419, "chris_unique": 539, "overlap_companies": 138, "num_icp": 135, "pedro_icp": 75, "chris_icp": 87, "overlap_icp": 27, "icp_rate": 16.5, "pedro_rate": 17.9, "chris_rate": 16.1, "prospects_with_hr": 11, "pedro_hr": 8, "chris_hr": 6, "overlap_hr": 3, "hr_rate": 8.1, "pedro_hr_rate": 10.7, "chris_hr_rate": 6.9, "timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [478, 225, 58, 67, 26, 5, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [227, 116, 30, 23, 13, 5, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [251, 109, 28, 44, 13, 20, 15, 37, 33, 25, 7]}}, "week": {"total": 197, "pedro_total": 60, "chris_total": 137, "unique_companies": 178, "pedro_unique": 60, "chris_unique": 134, "overlap_companies": 16, "num_icp": 32, "pedro_icp": 16, "chris_icp": 21, "overlap_icp": 5, "icp_rate": 18.0, "pedro_rate": 26.7, "chris_rate": 15.7, "prospects_with_hr": 2, "pedro_hr": 2, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 6.2, "pedro_hr_rate": 12.5, "chris_hr_rate": 0.0, "timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 30, 30, 49, 40, 29, 18]}, "pedro_timeline": {"dates": ["2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [1, 10, 15, 12, 7, 4, 11]}, "chris_timeline": {"dates": ["2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06"], "counts": [20, 15, 37, 33, 25, 7]}}, "day": {"total": 18, "pedro_total": 11, "chris_total": 7, "unique_companies": 16, "pedro_unique": 11, "chris_unique": 7, "overlap_companies": 2, "num_icp": 0, "pedro_icp": 0, "chris_icp": 0, "overlap_icp": 0, "icp_rate": 0.0, "pedro_rate": 0.0, "chris_rate": 0.0, "prospects_with_hr": 0, "pedro_hr": 0, "chris_hr": 0, "overlap_hr": 0, "hr_rate": 0, "pedro_hr_rate": 0, "chris_hr_rate": 0, "timeline": {"dates": ["2026-03-06"], "counts": [18]}, "pedro_timeline": {"dates": ["2026-03-06"], "counts": [11]}, "chris_timeline": {"dates": ["2026-03-06"], "counts": [7]}}};
+
+        function applyPeriodFilter(period) {
+            // Update active button
+            document.querySelectorAll('.time-toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.period === period);
+            });
+
+            const d = PERIOD_DATA[period];
+
+            // Update KPI Card 1
+            document.getElementById('kpi-total').textContent = d.total;
+            document.getElementById('kpi-connections-breakdown').textContent =
+                `${d.chris_total} Chris | ${d.pedro_total} Pedro`;
+            document.getElementById('kpi-unique').textContent = d.unique_companies;
+            document.getElementById('kpi-companies-breakdown').textContent =
+                `${d.chris_unique} Chris | ${d.pedro_unique} Pedro | ${d.overlap_companies} ambos`;
+
+            // Update KPI Card 2
+            document.getElementById('kpi-actionable').textContent = d.prospects_with_hr;
+            document.getElementById('kpi-actionable-breakdown').textContent =
+                `${d.chris_hr} Chris | ${d.pedro_hr} Pedro | ${d.overlap_hr} ambos`;
+            document.getElementById('kpi-hr-rate').textContent = d.hr_rate + '%';
+            document.getElementById('kpi-rate-breakdown').textContent =
+                `${d.chris_hr_rate}% Chris | ${d.pedro_hr_rate}% Pedro`;
+
+            // Update timeline charts
+            if (window.timelineChartInstance) {
+                window.timelineChartInstance.data.labels = d.timeline.dates;
+                window.timelineChartInstance.data.datasets[0].data = d.timeline.counts;
+                window.timelineChartInstance.update();
+            }
+            if (window.timelineChartModalInstance) {
+                window.timelineChartModalInstance.data.labels = d.timeline.dates;
+                window.timelineChartModalInstance.data.datasets[0].data = d.timeline.counts;
+                window.timelineChartModalInstance.data.datasets[1].data = d.pedro_timeline.counts.length > 0
+                    ? alignTimelineCounts(d.pedro_timeline, d.timeline.dates) : [];
+                window.timelineChartModalInstance.data.datasets[2].data = d.chris_timeline.counts.length > 0
+                    ? alignTimelineCounts(d.chris_timeline, d.timeline.dates) : [];
+                window.timelineChartModalInstance.update();
+            }
+
+            // Filter table rows by date
+            filterTableByPeriod(period, d.timeline.dates);
+        }
+
+        function alignTimelineCounts(subTimeline, allDates) {
+            const map = {};
+            subTimeline.dates.forEach((d, i) => { map[d] = subTimeline.counts[i]; });
+            return allDates.map(d => map[d] || 0);
+        }
+
+        function filterTableByPeriod(period, activeDates) {
+            const activeDateSet = new Set(activeDates);
+            const table = document.getElementById('leadsTable');
+            const rows = table.getElementsByTagName('tr');
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (row.classList.contains('company-lead')) {
+                    const rowDate = row.getAttribute('data-date');
+                    if (period === 'all' || activeDateSet.has(rowDate)) {
+                        row.removeAttribute('data-period-hidden');
+                    } else {
+                        row.setAttribute('data-period-hidden', '1');
+                    }
+                }
+            }
+            filterTable();
+        }
+
         function toggleICPFilter(btn) {
             btn.classList.toggle('active');
             filterTable();
@@ -5368,7 +5497,8 @@
                         cargo.includes(searchInput) ||
                         company.toLowerCase().includes(searchInput);
 
-                    if (matchesICP && matchesStatus && matchesL6 && matchesHR && matchesSearch) {
+                    const periodHidden = row.getAttribute('data-period-hidden') === '1';
+                    if (matchesICP && matchesStatus && matchesL6 && matchesHR && matchesSearch && !periodHidden) {
                         row.style.display = '';
                         visibleCompanies.add(company);
                     } else {
@@ -5494,7 +5624,7 @@
                 return index >= 0 ? chrisTimelineData.counts[index] : 0;
             });
 
-            new Chart(document.getElementById('timelineChartModal'), {
+            window.timelineChartModalInstance = new Chart(document.getElementById('timelineChartModal'), {
                 type: 'line',
                 data: {
                     labels: sortedDates,
