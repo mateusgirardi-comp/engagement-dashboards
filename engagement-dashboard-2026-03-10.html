@@ -534,7 +534,7 @@
             padding: 24px 30px;
             margin-bottom: 30px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-left: 4px solid #4a90d9;
+            border-left: 4px solid #FF4757;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -552,17 +552,27 @@
             text-align: center;
         }
         .cargo-big-number .cbn-value {
+            font-size: 14px;
+            font-weight: 400;
+            color: #999;
+            line-height: 1;
+            display: block;
+            margin: 3px 0 4px;
+        }
+        .cargo-big-number .cbn-pct {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FF4757;
+            display: block;
+            line-height: 1;
+        }
+        /* First box (total) keeps big style on the value */
+        .cargo-big-number.cbn-total .cbn-value {
             font-size: 36px;
             font-weight: 700;
             color: #FF4757;
             line-height: 1;
-            display: block;
-        }
-        .cargo-big-number .cbn-pct {
-            font-size: 13px;
-            color: #999;
-            display: block;
-            margin: 3px 0 4px;
+            margin: 0 0 4px;
         }
         .cargo-big-number .cbn-label {
             font-size: 12px;
@@ -623,7 +633,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 10/03/2026 às 15:07</p>
+            <p><strong>Gerado em:</strong> 10/03/2026 às 15:23</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -702,26 +712,25 @@
         <div class="cargo-summary-box" onclick="openCargoModal()">
             <h2 class="chart-title" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">👔 Análise de Cargos <span class="hint">clique para ver todos os gráficos →</span></h2>
             <div class="cargo-big-numbers" id="cargoBigNumbers">
-                <div class="cargo-big-number">
+                <div class="cargo-big-number cbn-total">
                     <span class="cbn-value" id="cbn-total">—</span>
-                    <span class="cbn-pct">&nbsp;</span>
                     <span class="cbn-label">conexões analisadas</span>
                 </div>
                 <div class="cargo-big-number">
-                    <span class="cbn-value" id="cbn-top-seniority-count">—</span>
                     <span class="cbn-pct" id="cbn-top-seniority-pct">—%</span>
+                    <span class="cbn-value" id="cbn-top-seniority-count">—</span>
                     <span class="cbn-label" id="cbn-top-seniority-label">nível mais frequente</span>
                     <span class="cbn-sublabel">nível de senioridade</span>
                 </div>
                 <div class="cargo-big-number">
-                    <span class="cbn-value" id="cbn-top-function-count">—</span>
                     <span class="cbn-pct" id="cbn-top-function-pct">—%</span>
+                    <span class="cbn-value" id="cbn-top-function-count">—</span>
                     <span class="cbn-label" id="cbn-top-function-label">área mais frequente</span>
                     <span class="cbn-sublabel">área funcional</span>
                 </div>
                 <div class="cargo-big-number">
-                    <span class="cbn-value" id="cbn-clevel-count">—</span>
                     <span class="cbn-pct" id="cbn-clevel-pct">—%</span>
+                    <span class="cbn-value" id="cbn-clevel-count">—</span>
                     <span class="cbn-label">executivos</span>
                     <span class="cbn-sublabel">C-Level + VP / Diretor</span>
                 </div>
@@ -5471,7 +5480,7 @@
         });
 
         // Cargo analysis data
-        const CARGO_DATA = {"total": 1055, "seniority": {"labels": ["Especialista / IC", "C-Level", "Gerente / Coord", "VP / Diretor", "Outros", "N\u00e3o identificado"], "values": [501, 351, 78, 73, 48, 4], "pcts": [47.5, 33.3, 7.4, 6.9, 4.5, 0.4]}, "function_area": {"labels": ["C-Level / Fundador", "Outros", "Tech / Produto", "Finance / Investimento", "People / HR", "Sales / BizDev", "Opera\u00e7\u00f5es / Strategy", "Marketing", "Legal / Compliance", "N\u00e3o identificado"], "values": [382, 216, 143, 104, 98, 53, 31, 17, 7, 4], "pcts": [36.2, 20.5, 13.6, 9.9, 9.3, 5.0, 2.9, 1.6, 0.7, 0.4]}, "seniority_icp": {"labels": ["Especialista / IC", "C-Level", "VP / Diretor", "Gerente / Coord", "Outros"], "values": [99, 52, 17, 17, 7], "pcts": [51.6, 27.1, 8.9, 8.9, 3.6]}, "pedro_seniority": {"labels": ["Especialista / IC", "C-Level", "Gerente / Coord", "VP / Diretor", "Outros", "N\u00e3o identificado"], "values": [224, 148, 48, 32, 19, 2], "pcts": [47.4, 31.3, 10.1, 6.8, 4.0, 0.4]}, "chris_seniority": {"labels": ["Especialista / IC", "C-Level", "VP / Diretor", "Gerente / Coord", "Outros", "N\u00e3o identificado"], "values": [277, 203, 41, 30, 29, 2], "pcts": [47.6, 34.9, 7.0, 5.2, 5.0, 0.3]}, "top_seniority": "Especialista / IC", "top_seniority_count": 501, "top_seniority_pct": 47.5, "top_function": "C-Level / Fundador", "top_function_count": 382, "top_function_pct": 36.2, "clevel_vp_count": 424, "clevel_vp_pct": 40.2};
+        const CARGO_DATA = {"total": 1055, "seniority": {"labels": ["Especialista / IC", "C-Level", "Gerente / Coord", "VP / Diretor", "Outros", "N\u00e3o identificado"], "values": [501, 351, 78, 73, 48, 4], "pcts": [47.5, 33.3, 7.4, 6.9, 4.5, 0.4]}, "function_area": {"labels": ["Lideran\u00e7a Geral", "Tech / Produto", "Outros", "Finance / Investimento", "People / HR", "Sales / BizDev", "Opera\u00e7\u00f5es / Strategy", "Marketing", "Legal / Compliance", "N\u00e3o identificado"], "values": [264, 217, 210, 111, 97, 75, 50, 21, 6, 4], "pcts": [25.0, 20.6, 19.9, 10.5, 9.2, 7.1, 4.7, 2.0, 0.6, 0.4]}, "seniority_icp": {"labels": ["Especialista / IC", "C-Level", "VP / Diretor", "Gerente / Coord", "Outros"], "values": [99, 52, 17, 17, 7], "pcts": [51.6, 27.1, 8.9, 8.9, 3.6]}, "pedro_seniority": {"labels": ["Especialista / IC", "C-Level", "Gerente / Coord", "VP / Diretor", "Outros", "N\u00e3o identificado"], "values": [224, 148, 48, 32, 19, 2], "pcts": [47.4, 31.3, 10.1, 6.8, 4.0, 0.4]}, "chris_seniority": {"labels": ["Especialista / IC", "C-Level", "VP / Diretor", "Gerente / Coord", "Outros", "N\u00e3o identificado"], "values": [277, 203, 41, 30, 29, 2], "pcts": [47.6, 34.9, 7.0, 5.2, 5.0, 0.3]}, "top_seniority": "Especialista / IC", "top_seniority_count": 501, "top_seniority_pct": 47.5, "top_function": "Lideran\u00e7a Geral", "top_function_count": 264, "top_function_pct": 25.0, "clevel_vp_count": 424, "clevel_vp_pct": 40.2};
 
         // Colour palettes
         const SENIORITY_COLORS  = ['#FF4757','#ff6b6b','#4a90d9','#7bbaff','#bbb','#e0e0e0'];
