@@ -651,7 +651,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 10/03/2026 às 15:35</p>
+            <p><strong>Gerado em:</strong> 10/03/2026 às 15:38</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -5502,10 +5502,33 @@
 
         // Colour palettes
         const SENIORITY_COLORS  = ['#FF4757','#ff6b6b','#4a90d9','#7bbaff','#bbb','#e0e0e0'];
-        const FUNCTION_COLORS   = ['#FF4757','#4a90d9','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22','#bbb'];
+        const FUNCTION_COLORS   = ['#FF4757','#ff6b6b','#4a90d9','#7bbaff','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22','#bbb'];
 
-        function buildCargoDonut(ctxId, dist, colors) {
-            const labels = dist.labels.map((l, i) => `${l} — ${dist.values[i]} (${dist.pcts[i]}%)`);
+        // Plugin: center text inside each donut
+        const centerTextPlugin = {
+            id: 'centerText',
+            beforeDraw(chart) {
+                const opts = chart.config.options.centerText;
+                if (!opts) return;
+                const { ctx, chartArea: { top, bottom, left, right } } = chart;
+                const cx = (left + right) / 2, cy = (top + bottom) / 2;
+                ctx.save();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.font = 'bold 20px Inter, sans-serif';
+                ctx.fillStyle = '#222';
+                ctx.fillText(opts.value, cx, cy - 9);
+                ctx.font = '11px Inter, sans-serif';
+                ctx.fillStyle = '#999';
+                ctx.fillText(opts.label, cx, cy + 11);
+                ctx.restore();
+            }
+        };
+        Chart.register(centerTextPlugin);
+
+        function buildCargoDonut(ctxId, dist, colors, centerValue, centerLabel) {
+            const total = dist.values.reduce((a,b) => a+b, 0);
+            const labels = dist.labels.map((l, i) => `${l}  ${dist.values[i]} (${dist.pcts[i]}%)`);
             return new Chart(document.getElementById(ctxId), {
                 type: 'doughnut',
                 data: {
@@ -5514,8 +5537,10 @@
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
+                    cutout: '62%',
+                    centerText: centerValue != null ? { value: centerValue, label: centerLabel || '' } : null,
                     plugins: {
-                        legend: { position: 'right', labels: { font: { size: 12 }, padding: 10, boxWidth: 14 } },
+                        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } },
                         tooltip: {
                             callbacks: {
                                 label: (ctx) => {
@@ -5529,45 +5554,47 @@
             });
         }
 
+        function cargoCard(title, subtitle, canvasId, height) {
+            return `<div style="background:#fafafa;border-radius:10px;padding:20px;border:1px solid #eee;">
+                <p style="font-size:13px;font-weight:700;color:#333;margin:0 0 2px;">${title}</p>
+                <p style="font-size:11px;color:#aaa;margin:0 0 12px;">${subtitle}</p>
+                <div style="height:${height || 280}px;"><canvas id="${canvasId}"></canvas></div>
+            </div>`;
+        }
+
         function openCargoModal() {
             const modal = document.createElement('div');
             modal.id = 'cargoModal';
             modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;overflow-y:auto;';
             modal.onclick = (e) => { if (e.target === modal) closeCargoModal(); };
+
+            const pedroTotal = CARGO_DATA.pedro_seniority.values.reduce((a,b)=>a+b,0);
+            const chrisTotal = CARGO_DATA.chris_seniority.values.reduce((a,b)=>a+b,0);
+            const icpTotal   = CARGO_DATA.seniority_icp.values.reduce((a,b)=>a+b,0);
+
             modal.innerHTML = `
-                <div class="modal-content" style="max-width:1300px;">
+                <div class="modal-content" style="max-width:1200px;">
                     <span class="modal-close" onclick="closeCargoModal()">&times;</span>
-                    <h2 class="chart-title">👔 Análise de Cargos — ${CARGO_DATA.total} conexões</h2>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;">
-                        <div style="background:#fafafa;border-radius:10px;padding:20px;border:1px solid #eee;">
-                            <h3 class="chart-subtitle">Distribuição por Nível de Senioridade</h3>
-                            <div style="height:320px;"><canvas id="cargoSeniorityChart"></canvas></div>
-                        </div>
-                        <div style="background:#fafafa;border-radius:10px;padding:20px;border:1px solid #eee;">
-                            <h3 class="chart-subtitle">Distribuição por Área Funcional</h3>
-                            <div style="height:320px;"><canvas id="cargoFunctionChart"></canvas></div>
-                        </div>
-                        <div style="background:#fafafa;border-radius:10px;padding:20px;border:1px solid #eee;">
-                            <h3 class="chart-subtitle highlight">Senioridade — Empresas ICP</h3>
-                            <div style="height:320px;"><canvas id="cargoSeniorityIcpChart"></canvas></div>
-                        </div>
-                        <div style="background:#fafafa;border-radius:10px;padding:20px;border:1px solid #eee;">
-                            <h3 class="chart-subtitle">Senioridade — Pedro vs Chris</h3>
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;height:320px;">
-                                <div style="position:relative;"><canvas id="cargoPedroChart"></canvas></div>
-                                <div style="position:relative;"><canvas id="cargoChrisChart"></canvas></div>
-                            </div>
-                        </div>
+                    <h2 class="chart-title" style="margin-bottom:20px;">👔 Análise de Cargos — ${CARGO_DATA.total} conexões</h2>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+                        ${cargoCard('Distribuição por Nível de Senioridade', `${CARGO_DATA.total} conexões totais`, 'cargoSeniorityChart', 300)}
+                        ${cargoCard('Distribuição por Área Funcional', `${CARGO_DATA.total} conexões totais`, 'cargoFunctionChart', 300)}
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;">
+                        ${cargoCard('Senioridade em Empresas ICP', `${icpTotal} conexões em empresas ICP`, 'cargoSeniorityIcpChart', 250)}
+                        ${cargoCard('Senioridade — Pedro', `${pedroTotal} conexões`, 'cargoPedroChart', 250)}
+                        ${cargoCard('Senioridade — Christophe', `${chrisTotal} conexões`, 'cargoChrisChart', 250)}
                     </div>
                 </div>`;
             document.body.appendChild(modal);
-            // Init charts after DOM is ready
             setTimeout(() => {
-                buildCargoDonut('cargoSeniorityChart',  CARGO_DATA.seniority,       SENIORITY_COLORS);
-                buildCargoDonut('cargoFunctionChart',   CARGO_DATA.function_area,   FUNCTION_COLORS);
-                buildCargoDonut('cargoSeniorityIcpChart', CARGO_DATA.seniority_icp, SENIORITY_COLORS);
-                buildCargoDonut('cargoPedroChart',      CARGO_DATA.pedro_seniority, SENIORITY_COLORS);
-                buildCargoDonut('cargoChrisChart',      CARGO_DATA.chris_seniority, SENIORITY_COLORS);
+                buildCargoDonut('cargoSeniorityChart',    CARGO_DATA.seniority,       SENIORITY_COLORS, CARGO_DATA.total,  'conexões');
+                buildCargoDonut('cargoFunctionChart',     CARGO_DATA.function_area,   FUNCTION_COLORS,  CARGO_DATA.total,  'conexões');
+                buildCargoDonut('cargoSeniorityIcpChart', CARGO_DATA.seniority_icp,   SENIORITY_COLORS, icpTotal,          'em ICPs');
+                buildCargoDonut('cargoPedroChart',        CARGO_DATA.pedro_seniority, SENIORITY_COLORS, pedroTotal,        'Pedro');
+                buildCargoDonut('cargoChrisChart',        CARGO_DATA.chris_seniority, SENIORITY_COLORS, chrisTotal,        'Christophe');
             }, 50);
         }
 
