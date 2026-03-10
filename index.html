@@ -550,7 +550,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 09/03/2026 às 22:09</p>
+            <p><strong>Gerado em:</strong> 09/03/2026 às 22:12</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -5394,17 +5394,23 @@
             document.getElementById('kpi-rate-breakdown').textContent =
                 `${d.chris_hr_rate}% Chris | ${d.pedro_hr_rate}% Pedro`;
 
+            // Merge all dates from all 3 timelines for this period (same logic as initial render)
+            const periodAllDates = new Set([...d.timeline.dates, ...d.pedro_timeline.dates, ...d.chris_timeline.dates]);
+            const periodSortedDates = Array.from(periodAllDates).sort();
+
             // Update timeline charts
             if (window.timelineChartInstance) {
-                window.timelineChartInstance.data.labels = d.timeline.dates;
-                window.timelineChartInstance.data.datasets[0].data = d.timeline.counts;
+                window.timelineChartInstance.data.labels = periodSortedDates;
+                window.timelineChartInstance.data.datasets[0].data = alignTimelineCounts(d.timeline, periodSortedDates);
+                window.timelineChartInstance.data.datasets[1].data = alignTimelineCounts(d.chris_timeline, periodSortedDates);
+                window.timelineChartInstance.data.datasets[2].data = alignTimelineCounts(d.pedro_timeline, periodSortedDates);
                 window.timelineChartInstance.update();
             }
             if (window.timelineChartModalInstance) {
-                window.timelineChartModalInstance.data.labels = d.timeline.dates;
-                window.timelineChartModalInstance.data.datasets[0].data = d.timeline.counts;
-                window.timelineChartModalInstance.data.datasets[1].data = alignTimelineCounts(d.pedro_timeline, d.timeline.dates);
-                window.timelineChartModalInstance.data.datasets[2].data = alignTimelineCounts(d.chris_timeline, d.timeline.dates);
+                window.timelineChartModalInstance.data.labels = periodSortedDates;
+                window.timelineChartModalInstance.data.datasets[0].data = alignTimelineCounts(d.timeline, periodSortedDates);
+                window.timelineChartModalInstance.data.datasets[1].data = alignTimelineCounts(d.pedro_timeline, periodSortedDates);
+                window.timelineChartModalInstance.data.datasets[2].data = alignTimelineCounts(d.chris_timeline, periodSortedDates);
                 window.timelineChartModalInstance.update();
             }
 
