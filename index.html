@@ -651,7 +651,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 10/03/2026 às 17:37</p>
+            <p><strong>Gerado em:</strong> 10/03/2026 às 17:54</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -5443,8 +5443,28 @@
                     ctx.textAlign = 'left';
                     ctx.textBaseline = 'middle';
 
+                    // Helper: wrap text into lines fitting maxW
+                    function wrapTextLines(context, text, font, maxW) {
+                        context.font = font;
+                        const words = text.split(' ');
+                        const result = [];
+                        let current = '';
+                        words.forEach(w => {
+                            const test = current ? current + ' ' + w : w;
+                            if (context.measureText(test).width > maxW && current) {
+                                result.push(current);
+                                current = w;
+                            } else {
+                                current = test;
+                            }
+                        });
+                        if (current) result.push(current);
+                        return result;
+                    }
+
                     // Build ordered list of lines
                     const GAP = 6;
+                    const NOTE_MAX_W = 200;
                     const lines = [];
                     if (item.label2) {
                         lines.push({ text: item.label,  font: 'bold 15px -apple-system, Arial', color: '#333', size: 15 });
@@ -5453,7 +5473,10 @@
                         lines.push({ text: item.label,  font: 'bold 15px -apple-system, Arial', color: '#333', size: 15 });
                     }
                     if (item.note) {
-                        lines.push({ text: item.note,    font: '11px -apple-system, Arial',       color: '#888', size: 11 });
+                        const noteFont = '11px -apple-system, Arial';
+                        wrapTextLines(ctx, item.note, noteFont, NOTE_MAX_W).forEach(t => {
+                            lines.push({ text: t, font: noteFont, color: '#888', size: 11 });
+                        });
                     }
                     if (item.sublabel) {
                         lines.push({ text: item.sublabel, font: 'bold 12px -apple-system, Arial', color: item.color, size: 12 });
