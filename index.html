@@ -633,7 +633,7 @@
 
         <div class="header">
             <h1>LinkedIn Connections Dashboard</h1>
-            <p><strong>Gerado em:</strong> 10/03/2026 às 15:23</p>
+            <p><strong>Gerado em:</strong> 10/03/2026 às 15:27</p>
             <p><strong>Objetivo:</strong> Entender o impacto do Series A nas novas conexões e o que é actionable em termos de outbound. Os números partem de um scraping diário dos engajamentos classificados como conexões nos LinkedIns do Pedro e Chris. Essas informações são enriquecidas com a API do Tyrion, para classificar cada empresa dentro dos critérios de ICP. As informações também foram cruzadas com o CRM de clientes ativos (Notion) e com o sales pipeline (Attio).</p>
         </div>
 
@@ -723,16 +723,16 @@
                     <span class="cbn-sublabel">nível de senioridade</span>
                 </div>
                 <div class="cargo-big-number">
+                    <span class="cbn-pct" id="cbn-clevel-icp-pct">—%</span>
+                    <span class="cbn-value" id="cbn-clevel-icp-count">—</span>
+                    <span class="cbn-label">são C-Level</span>
+                    <span class="cbn-sublabel">em empresas ICP</span>
+                </div>
+                <div class="cargo-big-number">
                     <span class="cbn-pct" id="cbn-top-function-pct">—%</span>
                     <span class="cbn-value" id="cbn-top-function-count">—</span>
                     <span class="cbn-label" id="cbn-top-function-label">área mais frequente</span>
                     <span class="cbn-sublabel">área funcional</span>
-                </div>
-                <div class="cargo-big-number">
-                    <span class="cbn-pct" id="cbn-clevel-pct">—%</span>
-                    <span class="cbn-value" id="cbn-clevel-count">—</span>
-                    <span class="cbn-label">executivos</span>
-                    <span class="cbn-sublabel">C-Level + VP / Diretor</span>
                 </div>
             </div>
         </div>
@@ -5480,7 +5480,7 @@
         });
 
         // Cargo analysis data
-        const CARGO_DATA = {"total": 1055, "seniority": {"labels": ["Especialista / IC", "C-Level", "Gerente / Coord", "VP / Diretor", "Outros", "N\u00e3o identificado"], "values": [501, 351, 78, 73, 48, 4], "pcts": [47.5, 33.3, 7.4, 6.9, 4.5, 0.4]}, "function_area": {"labels": ["Lideran\u00e7a Geral", "Tech / Produto", "Outros", "Finance / Investimento", "People / HR", "Sales / BizDev", "Opera\u00e7\u00f5es / Strategy", "Marketing", "Legal / Compliance", "N\u00e3o identificado"], "values": [264, 217, 210, 111, 97, 75, 50, 21, 6, 4], "pcts": [25.0, 20.6, 19.9, 10.5, 9.2, 7.1, 4.7, 2.0, 0.6, 0.4]}, "seniority_icp": {"labels": ["Especialista / IC", "C-Level", "VP / Diretor", "Gerente / Coord", "Outros"], "values": [99, 52, 17, 17, 7], "pcts": [51.6, 27.1, 8.9, 8.9, 3.6]}, "pedro_seniority": {"labels": ["Especialista / IC", "C-Level", "Gerente / Coord", "VP / Diretor", "Outros", "N\u00e3o identificado"], "values": [224, 148, 48, 32, 19, 2], "pcts": [47.4, 31.3, 10.1, 6.8, 4.0, 0.4]}, "chris_seniority": {"labels": ["Especialista / IC", "C-Level", "VP / Diretor", "Gerente / Coord", "Outros", "N\u00e3o identificado"], "values": [277, 203, 41, 30, 29, 2], "pcts": [47.6, 34.9, 7.0, 5.2, 5.0, 0.3]}, "top_seniority": "Especialista / IC", "top_seniority_count": 501, "top_seniority_pct": 47.5, "top_function": "Lideran\u00e7a Geral", "top_function_count": 264, "top_function_pct": 25.0, "clevel_vp_count": 424, "clevel_vp_pct": 40.2};
+        const CARGO_DATA = {"total": 1055, "seniority": {"labels": ["Especialista / IC", "C-Level", "Gerente / Coord", "VP / Diretor", "Outros", "N\u00e3o identificado"], "values": [501, 351, 78, 73, 48, 4], "pcts": [47.5, 33.3, 7.4, 6.9, 4.5, 0.4]}, "function_area": {"labels": ["Lideran\u00e7a Geral", "Tech / Produto", "Outros", "Finance / Investimento", "People / HR", "Sales / BizDev", "Opera\u00e7\u00f5es / Strategy", "Marketing", "Legal / Compliance", "N\u00e3o identificado"], "values": [264, 217, 210, 111, 97, 75, 50, 21, 6, 4], "pcts": [25.0, 20.6, 19.9, 10.5, 9.2, 7.1, 4.7, 2.0, 0.6, 0.4]}, "seniority_icp": {"labels": ["Especialista / IC", "C-Level", "VP / Diretor", "Gerente / Coord", "Outros"], "values": [99, 52, 17, 17, 7], "pcts": [51.6, 27.1, 8.9, 8.9, 3.6]}, "pedro_seniority": {"labels": ["Especialista / IC", "C-Level", "Gerente / Coord", "VP / Diretor", "Outros", "N\u00e3o identificado"], "values": [224, 148, 48, 32, 19, 2], "pcts": [47.4, 31.3, 10.1, 6.8, 4.0, 0.4]}, "chris_seniority": {"labels": ["Especialista / IC", "C-Level", "VP / Diretor", "Gerente / Coord", "Outros", "N\u00e3o identificado"], "values": [277, 203, 41, 30, 29, 2], "pcts": [47.6, 34.9, 7.0, 5.2, 5.0, 0.3]}, "top_seniority": "Especialista / IC", "top_seniority_count": 501, "top_seniority_pct": 47.5, "top_function": "Lideran\u00e7a Geral", "top_function_count": 264, "top_function_pct": 25.0, "clevel_in_icp_count": 52, "clevel_in_icp_pct": 27.1, "icp_total": 192};
 
         // Colour palettes
         const SENIORITY_COLORS  = ['#FF4757','#ff6b6b','#4a90d9','#7bbaff','#bbb','#e0e0e0'];
@@ -5564,11 +5564,11 @@
             document.getElementById('cbn-top-seniority-count').textContent = CARGO_DATA.top_seniority_count;
             document.getElementById('cbn-top-seniority-pct').textContent   = CARGO_DATA.top_seniority_pct + '%';
             document.getElementById('cbn-top-seniority-label').textContent = CARGO_DATA.top_seniority;
+            document.getElementById('cbn-clevel-icp-count').textContent = CARGO_DATA.clevel_in_icp_count;
+            document.getElementById('cbn-clevel-icp-pct').textContent   = CARGO_DATA.clevel_in_icp_pct + '%';
             document.getElementById('cbn-top-function-count').textContent  = CARGO_DATA.top_function_count;
             document.getElementById('cbn-top-function-pct').textContent    = CARGO_DATA.top_function_pct + '%';
             document.getElementById('cbn-top-function-label').textContent  = CARGO_DATA.top_function;
-            document.getElementById('cbn-clevel-count').textContent  = CARGO_DATA.clevel_vp_count;
-            document.getElementById('cbn-clevel-pct').textContent    = CARGO_DATA.clevel_vp_pct + '%';
         });
 
         // Period data for master time filter
